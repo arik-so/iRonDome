@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "_default": {
+            "link": "iRon Dome"
+        }, 
+        "iRon Dome": {
+            "applicationId": "KFQeWT9x9MoHlUvBUlEDj77Rh3zZ8piQIMzQ2Anf", 
+            "masterKey": "2p3HRc8p5f7ylNMcvQkFwPJRLda8DFoUNp33gNug"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.2.19"
+    }
+}
