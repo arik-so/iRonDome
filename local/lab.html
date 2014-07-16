@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="https://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
+
+    <script type="text/javascript">
+
+        Parse.initialize("KFQeWT9x9MoHlUvBUlEDj77Rh3zZ8piQIMzQ2Anf", "EApcfC6YoZ8rhUmXkHsTUcs7dd2ma06oFdDXFOD6");
+
+    </script>
+
+
+    <script type="text/javascript">
+
+
+        Parse.Cloud.run('pullTzevaAdom', {}, {
+            success: function(result) {
+                // result is 'Hello world!'
+                console.log('success');
+                console.log(result);
+                alert(result);
+
+            },
+            error: function(error) {
+                console.log('error');
+                console.error(error);
+            }
+        });
+
+
+    </script>
+</head>
+<body>
+
+
+
+
+</body>
+</html>

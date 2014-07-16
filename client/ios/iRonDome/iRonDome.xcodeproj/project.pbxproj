@@ -1,0 +1,486 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5179927419771B6300830A21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5179927319771B6300830A21 /* Foundation.framework */; };
+		5179927619771B6300830A21 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5179927519771B6300830A21 /* CoreGraphics.framework */; };
+		5179927819771B6300830A21 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5179927719771B6300830A21 /* UIKit.framework */; };
+		5179927E19771B6300830A21 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5179927C19771B6300830A21 /* InfoPlist.strings */; };
+		5179928019771B6300830A21 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5179927F19771B6300830A21 /* main.m */; };
+		5179928419771B6300830A21 /* IRDAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5179928319771B6300830A21 /* IRDAppDelegate.m */; };
+		5179928719771B6300830A21 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5179928519771B6300830A21 /* Main_iPhone.storyboard */; };
+		5179928A19771B6300830A21 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5179928819771B6300830A21 /* Main_iPad.storyboard */; };
+		5179928D19771B6300830A21 /* IRDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5179928C19771B6300830A21 /* IRDViewController.m */; };
+		5179928F19771B6300830A21 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5179928E19771B6300830A21 /* Images.xcassets */; };
+		5179929619771B6300830A21 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5179929519771B6300830A21 /* XCTest.framework */; };
+		5179929719771B6300830A21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5179927319771B6300830A21 /* Foundation.framework */; };
+		5179929819771B6300830A21 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5179927719771B6300830A21 /* UIKit.framework */; };
+		517992A019771B6300830A21 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5179929E19771B6300830A21 /* InfoPlist.strings */; };
+		517992A219771B6400830A21 /* iRonDomeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992A119771B6400830A21 /* iRonDomeTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5179929919771B6300830A21 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5179926819771B6300830A21 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5179926F19771B6300830A21;
+			remoteInfo = iRonDome;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		5179927019771B6300830A21 /* iRonDome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iRonDome.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5179927319771B6300830A21 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		5179927519771B6300830A21 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		5179927719771B6300830A21 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		5179927B19771B6300830A21 /* iRonDome-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iRonDome-Info.plist"; sourceTree = "<group>"; };
+		5179927D19771B6300830A21 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5179927F19771B6300830A21 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5179928119771B6300830A21 /* iRonDome-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iRonDome-Prefix.pch"; sourceTree = "<group>"; };
+		5179928219771B6300830A21 /* IRDAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRDAppDelegate.h; sourceTree = "<group>"; };
+		5179928319771B6300830A21 /* IRDAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRDAppDelegate.m; sourceTree = "<group>"; };
+		5179928619771B6300830A21 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		5179928919771B6300830A21 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		5179928B19771B6300830A21 /* IRDViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRDViewController.h; sourceTree = "<group>"; };
+		5179928C19771B6300830A21 /* IRDViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRDViewController.m; sourceTree = "<group>"; };
+		5179928E19771B6300830A21 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		5179929419771B6300830A21 /* iRonDomeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iRonDomeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5179929519771B6300830A21 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		5179929D19771B6300830A21 /* iRonDomeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iRonDomeTests-Info.plist"; sourceTree = "<group>"; };
+		5179929F19771B6300830A21 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		517992A119771B6400830A21 /* iRonDomeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iRonDomeTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5179926D19771B6300830A21 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5179927619771B6300830A21 /* CoreGraphics.framework in Frameworks */,
+				5179927819771B6300830A21 /* UIKit.framework in Frameworks */,
+				5179927419771B6300830A21 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5179929119771B6300830A21 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5179929619771B6300830A21 /* XCTest.framework in Frameworks */,
+				5179929819771B6300830A21 /* UIKit.framework in Frameworks */,
+				5179929719771B6300830A21 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5179926719771B6300830A21 = {
+			isa = PBXGroup;
+			children = (
+				5179927919771B6300830A21 /* iRonDome */,
+				5179929B19771B6300830A21 /* iRonDomeTests */,
+				5179927219771B6300830A21 /* Frameworks */,
+				5179927119771B6300830A21 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5179927119771B6300830A21 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5179927019771B6300830A21 /* iRonDome.app */,
+				5179929419771B6300830A21 /* iRonDomeTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5179927219771B6300830A21 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5179927319771B6300830A21 /* Foundation.framework */,
+				5179927519771B6300830A21 /* CoreGraphics.framework */,
+				5179927719771B6300830A21 /* UIKit.framework */,
+				5179929519771B6300830A21 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5179927919771B6300830A21 /* iRonDome */ = {
+			isa = PBXGroup;
+			children = (
+				5179928219771B6300830A21 /* IRDAppDelegate.h */,
+				5179928319771B6300830A21 /* IRDAppDelegate.m */,
+				5179928519771B6300830A21 /* Main_iPhone.storyboard */,
+				5179928819771B6300830A21 /* Main_iPad.storyboard */,
+				5179928B19771B6300830A21 /* IRDViewController.h */,
+				5179928C19771B6300830A21 /* IRDViewController.m */,
+				5179928E19771B6300830A21 /* Images.xcassets */,
+				5179927A19771B6300830A21 /* Supporting Files */,
+			);
+			path = iRonDome;
+			sourceTree = "<group>";
+		};
+		5179927A19771B6300830A21 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5179927B19771B6300830A21 /* iRonDome-Info.plist */,
+				5179927C19771B6300830A21 /* InfoPlist.strings */,
+				5179927F19771B6300830A21 /* main.m */,
+				5179928119771B6300830A21 /* iRonDome-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5179929B19771B6300830A21 /* iRonDomeTests */ = {
+			isa = PBXGroup;
+			children = (
+				517992A119771B6400830A21 /* iRonDomeTests.m */,
+				5179929C19771B6300830A21 /* Supporting Files */,
+			);
+			path = iRonDomeTests;
+			sourceTree = "<group>";
+		};
+		5179929C19771B6300830A21 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5179929D19771B6300830A21 /* iRonDomeTests-Info.plist */,
+				5179929E19771B6300830A21 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5179926F19771B6300830A21 /* iRonDome */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 517992A519771B6400830A21 /* Build configuration list for PBXNativeTarget "iRonDome" */;
+			buildPhases = (
+				5179926C19771B6300830A21 /* Sources */,
+				5179926D19771B6300830A21 /* Frameworks */,
+				5179926E19771B6300830A21 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iRonDome;
+			productName = iRonDome;
+			productReference = 5179927019771B6300830A21 /* iRonDome.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5179929319771B6300830A21 /* iRonDomeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 517992A819771B6400830A21 /* Build configuration list for PBXNativeTarget "iRonDomeTests" */;
+			buildPhases = (
+				5179929019771B6300830A21 /* Sources */,
+				5179929119771B6300830A21 /* Frameworks */,
+				5179929219771B6300830A21 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5179929A19771B6300830A21 /* PBXTargetDependency */,
+			);
+			name = iRonDomeTests;
+			productName = iRonDomeTests;
+			productReference = 5179929419771B6300830A21 /* iRonDomeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5179926819771B6300830A21 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = IRD;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = Arik;
+				TargetAttributes = {
+					5179929319771B6300830A21 = {
+						TestTargetID = 5179926F19771B6300830A21;
+					};
+				};
+			};
+			buildConfigurationList = 5179926B19771B6300830A21 /* Build configuration list for PBXProject "iRonDome" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5179926719771B6300830A21;
+			productRefGroup = 5179927119771B6300830A21 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5179926F19771B6300830A21 /* iRonDome */,
+				5179929319771B6300830A21 /* iRonDomeTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5179926E19771B6300830A21 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5179928A19771B6300830A21 /* Main_iPad.storyboard in Resources */,
+				5179928F19771B6300830A21 /* Images.xcassets in Resources */,
+				5179928719771B6300830A21 /* Main_iPhone.storyboard in Resources */,
+				5179927E19771B6300830A21 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5179929219771B6300830A21 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				517992A019771B6300830A21 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5179926C19771B6300830A21 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5179928D19771B6300830A21 /* IRDViewController.m in Sources */,
+				5179928419771B6300830A21 /* IRDAppDelegate.m in Sources */,
+				5179928019771B6300830A21 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5179929019771B6300830A21 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				517992A219771B6400830A21 /* iRonDomeTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5179929A19771B6300830A21 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5179926F19771B6300830A21 /* iRonDome */;
+			targetProxy = 5179929919771B6300830A21 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		5179927C19771B6300830A21 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5179927D19771B6300830A21 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		5179928519771B6300830A21 /* Main_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5179928619771B6300830A21 /* Base */,
+			);
+			name = Main_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		5179928819771B6300830A21 /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5179928919771B6300830A21 /* Base */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		5179929E19771B6300830A21 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5179929F19771B6300830A21 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		517992A319771B6400830A21 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		517992A419771B6400830A21 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		517992A619771B6400830A21 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iRonDome/iRonDome-Prefix.pch";
+				INFOPLIST_FILE = "iRonDome/iRonDome-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		517992A719771B6400830A21 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iRonDome/iRonDome-Prefix.pch";
+				INFOPLIST_FILE = "iRonDome/iRonDome-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		517992A919771B6400830A21 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/iRonDome.app/iRonDome";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iRonDome/iRonDome-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "iRonDomeTests/iRonDomeTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		517992AA19771B6400830A21 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/iRonDome.app/iRonDome";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iRonDome/iRonDome-Prefix.pch";
+				INFOPLIST_FILE = "iRonDomeTests/iRonDomeTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5179926B19771B6300830A21 /* Build configuration list for PBXProject "iRonDome" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				517992A319771B6400830A21 /* Debug */,
+				517992A419771B6400830A21 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		517992A519771B6400830A21 /* Build configuration list for PBXNativeTarget "iRonDome" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				517992A619771B6400830A21 /* Debug */,
+				517992A719771B6400830A21 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		517992A819771B6400830A21 /* Build configuration list for PBXNativeTarget "iRonDomeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				517992A919771B6400830A21 /* Debug */,
+				517992AA19771B6400830A21 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5179926819771B6300830A21 /* Project object */;
+}
