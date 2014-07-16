@@ -26,17 +26,76 @@ Parse.Cloud.define('pullTzevaAdom', function(request, response){
             title: 'Vote for Pedro',
             body: 'If you vote for Pedro, your wildest dreams will come true'
         },
+
         success: function(httpResponse) {
-            console.log(httpResponse.text);
-            // response.success('here wer are');
-            response.success(httpResponse.text);
-            return;
+
+            var incomingRockets = JSON.parse(httpResponse.text);
+            var coordinates = incomingRockets['Coords'];
+            var alertID = parseInt(incomingRockets['ID']);
+
+            var Rocket = Parse.Object.extend('Rocket');
+
+            // first, let's check whether there are any entries with the current alertID
+            var query = new Parse.Query(Rocket);
+            query.equalTo('alertID', alertID);
+            query.count({
+
+                success: function(number){
+
+                    if(number > 0){ // we already know about these rockets
+
+                        response.error('Alert already registered');
+
+                    }else{
+
+                        // ok, we don't know anything about this alert yet, so let's notify our users
+
+                        for(var i = 0; i < coordinates.length; i++){
+
+                            var currentLocation = coordinates[i];
+                            if(currentLocation.length < 7){ // x.x;x.x -> 7 characters
+                                continue;
+                            }
+
+                            var locationComponents = currentLocation.split(';');
+                            var latitude = parseFloat(locationComponents[0]);
+                            var longitude = parseFloat(locationComponents[1]);
+                            var geoPoint = new Parse.GeoPoint({'latitude': latitude, 'longitude': longitude});
+
+                            // response.success(geoPoint);
+                            // return;
+
+                            var currentRocket = new Rocket();
+
+
+                            currentRocket.set('location', geoPoint);
+                            currentRocket.set('alertID', alertID);
+                            currentRocket.save();
+
+                        }
+
+                        response.success('Registered new rockets. Stay safe! '+JSON.stringify(incomingRockets));
+
+                    }
+                },
+
+                error: function(error){
+
+                    response.error(error);
+
+                }
+
+            });
+
         },
-        error: function(httpResponse) {
+
+        error: function(error) {
+
             console.error('Request failed with response code ' + httpResponse.status);
-            response.error(httpResponse);
-            return;
+            response.error(error);
+
         }
+
     });
 
     // response.success()
