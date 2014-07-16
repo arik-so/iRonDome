@@ -23,10 +23,10 @@ Parse.Cloud.define('pullTzevaAdom', function(request, response){
         // url: 'http://www.galaxy-battle.de/node/server/tzevaadom.json',
         url: 'http://tzevaadom.com/alert.json',
         // url: 'http://www.galaxy-battle.de/node/server/tsevaadom_3.json',
-        body: {
+        /*body: {
             title: 'Vote for Pedro',
             body: 'If you vote for Pedro, your wildest dreams will come true'
-        },
+        },*/
 
         success: function(httpResponse) {
 
