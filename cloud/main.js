@@ -20,8 +20,9 @@ Parse.Cloud.define('pullTzevaAdom', function(request, response){
 
     Parse.Cloud.httpRequest({
         method: 'GET',
-        url: 'http://www.galaxy-battle.de/node/server/tzevaadom.json',
-        // url: 'http://tzevaadom.com/alert.json',
+        // url: 'http://www.galaxy-battle.de/node/server/tzevaadom.json',
+        url: 'http://tzevaadom.com/alert.json',
+        // url: 'http://www.galaxy-battle.de/node/server/tsevaadom_3.json',
         body: {
             title: 'Vote for Pedro',
             body: 'If you vote for Pedro, your wildest dreams will come true'
@@ -50,6 +51,8 @@ Parse.Cloud.define('pullTzevaAdom', function(request, response){
 
                         // ok, we don't know anything about this alert yet, so let's notify our users
 
+                        var processed = 0;
+
                         for(var i = 0; i < coordinates.length; i++){
 
                             var currentLocation = coordinates[i];
@@ -70,11 +73,25 @@ Parse.Cloud.define('pullTzevaAdom', function(request, response){
 
                             currentRocket.set('location', geoPoint);
                             currentRocket.set('alertID', alertID);
-                            currentRocket.save();
+                            currentRocket.save(null, {
+
+                                success: function(){
+
+                                },
+
+                                error: function(rocket, error){
+
+                                    console.error('Could not save: '+error);
+
+                                }
+
+                            });
+
+                            processed++;
 
                         }
 
-                        response.success('Registered new rockets. Stay safe! '+JSON.stringify(incomingRockets));
+                        // response.success('Registered '+processed+'/'+coordinates.length+' new rockets. Stay safe! '+JSON.stringify(incomingRockets));
 
                     }
                 },
