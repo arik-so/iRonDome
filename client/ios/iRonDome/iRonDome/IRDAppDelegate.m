@@ -12,6 +12,13 @@
 #define kParseApplicationId @"KFQeWT9x9MoHlUvBUlEDj77Rh3zZ8piQIMzQ2Anf"
 #define kParseClientKey @"ibx6T6Bvmuxa5gTaY3zSzLajDPpumblyybno3orz"
 
+@interface IRDAppDelegate()
+
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property BOOL isInBackground;
+
+@end
+
 @implementation IRDAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -24,19 +31,74 @@
     
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
+    
+    // Register for push notifications
+    [application registerForRemoteNotificationTypes: UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
+    
+    
+    
+    // let's start monitoring location, right?
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.distanceFilter = kCLDistanceFilterNone;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // this is not super precise, but sufficient for our purpose
+    self.locationManager.activityType = CLActivityTypeOther;
+    self.locationManager.pausesLocationUpdatesAutomatically = NO; // we want it to constantly keep the user updated. IT IS IMPORTANT!
+    self.locationManager.delegate = self;
+    
+    [self.locationManager startMonitoringSignificantLocationChanges];
+    [self.locationManager startUpdatingLocation];
+    
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     return YES;
 }
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+    
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:deviceToken];
+    [currentInstallation saveInBackground];
+    
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+    
+    CLLocation *latestLocation = locations[0];
+
+    PFGeoPoint *geoPoint = [[PFGeoPoint alloc] init];
+    geoPoint.latitude = latestLocation.coordinate.latitude;
+    geoPoint.longitude = latestLocation.coordinate.longitude;
+    
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setObject:geoPoint forKey:@"lastKnownLocation"];
+    
+    if(self.isInBackground){
+
+        [currentInstallation save];
+        
+    }else{
+        
+        [currentInstallation saveInBackground];
+        
+    }
+    
+
+    
+}
 							
 - (void)applicationWillResignActive:(UIApplication *)application
 {
+    self.isInBackground = YES;
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
+    
+    self.isInBackground = YES;
+    
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
@@ -48,11 +110,13 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    self.isInBackground = NO;
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    self.isInBackground = YES;
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 

@@ -94,9 +94,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE52C8F819778CBD000ED87D /* CoreLocation.framework in Frameworks */,
 				FE52C9031977A1EC000ED87D /* MapKit.framework in Frameworks */,
 				FE52C8F719778CBD000ED87D /* CFNetwork.framework in Frameworks */,
-				FE52C8F819778CBD000ED87D /* CoreLocation.framework in Frameworks */,
 				FE52C8F919778CBD000ED87D /* libz.dylib in Frameworks */,
 				FE52C8FA19778CBD000ED87D /* MobileCoreServices.framework in Frameworks */,
 				FE52C8FB19778CBD000ED87D /* QuartzCore.framework in Frameworks */,
@@ -271,6 +271,13 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Arik;
 				TargetAttributes = {
+					5179926F19771B6300830A21 = {
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
 					5179929319771B6300830A21 = {
 						TestTargetID = 5179926F19771B6300830A21;
 					};
@@ -418,7 +425,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -451,7 +458,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -463,6 +470,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -472,6 +480,7 @@
 				INFOPLIST_FILE = "iRonDome/iRonDome-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6989489D-7DA7-458E-B882-197BAA00A55C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -481,6 +490,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -490,6 +500,7 @@
 				INFOPLIST_FILE = "iRonDome/iRonDome-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6989489D-7DA7-458E-B882-197BAA00A55C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
