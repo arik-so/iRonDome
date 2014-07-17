@@ -17,7 +17,8 @@
 
 
 @property (nonatomic, strong)NSMutableArray *rocketData;
-@property (nonatomic, weak) IBOutlet MKMapView *mapView;
+@property (nonatomic, weak) IBOutlet MKMapView *mapViewOld;
+@property (strong, nonatomic) MKMapView *mapView;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) CLGeocoder *geocoder;
 
@@ -44,11 +45,27 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    
+    //init array to store data in
+    self.rocketData = [[NSMutableArray alloc] init];
+    
+    //download rocket data
+    [self downloadRocketData];
+    
+    [self setupMap];
+    
+    [self performSelector:@selector(testTableView) withObject:nil afterDelay:5];
+    
+    
+    
+    
+    UIRefreshControl *refresher = [[UIRefreshControl alloc] init];
+    [self.tableView addSubview:refresher];
+    
+    
+    
 }
-
-
-
-
 
 
 
@@ -61,6 +78,7 @@
 }
 
 - (void)setupMap{
+    
     self.geocoder = [[CLGeocoder alloc] init];
     
     CLLocationCoordinate2D zoomLocation;
@@ -71,7 +89,13 @@
     MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, kMapZoomLatitude, kMapZoomLongitude);
     
     // 3
-    [_mapView setRegion:viewRegion animated:YES];
+    
+    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 250)];
+    [self.mapView setRegion:viewRegion animated:YES];
+    
+    self.tableView.tableHeaderView = self.mapView;
+    
+    // [_mapView setRegion:viewRegion animated:YES];
 }
 
 - (void)downloadRocketData{
@@ -201,32 +225,59 @@ calloutAccessoryControlTapped:(UIControl *)control{
     // Dispose of any resources that can be recreated.
 }
 
+
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return [self.rocketData count];
 }
 
-/*
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath: (NSIndexPath *) indexPath {
+    return 70;
+}
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
     // Configure the cell...
+    UILabel *subtitleLabel = (UILabel *)[cell viewWithTag:2];
+    if ([self.rocketData count] == 0) {
+        //dont set the text yet
+    }
+    else{
+        subtitleLabel.text = [NSString stringWithFormat:@"%f, %f",[[[self.rocketData objectAtIndex:indexPath.row] objectAtIndex:1] doubleValue], [[[self.rocketData objectAtIndex:indexPath.row] objectAtIndex:2] doubleValue]];
+    }
     
     return cell;
 }
-*/
+
+
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    
+    if(section == 0){
+        
+        return @"Current Rockets";
+        
+    }
+    
+    return nil;
+    
+}
+
+
 
 /*
 // Override to support conditional editing of the table view.
