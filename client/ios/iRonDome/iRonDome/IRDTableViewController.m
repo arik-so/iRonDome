@@ -23,6 +23,13 @@
 @property (nonatomic, strong) CLGeocoder *geocoder;
 
 
+
+
+@property (strong, nonatomic) NSMutableArray *currentRockets;
+@property (strong, nonatomic) NSMutableArray *pastRockets;
+
+
+
 @end
 
 @implementation IRDTableViewController
@@ -50,12 +57,17 @@
     //init array to store data in
     self.rocketData = [[NSMutableArray alloc] init];
     
+    self.currentRockets = @[].mutableCopy;
+    self.pastRockets = @[].mutableCopy;
+    
+    
+    
     //download rocket data
     [self downloadRocketData];
     
     [self setupMap];
     
-    [self performSelector:@selector(testTableView) withObject:nil afterDelay:5];
+    // [self performSelector:@selector(testTableView) withObject:nil afterDelay:5];
     
     
     
@@ -99,10 +111,20 @@
 }
 
 - (void)downloadRocketData{
-    PFQuery *query = [PFQuery queryWithClassName:@"Rocket"];
-    [query whereKey:@"createdAt" equalTo:[NSNull null]];
+    
+    PFQuery *currentRocketQuery = [PFQuery queryWithClassName:@"Rocket"];
+    [currentRocketQuery whereKey:@"createdAt" greaterThanOrEqualTo:[[NSDate date] dateByAddingTimeInterval:kRocketTimeThreshold]];
+    
+    
+    PFQuery *pastRocketQuery = [PFQuery queryWithClassName:@"Rocket"];
+    [pastRocketQuery whereKey:@"createdAt" lessThan:[[NSDate date] dateByAddingTimeInterval:kRocketTimeThreshold]];
+    
+    
+    
+    
+    // [query whereKey:@"createdAt" equalTo:[NSNull null]];
     //[query whereKey:@"createdAt" equalTo:[self todaysDate]];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    [currentRocketQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // The find succeeded.
             NSLog(@"Successfully retrieved %lu rockets.", (unsigned long)objects.count);
@@ -110,7 +132,7 @@
             for (PFObject *object in objects) {
                 PFGeoPoint *location = object[@"location"];
                 NSLog(@"Object Id: %@ Latitude: %f Longitude: %f", object.objectId, location.latitude, location.longitude);
-                [self.rocketData addObject:[NSArray arrayWithObjects:object.objectId, [NSNumber numberWithDouble:location.latitude], [NSNumber numberWithDouble:location.longitude], nil]];
+                [self.currentRockets addObject:[NSArray arrayWithObjects:object.objectId, [NSNumber numberWithDouble:location.latitude], [NSNumber numberWithDouble:location.longitude], nil]];
                 //add pins to map
                 CLLocationCoordinate2D  ctrpoint;
                 ctrpoint.latitude = location.latitude;
@@ -122,11 +144,60 @@
                     [self.mapView performSelector:@selector(addAnnotation:) withObject:rocketAnnotation afterDelay:0.2];
                 });
             }
+            
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // [self testTableView];
+                
+                [self.tableView reloadData];
+                
+            });
+            
+            
         } else {
             // Log details of the failure
             NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
+        
     }];
+    
+
+    
+    
+    
+    [pastRocketQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            // The find succeeded.
+            NSLog(@"Successfully retrieved %lu rockets.", (unsigned long)objects.count);
+            // Do something with the found objects
+            for (PFObject *object in objects) {
+                PFGeoPoint *location = object[@"location"];
+                NSLog(@"Object Id: %@ Latitude: %f Longitude: %f", object.objectId, location.latitude, location.longitude);
+                
+                [self.pastRockets addObject:[NSArray arrayWithObjects:object.objectId, [NSNumber numberWithDouble:location.latitude], [NSNumber numberWithDouble:location.longitude], nil]];
+                
+            }
+            
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // [self testTableView];
+                
+                [self.tableView reloadData];
+                
+            });
+            
+            
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+        
+    }];
+    
+    
+    
+    
+    
 }
 
 #pragma mark - Date Creator
@@ -233,13 +304,26 @@ calloutAccessoryControlTapped:(UIControl *)control{
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    
+    return 2;
+    
+    // return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.rocketData count];
+    
+    if(section == 0){
+        return self.currentRockets.count;
+    }else if(section == 1){
+        return self.pastRockets.count;
+    }
+    
+    return 0;
+    
+    // return [self.rocketData count];
+    
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath: (NSIndexPath *) indexPath {
@@ -251,13 +335,23 @@ calloutAccessoryControlTapped:(UIControl *)control{
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
+    
+    NSArray *rocketArray = @[];
+    
+    if(indexPath.section == 0){
+        rocketArray = self.currentRockets.copy;
+    }else if(indexPath.section == 1){
+        rocketArray = self.pastRockets.copy;
+    }
+    
+    
     // Configure the cell...
     UILabel *subtitleLabel = (UILabel *)[cell viewWithTag:2];
-    if ([self.rocketData count] == 0) {
+    if (rocketArray.count == 0) {
         //dont set the text yet
     }
     else{
-        subtitleLabel.text = [NSString stringWithFormat:@"%f, %f",[[[self.rocketData objectAtIndex:indexPath.row] objectAtIndex:1] doubleValue], [[[self.rocketData objectAtIndex:indexPath.row] objectAtIndex:2] doubleValue]];
+        subtitleLabel.text = [NSString stringWithFormat:@"%f, %f",[rocketArray[indexPath.row][1] doubleValue], [rocketArray[indexPath.row][2] doubleValue]];
     }
     
     return cell;
@@ -267,9 +361,13 @@ calloutAccessoryControlTapped:(UIControl *)control{
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     
-    if(section == 0){
+    if(section == 0 && self.currentRockets.count > 0){
         
         return @"Current Rockets";
+        
+    }else if(section == 1 && self.pastRockets.count > 0){
+    
+        return @"Past Rockets";
         
     }
     
