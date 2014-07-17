@@ -2,33 +2,21 @@
 //  IRDTableViewController.m
 //  iRonDome
 //
-//  Created by Arik Sosman on 7/17/14.
+//  Created by Ben Honig on 7/17/14.
 //  Copyright (c) 2014 Arik. All rights reserved.
 //
 
 #import "IRDTableViewController.h"
-
-#define kRocketTimeThreshold -60*400
+#define kRocketTimeThreshold -60*20
 #define kMapZoomLatitude 400000
 #define kMapZoomLongitude 400000
 #define kAvenirLight @"Avenir-Light"
+#define kAvenirBook @"Avenir-Book"
 
 @interface IRDTableViewController ()
 
-
-@property (nonatomic, strong)NSMutableArray *rocketData;
-@property (nonatomic, weak) IBOutlet MKMapView *mapViewOld;
-@property (strong, nonatomic) MKMapView *mapView;
-@property (nonatomic, weak) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) CLGeocoder *geocoder;
-
-
-
-
-@property (strong, nonatomic) NSMutableArray *currentRockets;
-@property (strong, nonatomic) NSMutableArray *pastRockets;
-
-
+@property (nonatomic, strong) NSMutableArray *currentRockets;
+@property (nonatomic, strong) NSMutableArray *pastRockets;
 
 @end
 
@@ -54,43 +42,27 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     
-    //init array to store data in
-    self.rocketData = [[NSMutableArray alloc] init];
-    
     self.currentRockets = @[].mutableCopy;
     self.pastRockets = @[].mutableCopy;
-    
-    
     
     //download rocket data
     [self downloadRocketData];
     
     [self setupMap];
     
-    // [self performSelector:@selector(testTableView) withObject:nil afterDelay:5];
-    
-    
-    
+    //[self performSelector:@selector(testTableView) withObject:nil afterDelay:5];
     
     UIRefreshControl *refresher = [[UIRefreshControl alloc] init];
-    [self.tableView addSubview:refresher];
-    
-    
-    
+    [refresher addTarget:self action:@selector(downloadRocketData) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refresher;
+
 }
-
-
-
-
-
-// blindly added code
 
 - (void)testTableView{
     [self.tableView reloadData];
 }
 
 - (void)setupMap{
-    
     self.geocoder = [[CLGeocoder alloc] init];
     
     CLLocationCoordinate2D zoomLocation;
@@ -101,16 +73,13 @@
     MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, kMapZoomLatitude, kMapZoomLongitude);
     
     // 3
-    
-    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 250)];
-    [self.mapView setRegion:viewRegion animated:YES];
-    
-    self.tableView.tableHeaderView = self.mapView;
-    
-    // [_mapView setRegion:viewRegion animated:YES];
+    [_mapView setRegion:viewRegion animated:YES];
 }
 
 - (void)downloadRocketData{
+    //make sure array is null and then init it for refresh
+    self.rocketData = nil;
+    self.rocketData = [[NSMutableArray alloc] init];
     
     PFQuery *currentRocketQuery = [PFQuery queryWithClassName:@"Rocket"];
     [currentRocketQuery whereKey:@"createdAt" greaterThanOrEqualTo:[[NSDate date] dateByAddingTimeInterval:kRocketTimeThreshold]];
@@ -119,11 +88,7 @@
     PFQuery *pastRocketQuery = [PFQuery queryWithClassName:@"Rocket"];
     [pastRocketQuery whereKey:@"createdAt" lessThan:[[NSDate date] dateByAddingTimeInterval:kRocketTimeThreshold]];
     
-    
-    
-    
-    // [query whereKey:@"createdAt" equalTo:[NSNull null]];
-    //[query whereKey:@"createdAt" equalTo:[self todaysDate]];
+    //get current rockets
     [currentRocketQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // The find succeeded.
@@ -148,7 +113,6 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 // [self testTableView];
-                
                 [self.tableView reloadData];
                 
             });
@@ -161,10 +125,7 @@
         
     }];
     
-
-    
-    
-    
+    //get past rockets
     [pastRocketQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // The find succeeded.
@@ -193,10 +154,6 @@
         }
         
     }];
-    
-    
-    
-    
     
 }
 
@@ -279,41 +236,23 @@ calloutAccessoryControlTapped:(UIControl *)control{
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-
-
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    
     return 2;
-    
-    // return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    
     if(section == 0){
         return self.currentRockets.count;
     }else if(section == 1){
@@ -322,20 +261,17 @@ calloutAccessoryControlTapped:(UIControl *)control{
     
     return 0;
     
-    // return [self.rocketData count];
-    
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath: (NSIndexPath *) indexPath {
     return 70;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
-    
+    // Configure the cell...
     NSArray *rocketArray = @[];
     
     if(indexPath.section == 0){
@@ -343,7 +279,6 @@ calloutAccessoryControlTapped:(UIControl *)control{
     }else if(indexPath.section == 1){
         rocketArray = self.pastRockets.copy;
     }
-    
     
     // Configure the cell...
     UILabel *subtitleLabel = (UILabel *)[cell viewWithTag:2];
@@ -357,24 +292,36 @@ calloutAccessoryControlTapped:(UIControl *)control{
     return cell;
 }
 
-
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    
-    if(section == 0 && self.currentRockets.count > 0){
-        
-        return @"Current Rockets";
-        
-    }else if(section == 1 && self.pastRockets.count > 0){
-    
-        return @"Past Rockets";
-        
-    }
-    
-    return nil;
-    
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 40;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView *headerView = [[UIView alloc] init];
+    if (section == 0) {
+        headerView.frame = CGRectMake(0, 0, 320, 20);
+        headerView.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:236.0/255.0 blue:237.0/255.0 alpha:1.0];
+        UILabel *currentRocketsLabel = [[UILabel alloc] init];
+        currentRocketsLabel.frame = CGRectMake(20, 10, 320, 21);
+        currentRocketsLabel.font = [UIFont fontWithName:kAvenirBook size:16];
+        currentRocketsLabel.textAlignment = NSTextAlignmentLeft;
+        currentRocketsLabel.text = @"Current Rockets";
+        currentRocketsLabel.textColor = [UIColor blackColor];
+        [headerView addSubview:currentRocketsLabel];
+    }
+    if (section == 1) {
+        headerView.frame = CGRectMake(0, 0, 320, 20);
+        headerView.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:236.0/255.0 blue:237.0/255.0 alpha:1.0];
+        UILabel *pastRocketsLabel = [[UILabel alloc] init];
+        pastRocketsLabel.frame = CGRectMake(20, 10, 320, 21);
+        pastRocketsLabel.font = [UIFont fontWithName:kAvenirBook size:16];
+        pastRocketsLabel.textAlignment = NSTextAlignmentLeft;
+        pastRocketsLabel.text = @"Past Rockets";
+        pastRocketsLabel.textColor = [UIColor blackColor];
+        [headerView addSubview:pastRocketsLabel];
+    }
+    return headerView;
+}
 
 
 /*
