@@ -21,8 +21,6 @@
 		5179929819771B6300830A21 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5179927719771B6300830A21 /* UIKit.framework */; };
 		517992A019771B6300830A21 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5179929E19771B6300830A21 /* InfoPlist.strings */; };
 		517992A219771B6400830A21 /* iRonDomeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992A119771B6400830A21 /* iRonDomeTests.m */; };
-		517992AD1977C49800830A21 /* IRDTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992AC1977C49800830A21 /* IRDTableViewController.m */; };
-		517992AE1977C49800830A21 /* IRDTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992AC1977C49800830A21 /* IRDTableViewController.m */; };
 		517992B419784D3B00830A21 /* SCSQLiteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992B119784D3B00830A21 /* SCSQLiteManager.m */; };
 		517992B519784D3B00830A21 /* SCLocalObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992B319784D3B00830A21 /* SCLocalObject.m */; };
 		517992C119784D5200830A21 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992B819784D5200830A21 /* FMDatabase.m */; };
@@ -77,8 +75,6 @@
 		5179929D19771B6300830A21 /* iRonDomeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iRonDomeTests-Info.plist"; sourceTree = "<group>"; };
 		5179929F19771B6300830A21 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		517992A119771B6400830A21 /* iRonDomeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iRonDomeTests.m; sourceTree = "<group>"; };
-		517992AB1977C49800830A21 /* IRDTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRDTableViewController.h; sourceTree = "<group>"; };
-		517992AC1977C49800830A21 /* IRDTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRDTableViewController.m; sourceTree = "<group>"; };
 		517992B019784D3B00830A21 /* SCSQLiteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSQLiteManager.h; sourceTree = "<group>"; };
 		517992B119784D3B00830A21 /* SCSQLiteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSQLiteManager.m; sourceTree = "<group>"; };
 		517992B219784D3B00830A21 /* SCLocalObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLocalObject.h; sourceTree = "<group>"; };
@@ -382,7 +378,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				517992B419784D3B00830A21 /* SCSQLiteManager.m in Sources */,
-				FE52C90119778E03000ED87D /* IRDViewController.m in Sources */,
 				517992B519784D3B00830A21 /* SCLocalObject.m in Sources */,
 				517992C119784D5200830A21 /* FMDatabase.m in Sources */,
 				FE52C9071977B572000ED87D /* IRDMapAnnotation.m in Sources */,
@@ -484,7 +479,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -517,7 +512,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -536,7 +531,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iRonDome/iRonDome-Prefix.pch";
 				INFOPLIST_FILE = "iRonDome/iRonDome-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -554,7 +549,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iRonDome/iRonDome-Prefix.pch";
 				INFOPLIST_FILE = "iRonDome/iRonDome-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
