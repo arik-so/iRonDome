@@ -21,8 +21,8 @@ Parse.Cloud.define('pullTzevaAdom', function(request, response){
     Parse.Cloud.httpRequest({
         method: 'GET',
         // url: 'http://www.galaxy-battle.de/node/server/tzevaadom.json',
-        url: 'http://tzevaadom.com/alert.json',
-        // url: 'http://www.galaxy-battle.de/node/server/tsevaadom_3.json',
+        // url: 'http://tzevaadom.com/alert.json',
+        url: 'http://www.galaxy-battle.de/node/server/tsevaadom_3.json',
         /*body: {
             title: 'Vote for Pedro',
             body: 'If you vote for Pedro, your wildest dreams will come true'
@@ -53,6 +53,15 @@ Parse.Cloud.define('pullTzevaAdom', function(request, response){
 
                         var processed = 0;
 
+
+
+
+                        // let's initiate the emergency query
+
+
+
+
+
                         for(var i = 0; i < coordinates.length; i++){
 
                             var currentLocation = coordinates[i];
@@ -64,6 +73,28 @@ Parse.Cloud.define('pullTzevaAdom', function(request, response){
                             var latitude = parseFloat(locationComponents[0]);
                             var longitude = parseFloat(locationComponents[1]);
                             var geoPoint = new Parse.GeoPoint({'latitude': latitude, 'longitude': longitude});
+
+
+
+                            var pushDistanceQuery = new Parse.Query(Parse.Installation);
+                            pushDistanceQuery.withinKilometers('lastKnownLocation', geoPoint, 6000);
+
+                            Parse.Push.send({
+                                where: pushDistanceQuery,
+                                data: {
+                                    alert: 'Red Alarm!'
+                                }
+                            }, {
+                                success: function(){
+
+                                },
+                                error: function(error){
+
+                                    console.error('Could not send push notification');
+
+                                }
+                            });
+
 
                             // response.success(geoPoint);
                             // return;
@@ -90,6 +121,9 @@ Parse.Cloud.define('pullTzevaAdom', function(request, response){
                             processed++;
 
                         }
+
+
+
 
                         // response.success('Registered '+processed+'/'+coordinates.length+' new rockets. Stay safe! '+JSON.stringify(incomingRockets));
 
