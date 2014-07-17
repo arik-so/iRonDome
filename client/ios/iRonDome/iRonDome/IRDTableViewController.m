@@ -1,22 +1,39 @@
 //
-//  IRDViewController.m
+//  IRDTableViewController.m
 //  iRonDome
 //
-//  Created by Ben Honig on 7/17/14.
+//  Created by Arik Sosman on 7/17/14.
 //  Copyright (c) 2014 Arik. All rights reserved.
 //
 
-#import "IRDViewController.h"
+#import "IRDTableViewController.h"
+
 #define kRocketTimeThreshold -60*400
 #define kMapZoomLatitude 400000
 #define kMapZoomLongitude 400000
 #define kAvenirLight @"Avenir-Light"
 
-@interface IRDViewController ()
+@interface IRDTableViewController ()
+
+
+@property (nonatomic, strong)NSMutableArray *rocketData;
+@property (nonatomic, weak) IBOutlet MKMapView *mapView;
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) CLGeocoder *geocoder;
+
 
 @end
 
-@implementation IRDViewController
+@implementation IRDTableViewController
+
+- (id)initWithStyle:(UITableViewStyle)style
+{
+    self = [super initWithStyle:style];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
@@ -27,17 +44,17 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    //init array to store data in
-    self.rocketData = [[NSMutableArray alloc] init];
-    
-    //download rocket data
-    [self downloadRocketData];
-    
-    [self setupMap];
-    
-    [self performSelector:@selector(testTableView) withObject:nil afterDelay:5];
 }
+
+
+
+
+
+
+
+
+
+// blindly added code
 
 - (void)testTableView{
     [self.tableView reloadData];
@@ -113,13 +130,13 @@
                    initWithAnnotation:annotation
                    reuseIdentifier:annotationIdentifier];
         
-//        UIImageView *customPinView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"annotationIcon.png"]];
-//        [customPinView setFrame:CGRectMake(0, 0, 32, 32)];
-//        customPinView.backgroundColor = [UIColor clearColor];
-//        customPinView.layer.borderWidth = 0.5;
-//        customPinView.layer.borderColor = [UIColor blackColor].CGColor;
-//        customPinView.layer.cornerRadius = customPinView.image.size.width / 8;//makes prof pic circle
-//        customPinView.layer.masksToBounds = YES;
+        //        UIImageView *customPinView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"annotationIcon.png"]];
+        //        [customPinView setFrame:CGRectMake(0, 0, 32, 32)];
+        //        customPinView.backgroundColor = [UIColor clearColor];
+        //        customPinView.layer.borderWidth = 0.5;
+        //        customPinView.layer.borderColor = [UIColor blackColor].CGColor;
+        //        customPinView.layer.cornerRadius = customPinView.image.size.width / 8;//makes prof pic circle
+        //        customPinView.layer.masksToBounds = YES;
         
         //TODO: decide if we want users to touch info button
         //pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
@@ -140,7 +157,7 @@
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view
 calloutAccessoryControlTapped:(UIControl *)control{
     NSLog(@"calloutAccessoryControlTapped:");
-   // NSString *annotationID = ((IRDMapAnnotation *) [view annotation]).rocketId;
+    // NSString *annotationID = ((IRDMapAnnotation *) [view annotation]).rocketId;
     //[self performSelector:@selector(showInfo:) withObject:annotationID];
 }
 
@@ -171,6 +188,13 @@ calloutAccessoryControlTapped:(UIControl *)control{
 
 
 
+
+
+
+
+
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -181,37 +205,28 @@ calloutAccessoryControlTapped:(UIControl *)control{
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 1;
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return [self.rocketData count];
+    return 0;
 }
 
-- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath: (NSIndexPath *) indexPath {
-    return 70;
-}
-
-
+/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
     
     // Configure the cell...
-    UILabel *subtitleLabel = (UILabel *)[cell viewWithTag:2];
-    if ([self.rocketData count] == 0) {
-        //dont set the text yet
-    }
-    else{
-        subtitleLabel.text = [NSString stringWithFormat:@"%f, %f",[[[self.rocketData objectAtIndex:indexPath.row] objectAtIndex:1] doubleValue], [[[self.rocketData objectAtIndex:indexPath.row] objectAtIndex:2] doubleValue]];
-    }
     
     return cell;
 }
-
+*/
 
 /*
 // Override to support conditional editing of the table view.
