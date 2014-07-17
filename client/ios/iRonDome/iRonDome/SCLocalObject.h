@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Parse/Parse.h>
 
 #import "SCSQLiteManager.h"
 
@@ -18,7 +19,7 @@
 + (NSArray *)fetchAll;
 
 + (instancetype)fetchByLocalID:(int)localID;
-+ (instancetype)fetchByServerID:(int)serverID;
++ (instancetype)fetchByServerID:(NSString *)serverID;
 + (instancetype)fetchByUniqueID:(NSString *)uniqueID;
 
 + (NSArray *)idsToObjects:(NSArray *)ids;
@@ -45,6 +46,8 @@
 - (NSArray *)decryptFromServer:(NSDictionary *)encryptedDictionary;
 
 @end
+
+#import "SCLocalRocket.h"
 
 /* #import "SCLocalUser.h"
 #import "SCLocalConversation.h"

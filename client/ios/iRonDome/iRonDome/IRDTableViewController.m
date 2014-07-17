@@ -42,8 +42,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     
-    self.currentRockets = @[].mutableCopy;
-    self.pastRockets = @[].mutableCopy;
+    [self prepareRocketData];
     
     //download rocket data
     [self downloadRocketData];
@@ -52,11 +51,67 @@
     
     //[self performSelector:@selector(testTableView) withObject:nil afterDelay:5];
     
-    UIRefreshControl *refresher = [[UIRefreshControl alloc] init];
-    [refresher addTarget:self action:@selector(downloadRocketData) forControlEvents:UIControlEventValueChanged];
-    self.refreshControl = refresher;
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(downloadRocketData) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:self.refreshControl];
 
 }
+
+
+
+
+- (void)prepareRocketData{
+    
+    self.currentRockets = @[].mutableCopy;
+    self.pastRockets = @[].mutableCopy;
+    
+    // let's fetch the necessary stuff
+    
+    
+    NSTimeInterval rightNow = [NSDate date].timeIntervalSince1970;
+    NSTimeInterval threshold = rightNow + kRocketTimeThreshold;
+    
+    
+    NSString *dbTable = [SCLocalRocket getDatabaseTable];
+    
+    NSString *query = [NSString stringWithFormat:@"SELECT id FROM %@ ORDER BY alertID DESC, timestamp DESC, toponym ASC", dbTable];
+    
+    NSMutableArray *allRocketIDs = @[].mutableCopy;
+    
+    [[SCSQLiteManager getActiveManager].dbQueue inDatabase:^(FMDatabase *db) {
+        
+        FMResultSet *result = [db executeQuery:query];
+        
+        while([result next]){
+            
+            [allRocketIDs addObject:result.resultDictionary[@"id"]];
+            
+        }
+        
+    }];
+    
+    
+    for(NSNumber *localID in allRocketIDs){
+        
+        SCLocalRocket *currentRocket = [SCLocalRocket fetchByLocalID:localID.intValue];
+        
+        if(currentRocket.timestamp < threshold){
+            
+            [self.pastRockets addObject:currentRocket];
+            
+        }else{
+            
+            [self.currentRockets addObject:currentRocket];
+            
+        }
+        
+    }
+    
+    
+}
+
+
+
 
 - (void)testTableView{
     [self.tableView reloadData];
@@ -78,24 +133,60 @@
 
 - (void)downloadRocketData{
     //make sure array is null and then init it for refresh
-    self.rocketData = nil;
-    self.rocketData = [[NSMutableArray alloc] init];
-    
-    PFQuery *currentRocketQuery = [PFQuery queryWithClassName:@"Rocket"];
-    [currentRocketQuery whereKey:@"createdAt" greaterThanOrEqualTo:[[NSDate date] dateByAddingTimeInterval:kRocketTimeThreshold]];
     
     
-    PFQuery *pastRocketQuery = [PFQuery queryWithClassName:@"Rocket"];
-    [pastRocketQuery whereKey:@"createdAt" lessThan:[[NSDate date] dateByAddingTimeInterval:kRocketTimeThreshold]];
+    
+    NSString *dbTable = [SCLocalRocket getDatabaseTable];
+    
+    NSString *query = [NSString stringWithFormat:@"SELECT alertID FROM %@ ORDER BY alertID DESC LIMIT 0,1", dbTable];
+    
+    __block NSNumber *alertID = nil;
+    
+    [[SCSQLiteManager getActiveManager].dbQueue inDatabase:^(FMDatabase *db) {
+        
+        FMResultSet *result = [db executeQuery:query];
+        
+        if([result next]){
+            
+            alertID = result.resultDictionary[@"alertID"];
+            
+        }
+        
+    }];
+    
+    
+    
+    
+    
+    PFQuery *newRocketQuery = [PFQuery queryWithClassName:@"Rocket"];
+    
+    if(alertID && [alertID isKindOfClass:[NSNumber class]]){
+    
+        [newRocketQuery whereKey:@"alertID" greaterThan:alertID];
+        
+    }
     
     //get current rockets
-    [currentRocketQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    [newRocketQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        
         if (!error) {
             // The find succeeded.
             NSLog(@"Successfully retrieved %lu rockets.", (unsigned long)objects.count);
             // Do something with the found objects
             for (PFObject *object in objects) {
-                PFGeoPoint *location = object[@"location"];
+                
+                SCLocalRocket *duplicate = [SCLocalRocket fetchByServerID:object.objectId];
+                if(duplicate){
+                    continue; // we don't wanna add a rocket we already have locally
+                }
+                
+                SCLocalRocket *rocket = [SCLocalRocket create];
+                [rocket initFromServerResponse:object];
+                
+                
+                
+                
+                /* PFGeoPoint *location = object[@"location"];
                 NSLog(@"Object Id: %@ Latitude: %f Longitude: %f", object.objectId, location.latitude, location.longitude);
                 [self.currentRockets addObject:[NSArray arrayWithObjects:object.objectId, [NSNumber numberWithDouble:location.latitude], [NSNumber numberWithDouble:location.longitude], nil]];
                 //add pins to map
@@ -107,8 +198,13 @@
                 rocketAnnotation.rocketId = object.objectId;
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.mapView performSelector:@selector(addAnnotation:) withObject:rocketAnnotation afterDelay:0.2];
-                });
+                }); */
             }
+            
+            
+            [self prepareRocketData];
+            
+            [self.refreshControl endRefreshing];
             
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -121,39 +217,14 @@
         } else {
             // Log details of the failure
             NSLog(@"Error: %@ %@", error, [error userInfo]);
+            
+            [self.refreshControl endRefreshing];
+            
         }
         
     }];
     
-    //get past rockets
-    [pastRocketQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            // The find succeeded.
-            NSLog(@"Successfully retrieved %lu rockets.", (unsigned long)objects.count);
-            // Do something with the found objects
-            for (PFObject *object in objects) {
-                PFGeoPoint *location = object[@"location"];
-                NSLog(@"Object Id: %@ Latitude: %f Longitude: %f", object.objectId, location.latitude, location.longitude);
-                
-                [self.pastRockets addObject:[NSArray arrayWithObjects:object.objectId, [NSNumber numberWithDouble:location.latitude], [NSNumber numberWithDouble:location.longitude], nil]];
-                
-            }
-            
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                // [self testTableView];
-                
-                [self.tableView reloadData];
-                
-            });
-            
-            
-        } else {
-            // Log details of the failure
-            NSLog(@"Error: %@ %@", error, [error userInfo]);
-        }
-        
-    }];
+    
     
 }
 
@@ -280,13 +351,16 @@ calloutAccessoryControlTapped:(UIControl *)control{
         rocketArray = self.pastRockets.copy;
     }
     
+    SCLocalRocket *rocket = rocketArray[indexPath.row];
+    
+    
     // Configure the cell...
     UILabel *subtitleLabel = (UILabel *)[cell viewWithTag:2];
     if (rocketArray.count == 0) {
         //dont set the text yet
     }
     else{
-        subtitleLabel.text = [NSString stringWithFormat:@"%f, %f",[rocketArray[indexPath.row][1] doubleValue], [rocketArray[indexPath.row][2] doubleValue]];
+        subtitleLabel.text = [NSString stringWithFormat:@"%f, %f", rocket.latitude, rocket.longitude];
     }
     
     return cell;
@@ -297,28 +371,62 @@ calloutAccessoryControlTapped:(UIControl *)control{
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    
+    NSArray *rocketArray = @[];
+    
+    if(section == 0){
+        rocketArray = self.currentRockets.copy;
+    }else if(section == 1){
+        rocketArray = self.pastRockets.copy;
+    }
+    
+    if(rocketArray.count < 1){ return nil; }
+    
+    
+    
+    
     UIView *headerView = [[UIView alloc] init];
+    
+    
+    
+    headerView.frame = CGRectMake(0, 0, 320, 20);
+    headerView.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:236.0/255.0 blue:237.0/255.0 alpha:1.0];
+    UILabel *currentRocketsLabel = [[UILabel alloc] init];
+    currentRocketsLabel.frame = CGRectMake(20, 10, 320, 21);
+    currentRocketsLabel.font = [UIFont fontWithName:kAvenirBook size:16];
+    currentRocketsLabel.textAlignment = NSTextAlignmentLeft;
+    // currentRocketsLabel.text = @"Current Rockets";
+    currentRocketsLabel.textColor = [UIColor blackColor];
+    [headerView addSubview:currentRocketsLabel];
+    
+    
+    
+    
     if (section == 0) {
-        headerView.frame = CGRectMake(0, 0, 320, 20);
-        headerView.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:236.0/255.0 blue:237.0/255.0 alpha:1.0];
-        UILabel *currentRocketsLabel = [[UILabel alloc] init];
-        currentRocketsLabel.frame = CGRectMake(20, 10, 320, 21);
-        currentRocketsLabel.font = [UIFont fontWithName:kAvenirBook size:16];
-        currentRocketsLabel.textAlignment = NSTextAlignmentLeft;
+//        headerView.frame = CGRectMake(0, 0, 320, 20);
+//        headerView.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:236.0/255.0 blue:237.0/255.0 alpha:1.0];
+//        UILabel *currentRocketsLabel = [[UILabel alloc] init];
+//        currentRocketsLabel.frame = CGRectMake(20, 10, 320, 21);
+//        currentRocketsLabel.font = [UIFont fontWithName:kAvenirBook size:16];
+//        currentRocketsLabel.textAlignment = NSTextAlignmentLeft;
+//        currentRocketsLabel.text = @"Current Rockets";
+//        currentRocketsLabel.textColor = [UIColor blackColor];
+//        [headerView addSubview:currentRocketsLabel];
+        
         currentRocketsLabel.text = @"Current Rockets";
-        currentRocketsLabel.textColor = [UIColor blackColor];
-        [headerView addSubview:currentRocketsLabel];
+        
     }
     if (section == 1) {
-        headerView.frame = CGRectMake(0, 0, 320, 20);
-        headerView.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:236.0/255.0 blue:237.0/255.0 alpha:1.0];
-        UILabel *pastRocketsLabel = [[UILabel alloc] init];
-        pastRocketsLabel.frame = CGRectMake(20, 10, 320, 21);
-        pastRocketsLabel.font = [UIFont fontWithName:kAvenirBook size:16];
-        pastRocketsLabel.textAlignment = NSTextAlignmentLeft;
-        pastRocketsLabel.text = @"Past Rockets";
-        pastRocketsLabel.textColor = [UIColor blackColor];
-        [headerView addSubview:pastRocketsLabel];
+//        headerView.frame = CGRectMake(0, 0, 320, 20);
+//        headerView.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:236.0/255.0 blue:237.0/255.0 alpha:1.0];
+//        UILabel *pastRocketsLabel = [[UILabel alloc] init];
+//        pastRocketsLabel.frame = CGRectMake(20, 10, 320, 21);
+//        pastRocketsLabel.font = [UIFont fontWithName:kAvenirBook size:16];
+//        pastRocketsLabel.textAlignment = NSTextAlignmentLeft;
+//        pastRocketsLabel.text = @"Past Rockets";
+//        pastRocketsLabel.textColor = [UIColor blackColor];
+//        [headerView addSubview:pastRocketsLabel];
+        currentRocketsLabel.text = @"Past Rockets";
     }
     return headerView;
 }

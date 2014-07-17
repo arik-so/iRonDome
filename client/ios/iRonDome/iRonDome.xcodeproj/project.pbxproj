@@ -29,6 +29,7 @@
 		517992C419784D5200830A21 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992BE19784D5200830A21 /* FMDatabaseQueue.m */; };
 		517992C519784D5200830A21 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992C019784D5200830A21 /* FMResultSet.m */; };
 		517992C7197852B300830A21 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 517992C6197852B300830A21 /* libsqlite3.0.dylib */; };
+		517992CA1978611600830A21 /* SCLocalRocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992C91978611600830A21 /* SCLocalRocket.m */; };
 		FE52C8EC197788FD000ED87D /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8EB197788FD000ED87D /* Parse.framework */; };
 		FE52C8EE19778C4D000ED87D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8ED19778C4D000ED87D /* AudioToolbox.framework */; };
 		FE52C8F719778CBD000ED87D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8EF19778CBD000ED87D /* CFNetwork.framework */; };
@@ -90,6 +91,8 @@
 		517992BF19784D5200830A21 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		517992C019784D5200830A21 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		517992C6197852B300830A21 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		517992C81978611600830A21 /* SCLocalRocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLocalRocket.h; sourceTree = "<group>"; };
+		517992C91978611600830A21 /* SCLocalRocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLocalRocket.m; sourceTree = "<group>"; };
 		FE52C8EB197788FD000ED87D /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		FE52C8ED19778C4D000ED87D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		FE52C8EF19778CBD000ED87D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -246,6 +249,8 @@
 				517992B119784D3B00830A21 /* SCSQLiteManager.m */,
 				517992B219784D3B00830A21 /* SCLocalObject.h */,
 				517992B319784D3B00830A21 /* SCLocalObject.m */,
+				517992C81978611600830A21 /* SCLocalRocket.h */,
+				517992C91978611600830A21 /* SCLocalRocket.m */,
 			);
 			name = storage;
 			sourceTree = "<group>";
@@ -326,6 +331,13 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Arik;
 				TargetAttributes = {
+					5179926F19771B6300830A21 = {
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
 					5179929319771B6300830A21 = {
 						TestTargetID = 5179926F19771B6300830A21;
 					};
@@ -389,6 +401,7 @@
 				5179928419771B6300830A21 /* IRDAppDelegate.m in Sources */,
 				FE9A3E2F197847770070AB27 /* IRDSettingsTableViewController.m in Sources */,
 				5179928019771B6300830A21 /* main.m in Sources */,
+				517992CA1978611600830A21 /* SCLocalRocket.m in Sources */,
 				517992C219784D5200830A21 /* FMDatabaseAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -524,6 +537,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -533,6 +547,7 @@
 				INFOPLIST_FILE = "iRonDome/iRonDome-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6989489D-7DA7-458E-B882-197BAA00A55C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -542,6 +557,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -551,6 +567,7 @@
 				INFOPLIST_FILE = "iRonDome/iRonDome-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6989489D-7DA7-458E-B882-197BAA00A55C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -13,6 +13,8 @@
 #import "CustomAnnotationView.h"
 #import "IRDMapAnnotation.h"
 
+#import "SCLocalRocket.h"
+
 @interface IRDTableViewController : UITableViewController <MKMapViewDelegate, CLLocationManagerDelegate>
 
 @property (nonatomic, strong)NSMutableArray *rocketData;

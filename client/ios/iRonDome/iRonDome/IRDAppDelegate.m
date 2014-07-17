@@ -47,6 +47,12 @@
     
     
     
+    [application registerForRemoteNotificationTypes: UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
+    
+    
+    
+    
+    
     SCSQLiteManager *manager = [SCSQLiteManager initManager];
     [SCSQLiteManager setActiveManager:manager];
     
@@ -61,6 +67,12 @@
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];
     [currentInstallation saveInBackground];
+    
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    
+    NSLog(@"PNS Error: %@ \n because \n %@", error.localizedDescription, error.localizedFailureReason);
     
 }
 

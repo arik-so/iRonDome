@@ -72,7 +72,7 @@
     
 }
 
-+ (instancetype)fetchByServerID:(int)serverID{
++ (instancetype)fetchByServerID:(NSString *)serverID{
     
     if(self.class == [SCLocalObject class]){ return nil; } // this is a pseudo-abstract class, motherfuckers!
     

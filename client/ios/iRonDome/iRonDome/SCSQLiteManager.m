@@ -78,11 +78,13 @@ static SCSQLiteManager *activeManager;
         
         
         // initializing the users table
-        
+
+        [db executeUpdate:@"ALTER TABLE rockets ADD COLUMN serverID TEXT "]; // the object's server ID as on parse
         [db executeUpdate:@"ALTER TABLE rockets ADD COLUMN latitude FLOAT "];
         [db executeUpdate:@"ALTER TABLE rockets ADD COLUMN longitude FLOAT "];
         [db executeUpdate:@"ALTER TABLE rockets ADD COLUMN toponym TEXT "]; // like place name, but more fancy
-        [db executeUpdate:@"ALTER TABLE users ADD COLUMN timestamp INTEGER "];
+        [db executeUpdate:@"ALTER TABLE rockets ADD COLUMN alertID INTEGER (20) "];
+        [db executeUpdate:@"ALTER TABLE rockets ADD COLUMN timestamp INTEGER (20) "];
         
         
         
@@ -181,9 +183,9 @@ static SCSQLiteManager *activeManager;
     
 }
 
-- (NSDictionary *)fetchObjectByServerID:(int)serverID inTable:(NSString *)table{
+- (NSDictionary *)fetchObjectByServerID:(NSString *)serverID inTable:(NSString *)table{
     
-    NSString *queryString = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE serverID = %i", table, serverID];
+    NSString *queryString = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE serverID = %@", table, serverID];
     
     NSMutableArray *resultArray = @[].mutableCopy;
     

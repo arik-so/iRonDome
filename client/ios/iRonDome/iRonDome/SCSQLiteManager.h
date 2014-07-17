@@ -24,7 +24,7 @@
 - (long)createObjectInTable:(NSString *)table;
 
 - (NSDictionary *)fetchObjectByID:(int)identifier inTable:(NSString *)table;
-- (NSDictionary *)fetchObjectByServerID:(int)serverID inTable:(NSString *)table;
+- (NSDictionary *)fetchObjectByServerID:(NSString *)serverID inTable:(NSString *)table;
 - (NSDictionary *)fetchObjectByProperty:(NSString *)property withValue:(NSString *)value inTable:(NSString *)table;
 
 @end
