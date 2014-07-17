@@ -15,13 +15,26 @@
 		5179928419771B6300830A21 /* IRDAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5179928319771B6300830A21 /* IRDAppDelegate.m */; };
 		5179928719771B6300830A21 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5179928519771B6300830A21 /* Main_iPhone.storyboard */; };
 		5179928A19771B6300830A21 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5179928819771B6300830A21 /* Main_iPad.storyboard */; };
-		5179928D19771B6300830A21 /* IRDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5179928C19771B6300830A21 /* IRDViewController.m */; };
 		5179928F19771B6300830A21 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5179928E19771B6300830A21 /* Images.xcassets */; };
 		5179929619771B6300830A21 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5179929519771B6300830A21 /* XCTest.framework */; };
 		5179929719771B6300830A21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5179927319771B6300830A21 /* Foundation.framework */; };
 		5179929819771B6300830A21 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5179927719771B6300830A21 /* UIKit.framework */; };
 		517992A019771B6300830A21 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5179929E19771B6300830A21 /* InfoPlist.strings */; };
 		517992A219771B6400830A21 /* iRonDomeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992A119771B6400830A21 /* iRonDomeTests.m */; };
+		FE52C8EC197788FD000ED87D /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8EB197788FD000ED87D /* Parse.framework */; };
+		FE52C8EE19778C4D000ED87D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8ED19778C4D000ED87D /* AudioToolbox.framework */; };
+		FE52C8F719778CBD000ED87D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8EF19778CBD000ED87D /* CFNetwork.framework */; };
+		FE52C8F819778CBD000ED87D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8F019778CBD000ED87D /* CoreLocation.framework */; };
+		FE52C8F919778CBD000ED87D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8F119778CBD000ED87D /* libz.dylib */; };
+		FE52C8FA19778CBD000ED87D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8F219778CBD000ED87D /* MobileCoreServices.framework */; };
+		FE52C8FB19778CBD000ED87D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8F319778CBD000ED87D /* QuartzCore.framework */; };
+		FE52C8FC19778CBD000ED87D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8F419778CBD000ED87D /* Security.framework */; };
+		FE52C8FD19778CBD000ED87D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8F519778CBD000ED87D /* StoreKit.framework */; };
+		FE52C8FE19778CBD000ED87D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8F619778CBD000ED87D /* SystemConfiguration.framework */; };
+		FE52C90119778E03000ED87D /* IRDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE52C90019778E03000ED87D /* IRDViewController.m */; };
+		FE52C9031977A1EC000ED87D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C9021977A1EC000ED87D /* MapKit.framework */; };
+		FE52C9071977B572000ED87D /* IRDMapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = FE52C9061977B572000ED87D /* IRDMapAnnotation.m */; };
+		FE52C90A1977B699000ED87D /* CustomAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE52C9091977B699000ED87D /* CustomAnnotationView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,14 +60,29 @@
 		5179928319771B6300830A21 /* IRDAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRDAppDelegate.m; sourceTree = "<group>"; };
 		5179928619771B6300830A21 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		5179928919771B6300830A21 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		5179928B19771B6300830A21 /* IRDViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRDViewController.h; sourceTree = "<group>"; };
-		5179928C19771B6300830A21 /* IRDViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRDViewController.m; sourceTree = "<group>"; };
 		5179928E19771B6300830A21 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5179929419771B6300830A21 /* iRonDomeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iRonDomeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5179929519771B6300830A21 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		5179929D19771B6300830A21 /* iRonDomeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iRonDomeTests-Info.plist"; sourceTree = "<group>"; };
 		5179929F19771B6300830A21 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		517992A119771B6400830A21 /* iRonDomeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iRonDomeTests.m; sourceTree = "<group>"; };
+		FE52C8EB197788FD000ED87D /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		FE52C8ED19778C4D000ED87D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		FE52C8EF19778CBD000ED87D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		FE52C8F019778CBD000ED87D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		FE52C8F119778CBD000ED87D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		FE52C8F219778CBD000ED87D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		FE52C8F319778CBD000ED87D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		FE52C8F419778CBD000ED87D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		FE52C8F519778CBD000ED87D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		FE52C8F619778CBD000ED87D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		FE52C8FF19778E03000ED87D /* IRDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRDViewController.h; sourceTree = "<group>"; };
+		FE52C90019778E03000ED87D /* IRDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRDViewController.m; sourceTree = "<group>"; };
+		FE52C9021977A1EC000ED87D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		FE52C9051977B572000ED87D /* IRDMapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRDMapAnnotation.h; sourceTree = "<group>"; };
+		FE52C9061977B572000ED87D /* IRDMapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRDMapAnnotation.m; sourceTree = "<group>"; };
+		FE52C9081977B699000ED87D /* CustomAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotationView.h; sourceTree = "<group>"; };
+		FE52C9091977B699000ED87D /* CustomAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotationView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,8 +90,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE52C9031977A1EC000ED87D /* MapKit.framework in Frameworks */,
+				FE52C8F719778CBD000ED87D /* CFNetwork.framework in Frameworks */,
+				FE52C8F819778CBD000ED87D /* CoreLocation.framework in Frameworks */,
+				FE52C8F919778CBD000ED87D /* libz.dylib in Frameworks */,
+				FE52C8FA19778CBD000ED87D /* MobileCoreServices.framework in Frameworks */,
+				FE52C8FB19778CBD000ED87D /* QuartzCore.framework in Frameworks */,
+				FE52C8FC19778CBD000ED87D /* Security.framework in Frameworks */,
+				FE52C8FD19778CBD000ED87D /* StoreKit.framework in Frameworks */,
+				FE52C8FE19778CBD000ED87D /* SystemConfiguration.framework in Frameworks */,
+				FE52C8EE19778C4D000ED87D /* AudioToolbox.framework in Frameworks */,
 				5179927619771B6300830A21 /* CoreGraphics.framework in Frameworks */,
 				5179927819771B6300830A21 /* UIKit.framework in Frameworks */,
+				FE52C8EC197788FD000ED87D /* Parse.framework in Frameworks */,
 				5179927419771B6300830A21 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -103,6 +142,17 @@
 		5179927219771B6300830A21 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FE52C9021977A1EC000ED87D /* MapKit.framework */,
+				FE52C8EF19778CBD000ED87D /* CFNetwork.framework */,
+				FE52C8F019778CBD000ED87D /* CoreLocation.framework */,
+				FE52C8F119778CBD000ED87D /* libz.dylib */,
+				FE52C8F219778CBD000ED87D /* MobileCoreServices.framework */,
+				FE52C8F319778CBD000ED87D /* QuartzCore.framework */,
+				FE52C8F419778CBD000ED87D /* Security.framework */,
+				FE52C8F519778CBD000ED87D /* StoreKit.framework */,
+				FE52C8F619778CBD000ED87D /* SystemConfiguration.framework */,
+				FE52C8ED19778C4D000ED87D /* AudioToolbox.framework */,
+				FE52C8EB197788FD000ED87D /* Parse.framework */,
 				5179927319771B6300830A21 /* Foundation.framework */,
 				5179927519771B6300830A21 /* CoreGraphics.framework */,
 				5179927719771B6300830A21 /* UIKit.framework */,
@@ -116,10 +166,11 @@
 			children = (
 				5179928219771B6300830A21 /* IRDAppDelegate.h */,
 				5179928319771B6300830A21 /* IRDAppDelegate.m */,
+				FE52C8FF19778E03000ED87D /* IRDViewController.h */,
+				FE52C90019778E03000ED87D /* IRDViewController.m */,
+				FE52C90B1977BCFC000ED87D /* MapView */,
 				5179928519771B6300830A21 /* Main_iPhone.storyboard */,
 				5179928819771B6300830A21 /* Main_iPad.storyboard */,
-				5179928B19771B6300830A21 /* IRDViewController.h */,
-				5179928C19771B6300830A21 /* IRDViewController.m */,
 				5179928E19771B6300830A21 /* Images.xcassets */,
 				5179927A19771B6300830A21 /* Supporting Files */,
 			);
@@ -153,6 +204,17 @@
 				5179929E19771B6300830A21 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FE52C90B1977BCFC000ED87D /* MapView */ = {
+			isa = PBXGroup;
+			children = (
+				FE52C9051977B572000ED87D /* IRDMapAnnotation.h */,
+				FE52C9061977B572000ED87D /* IRDMapAnnotation.m */,
+				FE52C9081977B699000ED87D /* CustomAnnotationView.h */,
+				FE52C9091977B699000ED87D /* CustomAnnotationView.m */,
+			);
+			name = MapView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,7 +316,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5179928D19771B6300830A21 /* IRDViewController.m in Sources */,
+				FE52C90119778E03000ED87D /* IRDViewController.m in Sources */,
+				FE52C9071977B572000ED87D /* IRDMapAnnotation.m in Sources */,
+				FE52C90A1977B699000ED87D /* CustomAnnotationView.m in Sources */,
 				5179928419771B6300830A21 /* IRDAppDelegate.m in Sources */,
 				5179928019771B6300830A21 /* main.m in Sources */,
 			);
@@ -391,6 +455,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iRonDome/iRonDome-Prefix.pch";
 				INFOPLIST_FILE = "iRonDome/iRonDome-Info.plist";
@@ -405,6 +473,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iRonDome/iRonDome-Prefix.pch";
 				INFOPLIST_FILE = "iRonDome/iRonDome-Info.plist";
@@ -473,6 +545,7 @@
 				517992A719771B6400830A21 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		517992A819771B6400830A21 /* Build configuration list for PBXNativeTarget "iRonDomeTests" */ = {
 			isa = XCConfigurationList;
@@ -481,6 +554,7 @@
 				517992AA19771B6400830A21 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

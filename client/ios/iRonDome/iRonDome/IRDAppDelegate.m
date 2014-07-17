@@ -7,12 +7,25 @@
 //
 
 #import "IRDAppDelegate.h"
+#import <Parse/Parse.h>
+
+#define kParseApplicationId @"KFQeWT9x9MoHlUvBUlEDj77Rh3zZ8piQIMzQ2Anf"
+#define kParseClientKey @"ibx6T6Bvmuxa5gTaY3zSzLajDPpumblyybno3orz"
 
 @implementation IRDAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    //setup parse
+    [Parse setApplicationId:kParseApplicationId
+                  clientKey:kParseClientKey];
+    
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
     return YES;
 }
 							
