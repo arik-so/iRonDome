@@ -51,6 +51,15 @@
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
+    
+    
+    
+    SCSQLiteManager *manager = [SCSQLiteManager initManager];
+    [SCSQLiteManager setActiveManager:manager];
+    
+    
+    
+    
     return YES;
 }
 
