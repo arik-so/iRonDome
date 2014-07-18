@@ -98,13 +98,13 @@
     UILabel *twitterLabel = (UILabel *)[cell viewWithTag:3];
     if (indexPath.row == 0) {
         titleLabel.text = @"Ben Honig";
-        subtitleLabel.text = @"Developer/ Designer";
+        subtitleLabel.text = @"Developer / Designer";
         twitterLabel.text = @"@iPhonig";
     }
     if (indexPath.row == 1) {
         titleLabel.text = @"Arik Sosman";
         subtitleLabel.text = @"Developer";
-        twitterLabel.text = @"@ArikAleph";
+        twitterLabel.text = @"@arikaleph";
     }
     
     return cell;

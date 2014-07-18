@@ -7,7 +7,7 @@
 //
 
 #import "IRDTableViewController.h"
-#define kRocketTimeThreshold -60*20
+#define kRocketTimeThreshold -60*2 // two minutes
 #define kMapZoomLatitude 400000
 #define kMapZoomLongitude 400000
 #define kAvenirLight @"Avenir-Light"
@@ -66,6 +66,13 @@
     // let's fetch the necessary stuff
     
     
+    
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    
+    
+    
+    
+    
     NSTimeInterval rightNow = [NSDate date].timeIntervalSince1970;
     NSTimeInterval threshold = rightNow + kRocketTimeThreshold;
     
@@ -100,6 +107,21 @@
         }else{
             
             [self.currentRockets addObject:currentRocket];
+            
+            
+            
+            
+            
+            CLLocationCoordinate2D  ctrpoint;
+            ctrpoint.latitude = currentRocket.latitude;
+            ctrpoint.longitude = currentRocket.longitude;
+            IRDMapAnnotation *rocketAnnotation = [[IRDMapAnnotation alloc] init];
+            [rocketAnnotation initWithCoordinate:ctrpoint userTitle:@"Rocket" userSubtitle:[NSString stringWithFormat:@"%f;%f", currentRocket.latitude, currentRocket.longitude]];
+            rocketAnnotation.rocketId = currentRocket.serverID;
+            
+            [self.mapView addAnnotation:rocketAnnotation];
+            
+            
             
         }
         
