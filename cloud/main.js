@@ -24,7 +24,7 @@ Parse.Cloud.define('pullFromHFC', function(request, response){
         method: 'GET',
         // url: 'http://www.galaxy-battle.de/node/server/tzevaadom.json',
         // url: 'http://tzevaadom.com/alert.json',
-        url: 'http://www.galaxy-battle.de/node/server/tsevaadom_3.json',
+        url: 'http://www.oref.org.il/WarningMessages/alerts.json',
         /*body: {
          title: 'Vote for Pedro',
          body: 'If you vote for Pedro, your wildest dreams will come true'
