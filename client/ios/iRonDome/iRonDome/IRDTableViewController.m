@@ -204,6 +204,26 @@
                 [rocket initFromServerResponse:object];
                 
                 
+                CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
+                CLLocation *location = [[CLLocation alloc] initWithLatitude:rocket.latitude longitude:rocket.longitude];
+                [geoCoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+                    
+                    if(!placemarks){ return; }
+                    
+                    CLPlacemark *firstPlacemark = placemarks[0];
+                    if(!firstPlacemark){ return; }
+                    
+                    rocket.toponym = firstPlacemark.name;
+                    [rocket saveAttribute:@"toponym"];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                        [self.tableView reloadData];
+                        
+                    });
+                    
+                }];
+                
                 
                 
                 /* PFGeoPoint *location = object[@"location"];
@@ -221,14 +241,12 @@
                 }); */
             }
             
-            
-            [self prepareRocketData];
-            
-            [self.refreshControl endRefreshing];
-            
-            
             dispatch_async(dispatch_get_main_queue(), ^{
-                // [self testTableView];
+                
+                [self prepareRocketData];
+                
+                [self.refreshControl endRefreshing];
+                
                 [self.tableView reloadData];
                 
             });
@@ -372,7 +390,7 @@ calloutAccessoryControlTapped:(UIControl *)control{
     }
     
     SCLocalRocket *rocket = rocketArray[indexPath.row];
-    
+    [rocket reload]; // the data might have been modified, so we should reload it just in case
     
     // Configure the cell...
     UILabel *subtitleLabel = (UILabel *)[cell viewWithTag:2];
@@ -380,7 +398,15 @@ calloutAccessoryControlTapped:(UIControl *)control{
         //dont set the text yet
     }
     else{
+        
+        if(rocket.toponym){
+            
+            cell.textLabel.text = rocket.toponym;
+            
+        }
+        
         subtitleLabel.text = [NSString stringWithFormat:@"%f, %f", rocket.latitude, rocket.longitude];
+        
     }
     
     return cell;
