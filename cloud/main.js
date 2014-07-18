@@ -14,6 +14,37 @@ Parse.Cloud.job("bgTest", function(request, status) {
 
 });
 
+Parse.Cloud.define('pullFromHFC', function(request, response){
+
+    Parse.Cloud.useMasterKey();
+
+    var responseJSON = {};
+
+    Parse.Cloud.httpRequest({
+        method: 'GET',
+        // url: 'http://www.galaxy-battle.de/node/server/tzevaadom.json',
+        // url: 'http://tzevaadom.com/alert.json',
+        url: 'http://www.galaxy-battle.de/node/server/tsevaadom_3.json',
+        /*body: {
+         title: 'Vote for Pedro',
+         body: 'If you vote for Pedro, your wildest dreams will come true'
+         },*/
+
+        success: function(httpResponse) {
+
+            responseJSON = JSON.parse(httpResponse.text);
+
+        }
+
+    }).then(function(){
+
+        response.success(responseJSON);
+
+    });
+
+
+});
+
 Parse.Cloud.define('pullTzevaAdom', function(request, response){
 
     Parse.Cloud.useMasterKey();
