@@ -49,8 +49,6 @@
     
     [self setupMap];
     
-    //[self performSelector:@selector(testTableView) withObject:nil afterDelay:5];
-    
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(downloadRocketData) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
@@ -380,14 +378,7 @@ calloutAccessoryControlTapped:(UIControl *)control{
         rocketArray = self.pastRockets.copy;
     }
     
-    if(rocketArray.count < 1){ return nil; }
-    
-    
-    
-    
     UIView *headerView = [[UIView alloc] init];
-    
-    
     
     headerView.frame = CGRectMake(0, 0, 320, 20);
     headerView.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:236.0/255.0 blue:237.0/255.0 alpha:1.0];
@@ -395,37 +386,18 @@ calloutAccessoryControlTapped:(UIControl *)control{
     currentRocketsLabel.frame = CGRectMake(20, 10, 320, 21);
     currentRocketsLabel.font = [UIFont fontWithName:kAvenirBook size:16];
     currentRocketsLabel.textAlignment = NSTextAlignmentLeft;
-    // currentRocketsLabel.text = @"Current Rockets";
     currentRocketsLabel.textColor = [UIColor blackColor];
     [headerView addSubview:currentRocketsLabel];
-    
-    
-    
-    
+
     if (section == 0) {
-//        headerView.frame = CGRectMake(0, 0, 320, 20);
-//        headerView.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:236.0/255.0 blue:237.0/255.0 alpha:1.0];
-//        UILabel *currentRocketsLabel = [[UILabel alloc] init];
-//        currentRocketsLabel.frame = CGRectMake(20, 10, 320, 21);
-//        currentRocketsLabel.font = [UIFont fontWithName:kAvenirBook size:16];
-//        currentRocketsLabel.textAlignment = NSTextAlignmentLeft;
-//        currentRocketsLabel.text = @"Current Rockets";
-//        currentRocketsLabel.textColor = [UIColor blackColor];
-//        [headerView addSubview:currentRocketsLabel];
-        
-        currentRocketsLabel.text = @"Current Rockets";
-        
+        if(rocketArray.count < 1){
+            currentRocketsLabel.text = @"Current Rockets: 0";
+        }
+        else{
+            currentRocketsLabel.text = @"Current Rockets";
+        }
     }
     if (section == 1) {
-//        headerView.frame = CGRectMake(0, 0, 320, 20);
-//        headerView.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:236.0/255.0 blue:237.0/255.0 alpha:1.0];
-//        UILabel *pastRocketsLabel = [[UILabel alloc] init];
-//        pastRocketsLabel.frame = CGRectMake(20, 10, 320, 21);
-//        pastRocketsLabel.font = [UIFont fontWithName:kAvenirBook size:16];
-//        pastRocketsLabel.textAlignment = NSTextAlignmentLeft;
-//        pastRocketsLabel.text = @"Past Rockets";
-//        pastRocketsLabel.textColor = [UIColor blackColor];
-//        [headerView addSubview:pastRocketsLabel];
         currentRocketsLabel.text = @"Past Rockets";
     }
     return headerView;
