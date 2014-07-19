@@ -12,7 +12,12 @@
 #define kRocketZoomLatitude 5000
 #define kRocketZoomLongitude 5000
 
+#define MAP_PADDING 1.3
+#define MINIMUM_VISIBLE_LATITUDE 0.01
+
 @interface IRDMapZoomViewController ()
+
+@property (strong, nonatomic) NSMutableArray *sirens;
 
 @end
 
@@ -32,16 +37,109 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self setupMap];
+    // [self setupMap];
     
-    CLLocationCoordinate2D  ctrpoint;
-    ctrpoint.latitude = self.latitude;
-    ctrpoint.longitude = self.longitude;
-    IRDMapAnnotation *rocketAnnotation = [[IRDMapAnnotation alloc] init];
-    [rocketAnnotation initWithCoordinate:ctrpoint userTitle:@"Rocket" userSubtitle:[NSString stringWithFormat:@"%f;%f", self.latitude, self.longitude]];
     
-    [self.mapView addAnnotation:rocketAnnotation];
+    self.sirens = @[].mutableCopy;
+    
+    __block double latitudeNorth = -1;
+    __block double latitudeSouth = -1;
+    __block double longitudeWest = -1;
+    __block double longitudeEast = -1;
+    
+    
+    NSString *dbTable = [SCLocalSiren getDatabaseTable];
+    NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE alertID = :alertID ORDER BY timestamp DESC, toponym ASC", dbTable];
+    
+    [[SCSQLiteManager getActiveManager].dbQueue inDatabase:^(FMDatabase *db) {
+        
+        FMResultSet *result = [db executeQuery:query withParameterDictionary:@{@"alertID": self.alertID}];
+        
+        while([result next]){
+            
+            SCLocalSiren *currentSiren = [[SCLocalSiren alloc] init];
+            [currentSiren initWithFetchResponse:result.resultDictionary];
+            
+            [self.sirens addObject:currentSiren];
+            
+            
+            
+            
+            
+            if(latitudeNorth == -1){
+                latitudeNorth = currentSiren.latitudeNorth;
+            }else{
+                latitudeNorth = MAX(latitudeNorth, currentSiren.latitudeNorth);
+            }
+            
+            if(latitudeSouth == -1){
+                latitudeSouth = currentSiren.latitudeSouth;
+            }else{
+                latitudeSouth = MIN(latitudeSouth, currentSiren.latitudeSouth);
+            }
+            
+            
+            
+            if(longitudeEast == -1){
+                longitudeEast = currentSiren.longitudeEast;
+            }else{
+                longitudeEast = MAX(longitudeEast, currentSiren.longitudeEast);
+            }
+            
+            if(longitudeWest == -1){
+                longitudeWest = currentSiren.longitudeWest;
+            }else{
+                longitudeWest = MIN(longitudeWest, currentSiren.longitudeWest);
+            }
+            
+            
+            
+            
+            
+            
+            
+            CLLocationCoordinate2D  ctrpoint;
+            ctrpoint.latitude = currentSiren.latitude;
+            ctrpoint.longitude = currentSiren.longitude;
+            IRDMapAnnotation *rocketAnnotation = [[IRDMapAnnotation alloc] init];
+            [rocketAnnotation initWithCoordinate:ctrpoint userTitle:@"Siren" userSubtitle:[NSString stringWithFormat:@"%f;%f", currentSiren.latitude, currentSiren.longitude]];
+            
+            [self.mapView addAnnotation:rocketAnnotation];
+            
+            
+            
+
+        }
+    
+    }];
+    
+    
+
+    
+    
+    MKCoordinateRegion region;
+    region.center.latitude = (latitudeSouth + latitudeNorth) / 2;
+    region.center.longitude = (longitudeWest + longitudeEast) / 2;
+    
+    
+    region.span.latitudeDelta = (latitudeNorth - latitudeSouth) * MAP_PADDING;
+    region.span.latitudeDelta = (region.span.latitudeDelta < MINIMUM_VISIBLE_LATITUDE) ? MINIMUM_VISIBLE_LATITUDE : region.span.latitudeDelta;
+    region.span.longitudeDelta = (longitudeEast - longitudeWest) * MAP_PADDING;
+    
+    MKCoordinateRegion scaledRegion = [self.mapView regionThatFits:region];
+    [self.mapView setRegion:scaledRegion animated:YES];
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
+
 
 - (void)setupMap{
     CLLocationCoordinate2D zoomLocation;
@@ -101,7 +199,7 @@ calloutAccessoryControlTapped:(UIControl *)control{
     NSLog(@"calloutAccessoryControlTapped:");
 }
 
-- (void)mapView:(MKMapView *)mv didAddAnnotationViews:(NSArray *)views
+/* - (void)mapView:(MKMapView *)mv didAddAnnotationViews:(NSArray *)views
 {
     
     // add the animation here
@@ -125,7 +223,7 @@ calloutAccessoryControlTapped:(UIControl *)control{
             }];
         }
     }
-}
+} */
 
 
 - (void)didReceiveMemoryWarning

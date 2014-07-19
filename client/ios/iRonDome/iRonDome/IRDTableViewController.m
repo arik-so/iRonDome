@@ -15,8 +15,14 @@
 
 @interface IRDTableViewController ()
 
-@property (nonatomic, strong) NSMutableArray *currentRockets;
-@property (nonatomic, strong) NSMutableArray *pastRockets;
+// @property (nonatomic, strong) NSMutableArray *currentRockets;
+// @property (nonatomic, strong) NSMutableArray *pastRockets;
+
+@property (nonatomic, strong) NSMutableArray *currentAlertIDs;
+@property (nonatomic, strong) NSMutableArray *pastAlertIDs;
+
+@property (strong, nonatomic) NSMutableDictionary *sirensByAlertID;
+
 
 @end
 
@@ -57,8 +63,14 @@
 
 - (void)prepareRocketData{
     
-    self.currentRockets = @[].mutableCopy;
-    self.pastRockets = @[].mutableCopy;
+    // self.currentRockets = @[].mutableCopy;
+    // self.pastRockets = @[].mutableCopy;
+    
+    self.currentAlertIDs = @[].mutableCopy;
+    self.pastAlertIDs = @[].mutableCopy;
+    
+    self.sirensByAlertID = @{}.mutableCopy;
+    
     
     // let's fetch the necessary stuff
     
@@ -68,11 +80,8 @@
     NSTimeInterval threshold = rightNow + kRocketTimeThreshold;
     
     
-    NSString *dbTable = [SCLocalRocket getDatabaseTable];
-    
-    NSString *query = [NSString stringWithFormat:@"SELECT id FROM %@ ORDER BY alertID DESC, timestamp DESC, toponym ASC", dbTable];
-    
-    NSMutableArray *allRocketIDs = @[].mutableCopy;
+    NSString *dbTable = [SCLocalSiren getDatabaseTable];
+    NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ ORDER BY alertID DESC, timestamp DESC, toponym ASC", dbTable];
     
     [[SCSQLiteManager getActiveManager].dbQueue inDatabase:^(FMDatabase *db) {
         
@@ -80,37 +89,71 @@
         
         while([result next]){
             
-            [allRocketIDs addObject:result.resultDictionary[@"id"]];
+            SCLocalSiren *currentSiren = [[SCLocalSiren alloc] init];
+            [currentSiren initWithFetchResponse:result.resultDictionary];
+            
+            NSNumber *alertIDObject = @(currentSiren.alertID);
+            
+            if(!self.sirensByAlertID[alertIDObject]){
+                self.sirensByAlertID[alertIDObject] = @[].mutableCopy;
+                
+                
+                
+                
+                
+                if(currentSiren.timestamp < threshold){
+                    
+                    // [self.pastRockets addObject:currentSiren];
+                    [self.pastAlertIDs addObject:alertIDObject];
+                    
+                }else{
+                    
+                    // [self.currentRockets addObject:currentSiren];
+                    [self.currentAlertIDs addObject:alertIDObject];
+                    
+                    /* [self.currentAlertIDs addObject:@(currentRocket.alertID)];
+                    
+                    [self.currentRockets addObject:currentRocket];
+                    
+                    CLLocationCoordinate2D  ctrpoint;
+                    ctrpoint.latitude = currentRocket.latitude;
+                    ctrpoint.longitude = currentRocket.longitude;
+                    IRDMapAnnotation *rocketAnnotation = [[IRDMapAnnotation alloc] init];
+                    [rocketAnnotation initWithCoordinate:ctrpoint userTitle:@"Rocket" userSubtitle:[NSString stringWithFormat:@"%f;%f", currentRocket.latitude, currentRocket.longitude]];
+                    rocketAnnotation.rocketId = currentRocket.serverID;
+                    
+                    [self.mapView addAnnotation:rocketAnnotation]; */
+                    
+                }
+                
+                
+                
+                
+                
+            }
+            
+            
+            if(currentSiren.timestamp >= threshold){
+                
+                CLLocationCoordinate2D  ctrpoint;
+                ctrpoint.latitude = currentSiren.latitude;
+                ctrpoint.longitude = currentSiren.longitude;
+                IRDMapAnnotation *rocketAnnotation = [[IRDMapAnnotation alloc] init];
+                [rocketAnnotation initWithCoordinate:ctrpoint userTitle:@"Rocket" userSubtitle:[NSString stringWithFormat:@"%f;%f", currentSiren.latitude, currentSiren.longitude]];
+                rocketAnnotation.rocketId = currentSiren.serverID;
+                
+                [self.mapView addAnnotation:rocketAnnotation];
+                
+            }
+            
+            
+            
+            
+            [self.sirensByAlertID[alertIDObject] addObject:currentSiren];
             
         }
         
     }];
-    
-    
-    for(NSNumber *localID in allRocketIDs){
-        
-        SCLocalRocket *currentRocket = [SCLocalRocket fetchByLocalID:localID.intValue];
-        
-        if(currentRocket.timestamp < threshold){
-            
-            [self.pastRockets addObject:currentRocket];
-            
-        }else{
-            
-            [self.currentRockets addObject:currentRocket];
-
-            CLLocationCoordinate2D  ctrpoint;
-            ctrpoint.latitude = currentRocket.latitude;
-            ctrpoint.longitude = currentRocket.longitude;
-            IRDMapAnnotation *rocketAnnotation = [[IRDMapAnnotation alloc] init];
-            [rocketAnnotation initWithCoordinate:ctrpoint userTitle:@"Rocket" userSubtitle:[NSString stringWithFormat:@"%f;%f", currentRocket.latitude, currentRocket.longitude]];
-            rocketAnnotation.rocketId = currentRocket.serverID;
-            
-            [self.mapView addAnnotation:rocketAnnotation];
-    
-        }
-        
-    }
     
 }
 
@@ -336,9 +379,9 @@ calloutAccessoryControlTapped:(UIControl *)control{
 {
     // Return the number of rows in the section.
     if(section == 0){
-        return self.currentRockets.count;
+        return self.currentAlertIDs.count;
     }else if(section == 1){
-        return self.pastRockets.count;
+        return self.pastAlertIDs.count;
     }
     
     return 0;
@@ -357,15 +400,67 @@ calloutAccessoryControlTapped:(UIControl *)control{
     NSArray *rocketArray = @[];
     
     if(indexPath.section == 0){
-        rocketArray = self.currentRockets.copy;
+        rocketArray = self.currentAlertIDs.copy;
     }else if(indexPath.section == 1){
-        rocketArray = self.pastRockets.copy;
+        rocketArray = self.pastAlertIDs.copy;
     }
     
-    SCLocalRocket *rocket = rocketArray[indexPath.row];
-    [rocket reload]; // the data might have been modified, so we should reload it just in case
+    NSNumber *currentAlertID = rocketArray[indexPath.row];
+    
+    NSArray *currentSirens = self.sirensByAlertID[currentAlertID];
+    
+    NSString *placeLabels = @"";
+    double latitudeNorth = -1;
+    double latitudeSouth = -1;
+    double longitudeWest = -1;
+    double longitudeEast = -1;
+    
+    for(SCLocalSiren *currentSiren in currentSirens){
+        
+        placeLabels = [NSString stringWithFormat:@"%@, %@", placeLabels, currentSiren.toponym];
+        
+        if(latitudeNorth == -1){
+            latitudeNorth = currentSiren.latitudeNorth;
+        }else{
+            latitudeNorth = MAX(latitudeNorth, currentSiren.latitudeNorth);
+        }
+        
+        if(latitudeSouth == -1){
+            latitudeSouth = currentSiren.latitudeSouth;
+        }else{
+            latitudeSouth = MIN(latitudeSouth, currentSiren.latitudeSouth);
+        }
+        
+        
+        
+        if(longitudeEast == -1){
+            longitudeEast = currentSiren.longitudeEast;
+        }else{
+            longitudeEast = MAX(longitudeEast, currentSiren.longitudeEast);
+        }
+        
+        if(longitudeWest == -1){
+            longitudeWest = currentSiren.longitudeWest;
+        }else{
+            longitudeWest = MIN(longitudeWest, currentSiren.longitudeWest);
+        }
+        
+        
+    }
+    
+    placeLabels = [placeLabels substringFromIndex:2];
+    
+    
+    UILabel *titleLabel = (UILabel *)[cell viewWithTag:1];
+    UILabel *subtitleLabel = (UILabel *)[cell viewWithTag:2];
+    
+    titleLabel.text = placeLabels;
+    
+    
+    // [rocket reload]; // the data might have been modified, so we should reload it just in case
     
     // Configure the cell...
+    /* UILabel *titleLabel = (UILabel *)[cell viewWithTag:1];
     UILabel *subtitleLabel = (UILabel *)[cell viewWithTag:2];
     if (rocketArray.count == 0) {
         //dont set the text yet
@@ -374,13 +469,14 @@ calloutAccessoryControlTapped:(UIControl *)control{
         
         if(rocket.toponym){
             
-            cell.textLabel.text = rocket.toponym;
+            titleLabel.text = rocket.toponym;
+            titleLabel.adjustsFontSizeToFitWidth = YES;
             
         }
         
         subtitleLabel.text = [NSString stringWithFormat:@"%f, %f", rocket.latitude, rocket.longitude];
         
-    }
+    } */
     
     return cell;
 }
@@ -394,9 +490,9 @@ calloutAccessoryControlTapped:(UIControl *)control{
     NSArray *rocketArray = @[];
     
     if(section == 0){
-        rocketArray = self.currentRockets.copy;
+        rocketArray = self.currentAlertIDs.copy;
     }else if(section == 1){
-        rocketArray = self.pastRockets.copy;
+        rocketArray = self.pastAlertIDs.copy;
     }
     
     UIView *headerView = [[UIView alloc] init];
@@ -471,23 +567,26 @@ calloutAccessoryControlTapped:(UIControl *)control{
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
     if ([segue.identifier isEqualToString:@"showRocketDetail"]) {
+        
+        
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         
         IRDMapZoomViewController *zoomView = segue.destinationViewController;
+        
+        
         NSArray *rocketArray = @[];
         
         if(indexPath.section == 0){
-            rocketArray = self.currentRockets.copy;
+            rocketArray = self.currentAlertIDs.copy;
         }else if(indexPath.section == 1){
-            rocketArray = self.pastRockets.copy;
+            rocketArray = self.pastAlertIDs.copy;
         }
         
-        SCLocalRocket *rocket = rocketArray[indexPath.row];
-        [rocket reload];
+        NSNumber *currentAlertID = rocketArray[indexPath.row];
+        zoomView.alertID = currentAlertID;
         
-        zoomView.latitude = rocket.latitude;
-        zoomView.longitude = rocket.longitude;
     }
 }
 

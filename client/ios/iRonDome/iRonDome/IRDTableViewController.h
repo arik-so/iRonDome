@@ -14,7 +14,7 @@
 #import "IRDMapAnnotation.h"
 #import "IRDMapZoomViewController.h"
 
-#import "SCLocalRocket.h"
+#import "SCLocalSiren.h"
 
 @interface IRDTableViewController : UITableViewController <MKMapViewDelegate, CLLocationManagerDelegate>
 

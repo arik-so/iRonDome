@@ -32,7 +32,7 @@
 
 - (void)initFromServerResponse:(PFObject *)serverSiren{
     
-    PFGeoPoint *location = serverSiren[@"location"];
+    PFGeoPoint *location = serverSiren[@"center"];
     PFGeoPoint *edgeNE = serverSiren[@"edgeNE"];
     PFGeoPoint *edgeSW = serverSiren[@"edgeSW"];
     

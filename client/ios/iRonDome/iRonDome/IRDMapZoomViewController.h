@@ -12,10 +12,11 @@
 #import "CustomAnnotationView.h"
 #import "IRDMapAnnotation.h"
 
+#import "SCLocalSiren.h"
+
 @interface IRDMapZoomViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate>
 
 @property (nonatomic, weak) IBOutlet MKMapView *mapView;
-@property (nonatomic, readwrite) double latitude;
-@property (nonatomic, readwrite) double longitude;
+@property (strong, nonatomic) NSNumber *alertID;
 
 @end
