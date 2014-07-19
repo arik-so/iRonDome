@@ -86,8 +86,11 @@
             CLLocationCoordinate2D  ctrpoint;
             ctrpoint.latitude = currentSiren.latitude;
             ctrpoint.longitude = currentSiren.longitude;
+            NSString *placeLabel = @"";
+            placeLabel = [NSString stringWithFormat:@"%@, %@", placeLabel, currentSiren.toponym];
+            placeLabel = [placeLabel substringFromIndex:2];
             IRDMapAnnotation *rocketAnnotation = [[IRDMapAnnotation alloc] init];
-            [rocketAnnotation initWithCoordinate:ctrpoint userTitle:@"Siren" userSubtitle:[NSString stringWithFormat:@"%f;%f", currentSiren.latitude, currentSiren.longitude]];
+            [rocketAnnotation initWithCoordinate:ctrpoint userTitle:@"Siren" userSubtitle:placeLabel];
             
             [self.mapView addAnnotation:rocketAnnotation];
             

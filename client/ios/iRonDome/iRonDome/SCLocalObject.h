@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
-
 #import "SCSQLiteManager.h"
 
 @interface SCLocalObject : NSObject
@@ -47,12 +46,4 @@
 
 @end
 
-#import "SCLocalRocket.h"
 #import "SCLocalSiren.h"
-
-/* #import "SCLocalUser.h"
-#import "SCLocalConversation.h"
-#import "SCLocalMessage.h"
-#import "SCLocalUserConversation.h"
-#import "SCLocalReadReceipt.h"
-#import "SCLocalUserDatum.h" */

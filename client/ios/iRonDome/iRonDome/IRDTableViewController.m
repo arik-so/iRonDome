@@ -58,7 +58,20 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(downloadRocketData) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:@"newRocket" object:nil];
 
+}
+
+- (void)handleNotification:(NSNotification *)notification{
+    if ([notification.name isEqualToString:@"newRocket"]) {
+        [self prepareRocketData];
+        [self downloadRocketData];
+    }
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)prepareRocketData{
@@ -96,10 +109,6 @@
             
             if(!self.sirensByAlertID[alertIDObject]){
                 self.sirensByAlertID[alertIDObject] = @[].mutableCopy;
-                
-                
-                
-                
                 
                 if(currentSiren.timestamp < threshold){
                     
@@ -296,6 +305,14 @@
     return dateTwoMinutesEarlier;
 }
 
+- (NSString *)formatDate:(NSDate *)date{
+    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+    [timeFormatter setDateFormat:@"MM/dd/yyyy HH:mm:ss"];
+    [timeFormatter setTimeZone:[NSTimeZone systemTimeZone]];
+    NSString *newTime = [timeFormatter stringFromDate:[[NSDate alloc]init] ];
+    return newTime;
+}
+
 #pragma mark - Map View
 
 //annotation and map delegate functions. Controls pin colors callout text etc
@@ -438,8 +455,6 @@ calloutAccessoryControlTapped:(UIControl *)control{
             latitudeSouth = MIN(latitudeSouth, currentSiren.latitudeSouth);
         }
         
-        
-        
         if(longitudeEast == -1){
             longitudeEast = currentSiren.longitudeEast;
         }else{
@@ -456,16 +471,15 @@ calloutAccessoryControlTapped:(UIControl *)control{
             sirenTime = [NSDate dateWithTimeIntervalSince1970:currentSiren.timestamp];
         }
         
-        
     }
     
     placeLabels = [placeLabels substringFromIndex:2];
-    
     
     UILabel *titleLabel = (UILabel *)[cell viewWithTag:1];
     UILabel *subtitleLabel = (UILabel *)[cell viewWithTag:2];
     
     titleLabel.text = placeLabels;
+    subtitleLabel.text = [self formatDate:sirenTime];
     
     
     // [rocket reload]; // the data might have been modified, so we should reload it just in case
@@ -522,11 +536,14 @@ calloutAccessoryControlTapped:(UIControl *)control{
             currentRocketsLabel.text = @"Current Rockets: 0";
         }
         else{
-            currentRocketsLabel.text = @"Current Rockets";
+            currentRocketsLabel.text = [NSString stringWithFormat:@"Current Rockets: %i", rocketArray.count];
         }
     }
     if (section == 1) {
-        currentRocketsLabel.text = @"Past Rockets";
+        if (rocketArray.count < 1) {
+            currentRocketsLabel.text = @"Past Rockets: 0";
+        }
+        currentRocketsLabel.text = [NSString stringWithFormat:@"Past Rockets: %i", rocketArray.count];
     }
     return headerView;
 }
