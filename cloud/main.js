@@ -18,175 +18,247 @@ Parse.Cloud.define('pushFromHFC', function(request, response){
 
     Parse.Cloud.useMasterKey();
 
-    var alertID = request['params']['alertID'];
+    var alertID = parseInt(request['params']['alertID']);
     var data = request['params']['data'];
 
-    // first, let's check whether this alert ID has already been processed
-    // we will do that later
+
+    var isDuplicateAlert = false;
 
 
+    var Alert = Parse.Object.extend('Alert');
 
+    // first, let's check whether there are any entries with the current alertID
+    var duplicateAlarmQuery = new Parse.Query(Alert);
+    duplicateAlarmQuery.equalTo('alertID', alertID);
+    duplicateAlarmQuery.count({
 
-    var affectedDeviceIDs = [];
-    var cityNameString = '';
+        success: function(count){
 
+              if(count > 0){
 
-    var iClosure = 0;
-    var iClosureMaximum = data.length-1;
+                  // we don't need it
+                  isDuplicateAlert = true;
+                  response.error('Duplicate alert');
 
-    for(var i = 0; i < data.length; i++){
-
-        var currentCity = data[i];
-        var currentCityName = currentCity['name'];
-
-        cityNameString += currentCityName+', ';
-
-        if(!currentCity['bounds']){
-
-            iClosureMaximum--;
-            continue;
+              }
 
         }
 
-        var edgeNE = new Parse.GeoPoint(parseFloat(currentCity['bounds']['northeast']['lat']), parseFloat(currentCity['bounds']['northeast']['lng']));
-        var edgeSW = new Parse.GeoPoint(parseFloat(currentCity['bounds']['southwest']['lat']), parseFloat(currentCity['bounds']['southwest']['lng']));
-
-        console.log('Current Bounds: ');
-        console.log(edgeNE);
-        console.log(edgeSW);
-
-        var currentDeviceQuery = new Parse.Query(Parse.Installation); // let's create a Parse installation query
-        currentDeviceQuery.withinGeoBox('lastKnownLocation', edgeSW, edgeNE);
-
-        currentDeviceQuery.find({
-
-            success: function(results){
-
-                for(var j = 0; j < results.length; j++){
-
-                    var currentDevice = results[j];
-                    affectedDeviceIDs.push(currentDevice.id);
-
-                }
-
-            }, error:function(error){
-
-                console.log('Could not find the geo-relevant devices because: '+JSON.stringify(error));
-
-            }
-
-        }).then(function(){
-
-            iClosure++; // we need to check the stuff in here
-
-            if(iClosure == iClosureMaximum){ // we have reached the end of this loop
+    }).then(function(){
 
 
-                console.log('Affected devuces: '+JSON.stringify(affectedDeviceIDs));
-
-
-                cityNameString = cityNameString.substr(0, cityNameString.length-2);
-
-
-                // debugging so I always also get a push notification
-                // affectedDeviceIDs.push('iXfNcrybPd'); // Arik's iPhone
-                // affectedDeviceIDs.push('O7XytkyAfE'); // Arik's iPad
+        // first, let's check whether this alert ID has already been processed
+        if(isDuplicateAlert){ return; } // we already know this shit
 
 
 
 
-                // we have found all the necessary device IDs
+        var currentAlert = new Alert();
+        currentAlert.set('alertID', alertID);
 
-                var urgentPushNotificationQuery = new Parse.Query(Parse.Installation);
-                urgentPushNotificationQuery.containedIn('objectId', affectedDeviceIDs);
+        currentAlert.save(null, {
 
+            success: function(currentAlert){
 
-
-                var informativePushNotificationQuery = new Parse.Query(Parse.Installation);
-                informativePushNotificationQuery.notContainedIn('objectId', affectedDeviceIDs);
-
-
+                // we have created this alert
+                var alertObjectID = currentAlert.id;
 
 
 
-                Parse.Push.send({
-                    where: urgentPushNotificationQuery,
-                    data: {
-                        alert: 'TAKE COVER!',
-                        sound: 'major_alert_alarm.m4a'
-                    }
-                }, {
-                    success: function(){
+                var Siren = Parse.Object.extend('Siren');
 
-                        // response.success('Push sent!');
+                var affectedDeviceIDs = [];
+                var cityNameString = '';
 
-                    },
-                    error: function(error){
 
-                        console.error('Could not send push notification');
-                        // response.error(error);
+                var iClosure = 0;
+                var iClosureMaximum = data.length-1;
+
+                for(var i = 0; i < data.length; i++){
+
+                    var currentCity = data[i];
+                    var currentCityName = currentCity['name'];
+
+                    cityNameString += currentCityName+', ';
+
+                    if(!currentCity['bounds']){
+
+                        iClosureMaximum--;
+                        continue;
 
                     }
-                }).then(function(){
+
+                    var edgeNE = new Parse.GeoPoint(parseFloat(currentCity['bounds']['northeast']['lat']), parseFloat(currentCity['bounds']['northeast']['lng']));
+                    var edgeSW = new Parse.GeoPoint(parseFloat(currentCity['bounds']['southwest']['lat']), parseFloat(currentCity['bounds']['southwest']['lng']));
+                    var center = new Parse.GeoPoint(parseFloat(currentCity['center']['lat']), parseFloat(currentCity['center']['lng']));
+
+
+                    var currentSiren = new Siren();
+                    currentSiren.set('edgeNE', edgeNE);
+                    currentSiren.set('edgeSW', edgeSW);
+                    currentSiren.set('center', center);
+                    currentSiren.set('toponym', currentCityName);
+                    currentSiren.set('alert', currentAlert);
+                    currentSiren.save();
 
 
 
 
 
 
-                    // only after the emergency alarms have been sent need we also send the ones about whether or not to take cover
 
-                    Parse.Push.send({
-                        where: informativePushNotificationQuery,
-                        data: {
-                            alert: 'Sirens in: '+cityNameString,
-                            sound: 'minor_alert_alarm.m4a'
+                    console.log('Current Bounds: ');
+                    console.log(edgeNE);
+                    console.log(edgeSW);
+
+                    var currentDeviceQuery = new Parse.Query(Parse.Installation); // let's create a Parse installation query
+                    currentDeviceQuery.withinGeoBox('lastKnownLocation', edgeSW, edgeNE);
+
+                    currentDeviceQuery.find({
+
+                        success: function(results){
+
+                            for(var j = 0; j < results.length; j++){
+
+                                var currentDevice = results[j];
+                                affectedDeviceIDs.push(currentDevice.id);
+
+                            }
+
+                        }, error:function(error){
+
+                            console.log('Could not find the geo-relevant devices because: '+JSON.stringify(error));
+
                         }
-                    }, {
-                        success: function(){
 
-                            // response.success('Push sent!');
-
-                        },
-                        error: function(error){
-
-                            console.error('Could not send push notification');
-                            // response.error(error);
-
-                        }
                     }).then(function(){
 
+                        iClosure++; // we need to check the stuff in here
+
+                        if(iClosure == iClosureMaximum){ // we have reached the end of this loop
 
 
-                        response.success('everything is done');
+                            console.log('Affected devuces: '+JSON.stringify(affectedDeviceIDs));
 
 
+                            cityNameString = cityNameString.substr(0, cityNameString.length-2);
+
+
+                            // debugging so I always also get a push notification
+                            // affectedDeviceIDs.push('iXfNcrybPd'); // Arik's iPhone
+                            // affectedDeviceIDs.push('O7XytkyAfE'); // Arik's iPad
+
+
+
+
+                            // we have found all the necessary device IDs
+
+                            var urgentPushNotificationQuery = new Parse.Query(Parse.Installation);
+                            urgentPushNotificationQuery.containedIn('objectId', affectedDeviceIDs);
+
+
+
+                            var informativePushNotificationQuery = new Parse.Query(Parse.Installation);
+                            informativePushNotificationQuery.notContainedIn('objectId', affectedDeviceIDs);
+
+
+
+
+
+                            Parse.Push.send({
+                                where: urgentPushNotificationQuery,
+                                data: {
+                                    alert: 'TAKE COVER!',
+                                    sound: 'major_alert_alarm.m4a'
+                                }
+                            }, {
+                                success: function(){
+
+                                    // response.success('Push sent!');
+
+                                },
+                                error: function(error){
+
+                                    console.error('Could not send push notification');
+                                    // response.error(error);
+
+                                }
+                            }).then(function(){
+
+
+
+
+
+
+                                // only after the emergency alarms have been sent need we also send the ones about whether or not to take cover
+
+                                Parse.Push.send({
+                                    where: informativePushNotificationQuery,
+                                    data: {
+                                        alert: 'Sirens in: '+cityNameString,
+                                        sound: 'minor_alert_alarm.m4a'
+                                    }
+                                }, {
+                                    success: function(){
+
+                                        // response.success('Push sent!');
+
+                                    },
+                                    error: function(error){
+
+                                        console.error('Could not send push notification');
+                                        // response.error(error);
+
+                                    }
+                                }).then(function(){
+
+
+
+                                    response.success('everything is done');
+
+
+
+                                });
+
+
+
+
+
+
+
+
+
+                            });
+
+
+
+
+
+
+
+                            // response.success(affectedDeviceIDs);
+
+                        }
 
                     });
 
+                }
 
 
 
 
 
 
+            }, error: function(currentAlert, error){
 
-
-                });
-
-
-
-
-
-
-
-                // response.success(affectedDeviceIDs);
+                response.error('Could not save new alert: '+JSON.stringify(error));
 
             }
 
         });
 
-    }
+    });
+
 
 });
 
