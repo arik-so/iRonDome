@@ -10,13 +10,27 @@ error_reporting(E_ALL);
 
 
 
+$localPathPrefix = dirname(__FILE__).'/';
+
+
+
+$triggerCount = file_get_contents($localPathPrefix.'trigger_count.txt');
+file_put_contents($localPathPrefix.'trigger_count.txt', ++$triggerCount);
+
+
+
+
+$doDebug = $_GET['debug'] || in_array('debug', $argv);
+$noCurl = $_GET['nocurl'] || in_array('nocurl', $argv);
+
 
 
 $recodedResponse = '{
-"id" : "1405805473970",
+"id" : "1405808361392",
 "title" : "פיקוד העורף התרעה במרחב ",
 "data" : [
-"עוטף עזה 224"
+"אשקלון 238, עוטף עזה 238",
+"31"
 ]
 }
 ';
@@ -25,19 +39,22 @@ $recodedResponse = '{
 
 
 
-$curl = curl_init('http://www.oref.org.il/WarningMessages/alerts.json');
+if(!$noCurl){
 
-// curl_setopt($curl, CURLOPT_HEADER, true); // get response header
-// curl_setopt($curl, CURLOPT_VERBOSE, true); // no idea what that means
+    $curl = curl_init('http://www.oref.org.il/WarningMessages/alerts.json');
 
-curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-// curl_setopt($curl, CURLOPT_ENCODING, '');
-$externalAlertResponse = curl_exec($curl);
-curl_close($curl);
+    // curl_setopt($curl, CURLOPT_HEADER, true); // get response header
+    // curl_setopt($curl, CURLOPT_VERBOSE, true); // no idea what that means
+
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    // curl_setopt($curl, CURLOPT_ENCODING, '');
+    $externalAlertResponse = curl_exec($curl);
+    curl_close($curl);
 
 
-$recodedResponse = mb_convert_encoding($externalAlertResponse, 'utf-8', 'utf-16');
+    $recodedResponse = mb_convert_encoding($externalAlertResponse, 'utf-8', 'utf-16');
 
+}
 
 
 
@@ -45,6 +62,11 @@ echo '<pre>';
 // echo $recodedResponse;
 
 // echo 'here';
+
+
+
+
+
 
 $processedExternalAlert = json_decode($recodedResponse, true);
 
@@ -56,7 +78,7 @@ print_r($processedExternalAlert);
 
 
 
-$convenientLookup = json_decode(file_get_contents('areas.json'), true); // these are the lookup codes for the affected codes we have found
+$convenientLookup = json_decode(file_get_contents($localPathPrefix.'areas.json'), true); // these are the lookup codes for the affected codes we have found
 
 
 
@@ -72,37 +94,50 @@ $simplifiedCities = [];
 
 foreach($affectedCodesRaw as $currentCodeRaw){
 
-    $currentCode = preg_replace('/[^0-9]/', null, $currentCodeRaw);
-    $affectedCodes[] = $currentCode;
+    $codeParts = explode(',', $currentCodeRaw);
 
-    $currentLookup = $convenientLookup[$currentCode];
-    $affectedCities[$currentCode] = $currentLookup;
+    foreach($codeParts as $currentPartialCodeRaw){
 
+        $currentCode = preg_replace('/[^0-9]/', null, $currentPartialCodeRaw);
 
+        if(in_array($currentCode, $affectedCodes)){ continue; } // we already know this code
 
-    // let's process the citiy names
-    foreach($currentLookup as $codeName => $geoData){
+        $affectedCodes[] = $currentCode;
 
-        $relevantAddressComponent = $geoData['address_components'][0];
-        $geometry = $geoData['geometry'];
+        $currentLookup = $convenientLookup[$currentCode];
+        $affectedCities[$currentCode] = $currentLookup;
 
-        $currentBounds = $geometry['bounds'];
-        if(!empty($currentBounds)){
-            $affectedBounds[] = $currentBounds;
+        if(!$currentLookup){
+            continue;
         }
 
-        if($relevantAddressComponent['types'][0] !== 'locality'){
-            continue; // we don't want bus stations and shit
+
+        // let's process the citiy names
+        foreach($currentLookup as $codeName => $geoData){
+
+            $relevantAddressComponent = $geoData['address_components'][0];
+            $geometry = $geoData['geometry'];
+
+            $currentBounds = $geometry['bounds'];
+            if(!empty($currentBounds)){
+                $affectedBounds[] = $currentBounds;
+            }
+
+            if($relevantAddressComponent['types'][0] !== 'locality'){
+                continue; // we don't want bus stations and shit
+            }
+
+            $currentCityDetails = [];
+            $currentCityDetails['name'] = str_replace(', Israel', null, $relevantAddressComponent['long_name']); // some names end with ', Israel', and we don't want that
+            $currentCityDetails['bounds'] = $currentBounds;
+            $currentCityDetails['center'] = $geometry['location'];
+
+            $simplifiedCities[] = $currentCityDetails;
+
+            // print_r($relevantAddressComponent);
+
         }
 
-        $currentCityDetails = [];
-        $currentCityDetails['name'] = str_replace(', Israel', null, $relevantAddressComponent['long_name']); // some names end with ', Israel', and we don't want that
-        $currentCityDetails['bounds'] = $currentBounds;
-        $currentCityDetails['center'] = $geometry['location'];
-
-        $simplifiedCities[] = $currentCityDetails;
-
-        // print_r($relevantAddressComponent);
 
     }
 
@@ -114,9 +149,7 @@ foreach($affectedCodesRaw as $currentCodeRaw){
 
 
 
-
-
-if($_GET['debug'] == 1){
+if($doDebug){
 
 
     $simplifiedCities[] = [
@@ -169,13 +202,11 @@ if($_GET['debug'] == 1){
 
 
 
+print_r($affectedCodes);
 
 // print_r($cityNames);
 // print_r($affectedBounds);
 print_r($simplifiedCities);
-
-
-
 
 
 
