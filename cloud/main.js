@@ -2,7 +2,7 @@
 // Use Parse.Cloud.define to define as many cloud functions as you want.
 // For example:
 Parse.Cloud.define("hello", function(request, response) {
-  response.success("Hello world!");
+  response.success(request);
 });
 
 
@@ -14,34 +14,122 @@ Parse.Cloud.job("bgTest", function(request, status) {
 
 });
 
-Parse.Cloud.define('pullFromHFC', function(request, response){
+Parse.Cloud.define('pushFromHFC', function(request, response){
 
     Parse.Cloud.useMasterKey();
 
-    var responseJSON = {};
+    var alertID = request['params']['alertID'];
+    var data = request['params']['data'];
 
-    Parse.Cloud.httpRequest({
-        method: 'GET',
-        // url: 'http://www.galaxy-battle.de/node/server/tzevaadom.json',
-        // url: 'http://tzevaadom.com/alert.json',
-        url: 'http://www.oref.org.il/WarningMessages/alerts.json',
-        /*body: {
-         title: 'Vote for Pedro',
-         body: 'If you vote for Pedro, your wildest dreams will come true'
-         },*/
+    // first, let's check whether this alert ID has already been processed
+    // we will do that later
 
-        success: function(httpResponse) {
 
-            responseJSON = JSON.parse(httpResponse.text);
+
+
+    var affectedDeviceIDs = [];
+    var cityNameString = '';
+
+
+    var iClosure = 0;
+    var iClosureMaximum = data.length-1;
+
+    for(var i = 0; i < data.length; i++){
+
+        var currentCity = data[i];
+
+        if(!currentCity['bounds']){
+
+            iClosureMaximum--;
+            continue;
 
         }
 
-    }).then(function(){
+        var edgeNE = new Parse.GeoPoint(parseFloat(currentCity['bounds']['northeast']['lat']), parseFloat(currentCity['bounds']['northeast']['lng']));
+        var edgeSW = new Parse.GeoPoint(parseFloat(currentCity['bounds']['southwest']['lat']), parseFloat(currentCity['bounds']['southwest']['lng']));
 
-        response.success(responseJSON);
+        console.log('Current Bounds: ');
+        console.log(edgeNE);
+        console.log(edgeSW);
 
-    });
+        var currentDeviceQuery = new Parse.Query(Parse.Installation); // let's create a Parse installation query
+        currentDeviceQuery.withinGeoBox('lastKnownLocation', edgeSW, edgeNE);
 
+        currentDeviceQuery.find({
+
+            success: function(results){
+
+                for(var j = 0; j < results.length; j++){
+
+                    var currentDevice = results[j];
+                    affectedDeviceIDs.push(currentDevice.id);
+
+                }
+
+            }
+
+        }).then(function(){
+
+            iClosure++; // we need to check the stuff in here
+
+            if(iClosure == iClosureMaximum){ // we have reached the end of this loop
+
+
+
+
+                // debugging so I always also get a push notification
+                affectedDeviceIDs.push('iXfNcrybPd'); // Arik's iPhone
+                affectedDeviceIDs.push('O7XytkyAfE'); // Arik's iPad
+
+
+
+
+                // we have found all the necessary device IDs
+
+                var urgentPushNotificationQuery = new Parse.Query(Parse.Installation);
+                urgentPushNotificationQuery.containedIn('objectId', affectedDeviceIDs);
+
+
+
+
+
+                Parse.Push.send({
+                    where: urgentPushNotificationQuery,
+                    data: {
+                        alert: 'TAKE COVER!',
+                        sound: 'major_alert.caf'
+                    }
+                }, {
+                    success: function(){
+
+                        response.success('Push sent!');
+
+                    },
+                    error: function(error){
+
+                        console.error('Could not send push notification');
+                        response.error(error);
+
+                    }
+                }).then(function(){
+
+
+
+                    response.success('everything is done');
+
+
+
+                });
+
+
+
+                // response.success(affectedDeviceIDs);
+
+            }
+
+        });
+
+    }
 
 });
 
