@@ -85,7 +85,7 @@ foreach($affectedCodesRaw as $currentCodeRaw){
         }
 
         $currentCityDetails = [];
-        $currentCityDetails['name'] = str_replace(', Israel', null, $relevantAddressComponent['short_name']); // some names end with ', Israel', and we don't want that
+        $currentCityDetails['name'] = str_replace(', Israel', null, $relevantAddressComponent['long_name']); // some names end with ', Israel', and we don't want that
         $currentCityDetails['bounds'] = $currentBounds;
         $currentCityDetails['center'] = $geometry['location'];
 
@@ -101,9 +101,64 @@ foreach($affectedCodesRaw as $currentCodeRaw){
 
 }
 
+
+
+
+
+if($_GET['debug'] == 1){
+
+
+    $simplifiedCities[] = [
+        'name' => 'Hameln',
+        'bounds' => [
+            'northeast' => [
+                'lat' => 55.000001,
+                'lng' => 15.0000001
+            ],
+            'southwest' => [
+                'lat' => 44.00000009,
+                'lng' => 4.000000009
+            ]
+        ]
+    ];
+
+
+
+
+    $simplifiedCities[] = [
+        'name' => 'Klein Berkel',
+        'bounds' => [
+            'northeast' => [
+                'lat' => 52.0932024,
+                'lng' => 9.3612585
+            ],
+            'southwest' => [
+                'lat' => 52.0695399,
+                'lng' => 9.327022999999999
+            ]
+        ]
+    ];
+
+
+
+}
+
+
+
+
+
+
+
+
+
 // print_r($cityNames);
 // print_r($affectedBounds);
 print_r($simplifiedCities);
+
+
+
+
+
 
 
 $parseOutput = [];
@@ -117,7 +172,6 @@ $parseOutput['data'] = $simplifiedCities;
 $parsePushAlert = json_encode($parseOutput);
 
 echo $parsePushAlert;
-
 
 
 define('APPLICATION_ID', 'KFQeWT9x9MoHlUvBUlEDj77Rh3zZ8piQIMzQ2Anf');

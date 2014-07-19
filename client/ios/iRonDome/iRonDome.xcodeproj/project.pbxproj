@@ -30,6 +30,9 @@
 		517992C519784D5200830A21 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992C019784D5200830A21 /* FMResultSet.m */; };
 		517992C7197852B300830A21 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 517992C6197852B300830A21 /* libsqlite3.0.dylib */; };
 		517992CA1978611600830A21 /* SCLocalRocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992C91978611600830A21 /* SCLocalRocket.m */; };
+		517C25C4197AAD5E00052133 /* major_alert.caf in Resources */ = {isa = PBXBuildFile; fileRef = 517C25C3197A916A00052133 /* major_alert.caf */; };
+		517C25C5197AAD6000052133 /* major_alert_alarm.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 517C25C1197A903500052133 /* major_alert_alarm.m4a */; };
+		517C25C6197AAD6300052133 /* minor_alert_alarm.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 517C25C2197A904000052133 /* minor_alert_alarm.m4a */; };
 		FE52C8EC197788FD000ED87D /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8EB197788FD000ED87D /* Parse.framework */; };
 		FE52C8EE19778C4D000ED87D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8ED19778C4D000ED87D /* AudioToolbox.framework */; };
 		FE52C8F719778CBD000ED87D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8EF19778CBD000ED87D /* CFNetwork.framework */; };
@@ -93,6 +96,9 @@
 		517992C6197852B300830A21 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		517992C81978611600830A21 /* SCLocalRocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLocalRocket.h; sourceTree = "<group>"; };
 		517992C91978611600830A21 /* SCLocalRocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLocalRocket.m; sourceTree = "<group>"; };
+		517C25C1197A903500052133 /* major_alert_alarm.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = major_alert_alarm.m4a; sourceTree = "<group>"; };
+		517C25C2197A904000052133 /* minor_alert_alarm.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = minor_alert_alarm.m4a; sourceTree = "<group>"; };
+		517C25C3197A916A00052133 /* major_alert.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = major_alert.caf; sourceTree = "<group>"; };
 		FE52C8EB197788FD000ED87D /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		FE52C8ED19778C4D000ED87D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		FE52C8EF19778CBD000ED87D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -196,6 +202,10 @@
 		5179927919771B6300830A21 /* iRonDome */ = {
 			isa = PBXGroup;
 			children = (
+				517C25C3197A916A00052133 /* major_alert.caf */,
+				517C25C1197A903500052133 /* major_alert_alarm.m4a */,
+				517C25C2197A904000052133 /* minor_alert_alarm.m4a */,
+				517C25C0197A902B00052133 /* alerts */,
 				517992AF19784D2200830A21 /* storage */,
 				5179928219771B6300830A21 /* IRDAppDelegate.h */,
 				5179928319771B6300830A21 /* IRDAppDelegate.m */,
@@ -270,6 +280,13 @@
 				517992C019784D5200830A21 /* FMResultSet.m */,
 			);
 			name = sqlite;
+			sourceTree = "<group>";
+		};
+		517C25C0197A902B00052133 /* alerts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = alerts;
 			sourceTree = "<group>";
 		};
 		FE52C90B1977BCFC000ED87D /* MapView */ = {
@@ -371,6 +388,9 @@
 				5179928F19771B6300830A21 /* Images.xcassets in Resources */,
 				5179928719771B6300830A21 /* Main_iPhone.storyboard in Resources */,
 				5179927E19771B6300830A21 /* InfoPlist.strings in Resources */,
+				517C25C4197AAD5E00052133 /* major_alert.caf in Resources */,
+				517C25C6197AAD6300052133 /* minor_alert_alarm.m4a in Resources */,
+				517C25C5197AAD6000052133 /* major_alert_alarm.m4a in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,7 +567,7 @@
 				INFOPLIST_FILE = "iRonDome/iRonDome-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "EF19132F-CC14-4D5B-AAE6-20C9E7696439";
+				PROVISIONING_PROFILE = "6989489D-7DA7-458E-B882-197BAA00A55C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -567,7 +587,7 @@
 				INFOPLIST_FILE = "iRonDome/iRonDome-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "EF19132F-CC14-4D5B-AAE6-20C9E7696439";
+				PROVISIONING_PROFILE = "6989489D-7DA7-458E-B882-197BAA00A55C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -37,6 +37,9 @@ Parse.Cloud.define('pushFromHFC', function(request, response){
     for(var i = 0; i < data.length; i++){
 
         var currentCity = data[i];
+        var currentCityName = currentCity['name'];
+
+        cityNameString += currentCityName+', ';
 
         if(!currentCity['bounds']){
 
@@ -66,6 +69,10 @@ Parse.Cloud.define('pushFromHFC', function(request, response){
 
                 }
 
+            }, error:function(error){
+
+                console.log('Could not find the geo-relevant devices because: '+JSON.stringify(error));
+
             }
 
         }).then(function(){
@@ -75,11 +82,15 @@ Parse.Cloud.define('pushFromHFC', function(request, response){
             if(iClosure == iClosureMaximum){ // we have reached the end of this loop
 
 
+                console.log('Affected devuces: '+JSON.stringify(affectedDeviceIDs));
+
+
+                cityNameString = cityNameString.substr(0, cityNameString.length-2);
 
 
                 // debugging so I always also get a push notification
-                affectedDeviceIDs.push('iXfNcrybPd'); // Arik's iPhone
-                affectedDeviceIDs.push('O7XytkyAfE'); // Arik's iPad
+                // affectedDeviceIDs.push('iXfNcrybPd'); // Arik's iPhone
+                // affectedDeviceIDs.push('O7XytkyAfE'); // Arik's iPad
 
 
 
@@ -91,35 +102,81 @@ Parse.Cloud.define('pushFromHFC', function(request, response){
 
 
 
+                var informativePushNotificationQuery = new Parse.Query(Parse.Installation);
+                informativePushNotificationQuery.notContainedIn('objectId', affectedDeviceIDs);
+
+
+
 
 
                 Parse.Push.send({
                     where: urgentPushNotificationQuery,
                     data: {
                         alert: 'TAKE COVER!',
-                        sound: 'major_alert.caf'
+                        sound: 'major_alert_alarm.m4a'
                     }
                 }, {
                     success: function(){
 
-                        response.success('Push sent!');
+                        // response.success('Push sent!');
 
                     },
                     error: function(error){
 
                         console.error('Could not send push notification');
-                        response.error(error);
+                        // response.error(error);
 
                     }
                 }).then(function(){
 
 
 
-                    response.success('everything is done');
+
+
+
+                    // only after the emergency alarms have been sent need we also send the ones about whether or not to take cover
+
+                    Parse.Push.send({
+                        where: informativePushNotificationQuery,
+                        data: {
+                            alert: 'Sirens in: '+cityNameString,
+                            sound: 'minor_alert_alarm.m4a'
+                        }
+                    }, {
+                        success: function(){
+
+                            // response.success('Push sent!');
+
+                        },
+                        error: function(error){
+
+                            console.error('Could not send push notification');
+                            // response.error(error);
+
+                        }
+                    }).then(function(){
+
+
+
+                        response.success('everything is done');
+
+
+
+                    });
+
+
+
+
+
+
 
 
 
                 });
+
+
+
+
 
 
 
@@ -132,6 +189,14 @@ Parse.Cloud.define('pushFromHFC', function(request, response){
     }
 
 });
+
+
+
+
+
+
+
+
 
 Parse.Cloud.define('pullTzevaAdom', function(request, response){
 
