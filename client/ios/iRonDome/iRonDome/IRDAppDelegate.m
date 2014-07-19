@@ -53,6 +53,9 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    //vibrate
+    AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"newRocket" object:nil];
 }
 
