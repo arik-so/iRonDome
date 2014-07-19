@@ -8,7 +8,24 @@
 
 error_reporting(E_ALL);
 
-/*$curl = curl_init('http://www.oref.org.il/WarningMessages/alerts.json');
+
+
+
+
+$recodedResponse = '{
+"id" : "1405805473970",
+"title" : "פיקוד העורף התרעה במרחב ",
+"data" : [
+"עוטף עזה 224"
+]
+}
+';
+
+
+
+
+/*
+$curl = curl_init('http://www.oref.org.il/WarningMessages/alerts.json');
 
 // curl_setopt($curl, CURLOPT_HEADER, true); // get response header
 // curl_setopt($curl, CURLOPT_VERBOSE, true); // no idea what that means
@@ -21,14 +38,7 @@ curl_close($curl);
 
 $recodedResponse = mb_convert_encoding($externalAlertResponse, 'utf-8', 'utf-16');*/
 
-$recodedResponse = '{
-"id" : "1405805125060",
-"title" : "פיקוד העורף התרעה במרחב ",
-"data" : [
-"עוטף עזה 224"
-]
-}
-';
+
 
 
 echo '<pre>';

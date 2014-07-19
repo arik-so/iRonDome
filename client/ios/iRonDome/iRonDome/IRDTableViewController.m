@@ -111,6 +111,15 @@
                     // [self.currentRockets addObject:currentSiren];
                     [self.currentAlertIDs addObject:alertIDObject];
                     
+                    
+                    // when will the current siren reach the threshold?
+                    NSTimeInterval timeDelta =  currentSiren.timestamp - threshold;
+                    
+                    [NSTimer scheduledTimerWithTimeInterval:timeDelta target:self selector:@selector(refreshLocalSirens) userInfo:nil repeats:NO];
+                    
+                    
+                    
+                    
                     /* [self.currentAlertIDs addObject:@(currentRocket.alertID)];
                     
                     [self.currentRockets addObject:currentRocket];
@@ -154,6 +163,13 @@
         }
         
     }];
+    
+}
+
+- (void)refreshLocalSirens{
+    
+    [self prepareRocketData];
+    [self.tableView reloadData];
     
 }
 
