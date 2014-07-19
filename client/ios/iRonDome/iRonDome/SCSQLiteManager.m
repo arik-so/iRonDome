@@ -74,6 +74,7 @@ static SCSQLiteManager *activeManager;
         
         // the primary keys need to be added with the creation process
         [db executeUpdate:@"CREATE TABLE IF NOT EXISTS rockets (id INTEGER PRIMARY KEY AUTOINCREMENT)"];
+        [db executeUpdate:@"CREATE TABLE IF NOT EXISTS sirens (id INTEGER PRIMARY KEY AUTOINCREMENT)"];
         
         
         
@@ -85,6 +86,26 @@ static SCSQLiteManager *activeManager;
         [db executeUpdate:@"ALTER TABLE rockets ADD COLUMN toponym TEXT "]; // like place name, but more fancy
         [db executeUpdate:@"ALTER TABLE rockets ADD COLUMN alertID INTEGER (20) "];
         [db executeUpdate:@"ALTER TABLE rockets ADD COLUMN timestamp INTEGER (20) "];
+        
+        
+        
+        
+        
+        [db executeUpdate:@"ALTER TABLE sirens ADD COLUMN serverID TEXT "]; // the object's server ID as on parse
+        [db executeUpdate:@"ALTER TABLE sirens ADD COLUMN latitude FLOAT "];
+        [db executeUpdate:@"ALTER TABLE sirens ADD COLUMN longitude FLOAT "];
+        
+        [db executeUpdate:@"ALTER TABLE sirens ADD COLUMN latitudeNorth FLOAT "];
+        [db executeUpdate:@"ALTER TABLE sirens ADD COLUMN latitudeSouth FLOAT "];
+        [db executeUpdate:@"ALTER TABLE sirens ADD COLUMN longitudeWest FLOAT "];
+        [db executeUpdate:@"ALTER TABLE sirens ADD COLUMN longitudeEast FLOAT "];
+        
+        
+        [db executeUpdate:@"ALTER TABLE sirens ADD COLUMN toponym TEXT "]; // like place name, but more fancy
+        [db executeUpdate:@"ALTER TABLE sirens ADD COLUMN alertID INTEGER (20) "];
+        [db executeUpdate:@"ALTER TABLE sirens ADD COLUMN timestamp INTEGER (20) "];
+        
+        
         
         
         

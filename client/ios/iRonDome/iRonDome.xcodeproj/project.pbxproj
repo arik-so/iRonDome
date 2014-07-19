@@ -33,6 +33,7 @@
 		517C25C4197AAD5E00052133 /* major_alert.caf in Resources */ = {isa = PBXBuildFile; fileRef = 517C25C3197A916A00052133 /* major_alert.caf */; };
 		517C25C5197AAD6000052133 /* major_alert_alarm.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 517C25C1197A903500052133 /* major_alert_alarm.m4a */; };
 		517C25C6197AAD6300052133 /* minor_alert_alarm.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 517C25C2197A904000052133 /* minor_alert_alarm.m4a */; };
+		517C25C9197AD76500052133 /* SCLocalSiren.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C25C8197AD76500052133 /* SCLocalSiren.m */; };
 		FE52C8EC197788FD000ED87D /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8EB197788FD000ED87D /* Parse.framework */; };
 		FE52C8EE19778C4D000ED87D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8ED19778C4D000ED87D /* AudioToolbox.framework */; };
 		FE52C8F719778CBD000ED87D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8EF19778CBD000ED87D /* CFNetwork.framework */; };
@@ -100,6 +101,8 @@
 		517C25C1197A903500052133 /* major_alert_alarm.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = major_alert_alarm.m4a; sourceTree = "<group>"; };
 		517C25C2197A904000052133 /* minor_alert_alarm.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = minor_alert_alarm.m4a; sourceTree = "<group>"; };
 		517C25C3197A916A00052133 /* major_alert.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = major_alert.caf; sourceTree = "<group>"; };
+		517C25C7197AD76500052133 /* SCLocalSiren.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLocalSiren.h; sourceTree = "<group>"; };
+		517C25C8197AD76500052133 /* SCLocalSiren.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLocalSiren.m; sourceTree = "<group>"; };
 		FE52C8EB197788FD000ED87D /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		FE52C8ED19778C4D000ED87D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		FE52C8EF19778CBD000ED87D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -266,6 +269,8 @@
 				517992B319784D3B00830A21 /* SCLocalObject.m */,
 				517992C81978611600830A21 /* SCLocalRocket.h */,
 				517992C91978611600830A21 /* SCLocalRocket.m */,
+				517C25C7197AD76500052133 /* SCLocalSiren.h */,
+				517C25C8197AD76500052133 /* SCLocalSiren.m */,
 			);
 			name = storage;
 			sourceTree = "<group>";
@@ -425,6 +430,7 @@
 				FE58AB0C19783EF00084808E /* IRDTableViewController.m in Sources */,
 				5179928419771B6300830A21 /* IRDAppDelegate.m in Sources */,
 				FE9A3E2F197847770070AB27 /* IRDSettingsTableViewController.m in Sources */,
+				517C25C9197AD76500052133 /* SCLocalSiren.m in Sources */,
 				5179928019771B6300830A21 /* main.m in Sources */,
 				517992CA1978611600830A21 /* SCLocalRocket.m in Sources */,
 				FE9D23FD197AB4AF00CE79E7 /* IRDMapZoomViewController.m in Sources */,
@@ -573,7 +579,7 @@
 				INFOPLIST_FILE = "iRonDome/iRonDome-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "EF19132F-CC14-4D5B-AAE6-20C9E7696439";
+				PROVISIONING_PROFILE = "6989489D-7DA7-458E-B882-197BAA00A55C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -593,7 +599,7 @@
 				INFOPLIST_FILE = "iRonDome/iRonDome-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "EF19132F-CC14-4D5B-AAE6-20C9E7696439";
+				PROVISIONING_PROFILE = "6989489D-7DA7-458E-B882-197BAA00A55C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
