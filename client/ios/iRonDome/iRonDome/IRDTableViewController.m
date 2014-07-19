@@ -117,9 +117,6 @@
                     
                     [NSTimer scheduledTimerWithTimeInterval:timeDelta target:self selector:@selector(refreshLocalSirens) userInfo:nil repeats:NO];
                     
-                    
-                    
-                    
                     /* [self.currentAlertIDs addObject:@(currentRocket.alertID)];
                     
                     [self.currentRockets addObject:currentRocket];
@@ -135,12 +132,7 @@
                     
                 }
                 
-                
-                
-                
-                
             }
-            
             
             if(currentSiren.timestamp >= threshold){
                 
@@ -154,10 +146,7 @@
                 [self.mapView addAnnotation:rocketAnnotation];
                 
             }
-            
-            
-            
-            
+        
             [self.sirensByAlertID[alertIDObject] addObject:currentSiren];
             
         }
