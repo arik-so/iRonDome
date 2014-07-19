@@ -29,7 +29,6 @@
 		517992C419784D5200830A21 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992BE19784D5200830A21 /* FMDatabaseQueue.m */; };
 		517992C519784D5200830A21 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992C019784D5200830A21 /* FMResultSet.m */; };
 		517992C7197852B300830A21 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 517992C6197852B300830A21 /* libsqlite3.0.dylib */; };
-		517992CA1978611600830A21 /* SCLocalRocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992C91978611600830A21 /* SCLocalRocket.m */; };
 		517C25C4197AAD5E00052133 /* major_alert.caf in Resources */ = {isa = PBXBuildFile; fileRef = 517C25C3197A916A00052133 /* major_alert.caf */; };
 		517C25C5197AAD6000052133 /* major_alert_alarm.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 517C25C1197A903500052133 /* major_alert_alarm.m4a */; };
 		517C25C6197AAD6300052133 /* minor_alert_alarm.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 517C25C2197A904000052133 /* minor_alert_alarm.m4a */; };
@@ -96,8 +95,6 @@
 		517992BF19784D5200830A21 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		517992C019784D5200830A21 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		517992C6197852B300830A21 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
-		517992C81978611600830A21 /* SCLocalRocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLocalRocket.h; sourceTree = "<group>"; };
-		517992C91978611600830A21 /* SCLocalRocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLocalRocket.m; sourceTree = "<group>"; };
 		517C25C1197A903500052133 /* major_alert_alarm.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = major_alert_alarm.m4a; sourceTree = "<group>"; };
 		517C25C2197A904000052133 /* minor_alert_alarm.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = minor_alert_alarm.m4a; sourceTree = "<group>"; };
 		517C25C3197A916A00052133 /* major_alert.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = major_alert.caf; sourceTree = "<group>"; };
@@ -211,7 +208,6 @@
 				517C25C3197A916A00052133 /* major_alert.caf */,
 				517C25C1197A903500052133 /* major_alert_alarm.m4a */,
 				517C25C2197A904000052133 /* minor_alert_alarm.m4a */,
-				517C25C0197A902B00052133 /* alerts */,
 				517992AF19784D2200830A21 /* storage */,
 				5179928219771B6300830A21 /* IRDAppDelegate.h */,
 				5179928319771B6300830A21 /* IRDAppDelegate.m */,
@@ -267,8 +263,6 @@
 				517992B119784D3B00830A21 /* SCSQLiteManager.m */,
 				517992B219784D3B00830A21 /* SCLocalObject.h */,
 				517992B319784D3B00830A21 /* SCLocalObject.m */,
-				517992C81978611600830A21 /* SCLocalRocket.h */,
-				517992C91978611600830A21 /* SCLocalRocket.m */,
 				517C25C7197AD76500052133 /* SCLocalSiren.h */,
 				517C25C8197AD76500052133 /* SCLocalSiren.m */,
 			);
@@ -290,13 +284,6 @@
 				517992C019784D5200830A21 /* FMResultSet.m */,
 			);
 			name = sqlite;
-			sourceTree = "<group>";
-		};
-		517C25C0197A902B00052133 /* alerts */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = alerts;
 			sourceTree = "<group>";
 		};
 		FE52C90B1977BCFC000ED87D /* MapView */ = {
@@ -432,7 +419,6 @@
 				FE9A3E2F197847770070AB27 /* IRDSettingsTableViewController.m in Sources */,
 				517C25C9197AD76500052133 /* SCLocalSiren.m in Sources */,
 				5179928019771B6300830A21 /* main.m in Sources */,
-				517992CA1978611600830A21 /* SCLocalRocket.m in Sources */,
 				FE9D23FD197AB4AF00CE79E7 /* IRDMapZoomViewController.m in Sources */,
 				517992C219784D5200830A21 /* FMDatabaseAdditions.m in Sources */,
 			);

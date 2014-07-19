@@ -37,9 +37,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    // [self setupMap];
-    
-    
     self.sirens = @[].mutableCopy;
     
     __block double latitudeNorth = -1;
@@ -62,10 +59,6 @@
             
             [self.sirens addObject:currentSiren];
             
-            
-            
-            
-            
             if(latitudeNorth == -1){
                 latitudeNorth = currentSiren.latitudeNorth;
             }else{
@@ -77,8 +70,6 @@
             }else{
                 latitudeSouth = MIN(latitudeSouth, currentSiren.latitudeSouth);
             }
-            
-            
             
             if(longitudeEast == -1){
                 longitudeEast = currentSiren.longitudeEast;
@@ -92,35 +83,24 @@
                 longitudeWest = MIN(longitudeWest, currentSiren.longitudeWest);
             }
             
-            
-            
-            
-            
-            
-            
             CLLocationCoordinate2D  ctrpoint;
             ctrpoint.latitude = currentSiren.latitude;
             ctrpoint.longitude = currentSiren.longitude;
+            NSString *placeLabel = @"";
+            placeLabel = [NSString stringWithFormat:@"%@, %@", placeLabel, currentSiren.toponym];
+            placeLabel = [placeLabel substringFromIndex:2];
             IRDMapAnnotation *rocketAnnotation = [[IRDMapAnnotation alloc] init];
-            [rocketAnnotation initWithCoordinate:ctrpoint userTitle:@"Siren" userSubtitle:[NSString stringWithFormat:@"%f;%f", currentSiren.latitude, currentSiren.longitude]];
+            [rocketAnnotation initWithCoordinate:ctrpoint userTitle:@"Siren" userSubtitle:placeLabel];
             
             [self.mapView addAnnotation:rocketAnnotation];
             
-            
-            
-
         }
     
     }];
     
-    
-
-    
-    
     MKCoordinateRegion region;
     region.center.latitude = (latitudeSouth + latitudeNorth) / 2;
     region.center.longitude = (longitudeWest + longitudeEast) / 2;
-    
     
     region.span.latitudeDelta = (latitudeNorth - latitudeSouth) * MAP_PADDING;
     region.span.latitudeDelta = (region.span.latitudeDelta < MINIMUM_VISIBLE_LATITUDE) ? MINIMUM_VISIBLE_LATITUDE : region.span.latitudeDelta;
@@ -129,29 +109,6 @@
     MKCoordinateRegion scaledRegion = [self.mapView regionThatFits:region];
     [self.mapView setRegion:scaledRegion animated:YES];
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-}
-
-
-- (void)setupMap{
-    CLLocationCoordinate2D zoomLocation;
-    zoomLocation.latitude = 31.0000;
-    zoomLocation.longitude= 35.0000;
-    
-    // 2
-    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, kMapZoomLatitude, kMapZoomLongitude);
-    
-    // 3
-    [_mapView setRegion:viewRegion animated:YES];
-
 }
 
 #pragma mark - Map View

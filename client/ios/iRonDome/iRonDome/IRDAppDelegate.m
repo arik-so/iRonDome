@@ -44,22 +44,16 @@
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
-    
-    
-    
     [application registerForRemoteNotificationTypes: UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
-    
-    
-    
-    
     
     SCSQLiteManager *manager = [SCSQLiteManager initManager];
     [SCSQLiteManager setActiveManager:manager];
     
-    
-    
-    
     return YES;
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"newRocket" object:nil];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
