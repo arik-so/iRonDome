@@ -38,6 +38,8 @@
     
     self.serverID = serverSiren.objectId;
     
+    self.toponym = serverSiren[@"toponym"];
+    
     self.latitude = location.latitude;
     self.longitude = location.longitude;
     
@@ -50,7 +52,7 @@
     self.timestamp = serverSiren.createdAt.timeIntervalSince1970;
     self.alertID = [serverSiren[@"alertID"] longLongValue];
     
-    [self saveAttributes:@[@"serverID", @"latitude", @"longitude", @"latitudeNorth", @"latitudeSouth", @"longitudeWest", @"longitudeEast", @"timestamp", @"alertID"]];
+    [self saveAttributes:@[@"serverID", @"toponym", @"latitude", @"longitude", @"latitudeNorth", @"latitudeSouth", @"longitudeWest", @"longitudeEast", @"timestamp", @"alertID"]];
     
 }
 

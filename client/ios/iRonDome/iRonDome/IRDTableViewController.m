@@ -135,8 +135,7 @@
 - (void)downloadRocketData{
     //make sure array is null and then init it for refresh
     
-    NSString *dbTable = [SCLocalRocket getDatabaseTable];
-    
+    NSString *dbTable = [SCLocalSiren getDatabaseTable];
     NSString *query = [NSString stringWithFormat:@"SELECT alertID FROM %@ ORDER BY alertID DESC LIMIT 0,1", dbTable];
     
     __block NSNumber *alertID = nil;
@@ -153,16 +152,16 @@
         
     }];
     
-    PFQuery *newRocketQuery = [PFQuery queryWithClassName:@"Rocket"];
+    PFQuery *newSirenQuery = [PFQuery queryWithClassName:@"Siren"];
     
     if(alertID && [alertID isKindOfClass:[NSNumber class]]){
     
-        [newRocketQuery whereKey:@"alertID" greaterThan:alertID];
+        [newSirenQuery whereKey:@"alertID" greaterThan:alertID];
         
     }
     
     //get current rockets
-    [newRocketQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    [newSirenQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         
         if (!error) {
             // The find succeeded.
@@ -170,16 +169,16 @@
             // Do something with the found objects
             for (PFObject *object in objects) {
                 
-                SCLocalRocket *duplicate = [SCLocalRocket fetchByServerID:object.objectId];
+                SCLocalSiren *duplicate = [SCLocalSiren fetchByServerID:object.objectId];
                 if(duplicate){
                     continue; // we don't wanna add a rocket we already have locally
                 }
                 
-                SCLocalRocket *rocket = [SCLocalRocket create];
-                [rocket initFromServerResponse:object];
+                SCLocalSiren *siren = [SCLocalSiren create];
+                [siren initFromServerResponse:object];
                 
                 
-                CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
+                /* CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
                 CLLocation *location = [[CLLocation alloc] initWithLatitude:rocket.latitude longitude:rocket.longitude];
                 [geoCoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
                     
@@ -197,7 +196,7 @@
                         
                     });
                     
-                }];
+                }]; */
                 
                 
                 /* PFGeoPoint *location = object[@"location"];
