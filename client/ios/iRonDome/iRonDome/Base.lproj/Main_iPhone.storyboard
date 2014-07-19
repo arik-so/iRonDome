@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="uct-U3-hAa">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
@@ -70,6 +70,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="Mu5-Cn-zO5" kind="push" identifier="showRocketDetail" id="Mfh-E3-ORZ"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -149,7 +152,44 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ghc-lZ-GIe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="992" y="129"/>
+            <point key="canvasLocation" x="1058" y="-252"/>
+        </scene>
+        <!--Map Zoom View Controller-->
+        <scene sceneID="jnE-pO-Cau">
+            <objects>
+                <viewController id="Mu5-Cn-zO5" customClass="IRDMapZoomViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="V63-Xj-ouV"/>
+                        <viewControllerLayoutGuide type="bottom" id="4FD-ag-loK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dqE-vo-fbs">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="naP-f0-Il7">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Mu5-Cn-zO5" id="Kms-3l-xtv"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="naP-f0-Il7" firstAttribute="leading" secondItem="dqE-vo-fbs" secondAttribute="leading" id="0Ov-NS-2Ji"/>
+                            <constraint firstItem="4FD-ag-loK" firstAttribute="top" secondItem="naP-f0-Il7" secondAttribute="bottom" id="4vA-RY-Zoa"/>
+                            <constraint firstItem="naP-f0-Il7" firstAttribute="top" secondItem="V63-Xj-ouV" secondAttribute="bottom" id="rS3-up-Emj"/>
+                            <constraint firstAttribute="trailing" secondItem="naP-f0-Il7" secondAttribute="trailing" id="y6F-2F-mGd"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="837-db-srj"/>
+                    <connections>
+                        <outlet property="mapView" destination="naP-f0-Il7" id="xbM-Ua-EMG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="31U-Q7-oLS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1064" y="423"/>
         </scene>
     </scenes>
     <resources>

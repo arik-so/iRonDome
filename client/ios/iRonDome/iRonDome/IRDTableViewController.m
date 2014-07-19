@@ -55,9 +55,6 @@
 
 }
 
-
-
-
 - (void)prepareRocketData{
     
     self.currentRockets = @[].mutableCopy;
@@ -65,13 +62,7 @@
     
     // let's fetch the necessary stuff
     
-    
-    
     [self.mapView removeAnnotations:self.mapView.annotations];
-    
-    
-    
-    
     
     NSTimeInterval rightNow = [NSDate date].timeIntervalSince1970;
     NSTimeInterval threshold = rightNow + kRocketTimeThreshold;
@@ -107,11 +98,7 @@
         }else{
             
             [self.currentRockets addObject:currentRocket];
-            
-            
-            
-            
-            
+
             CLLocationCoordinate2D  ctrpoint;
             ctrpoint.latitude = currentRocket.latitude;
             ctrpoint.longitude = currentRocket.longitude;
@@ -120,18 +107,12 @@
             rocketAnnotation.rocketId = currentRocket.serverID;
             
             [self.mapView addAnnotation:rocketAnnotation];
-            
-            
-            
+    
         }
         
     }
     
-    
 }
-
-
-
 
 - (void)testTableView{
     [self.tableView reloadData];
@@ -154,8 +135,6 @@
 - (void)downloadRocketData{
     //make sure array is null and then init it for refresh
     
-    
-    
     NSString *dbTable = [SCLocalRocket getDatabaseTable];
     
     NSString *query = [NSString stringWithFormat:@"SELECT alertID FROM %@ ORDER BY alertID DESC LIMIT 0,1", dbTable];
@@ -173,10 +152,6 @@
         }
         
     }];
-    
-    
-    
-    
     
     PFQuery *newRocketQuery = [PFQuery queryWithClassName:@"Rocket"];
     
@@ -223,7 +198,6 @@
                     });
                     
                 }];
-                
                 
                 
                 /* PFGeoPoint *location = object[@"location"];
@@ -451,6 +425,9 @@ calloutAccessoryControlTapped:(UIControl *)control{
     return headerView;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+}
 
 /*
 // Override to support conditional editing of the table view.
@@ -490,15 +467,30 @@ calloutAccessoryControlTapped:(UIControl *)control{
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"showRocketDetail"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        
+        IRDMapZoomViewController *zoomView = segue.destinationViewController;
+        NSArray *rocketArray = @[];
+        
+        if(indexPath.section == 0){
+            rocketArray = self.currentRockets.copy;
+        }else if(indexPath.section == 1){
+            rocketArray = self.pastRockets.copy;
+        }
+        
+        SCLocalRocket *rocket = rocketArray[indexPath.row];
+        [rocket reload];
+        
+        zoomView.latitude = rocket.latitude;
+        zoomView.longitude = rocket.longitude;
+    }
 }
-*/
+
 
 @end
