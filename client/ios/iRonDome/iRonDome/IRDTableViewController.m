@@ -431,6 +431,8 @@ calloutAccessoryControlTapped:(UIControl *)control{
     double longitudeWest = -1;
     double longitudeEast = -1;
     
+    NSDate *sirenTime = nil;
+    
     for(SCLocalSiren *currentSiren in currentSirens){
         
         placeLabels = [NSString stringWithFormat:@"%@, %@", placeLabels, currentSiren.toponym];
@@ -459,6 +461,10 @@ calloutAccessoryControlTapped:(UIControl *)control{
             longitudeWest = currentSiren.longitudeWest;
         }else{
             longitudeWest = MIN(longitudeWest, currentSiren.longitudeWest);
+        }
+        
+        if(!sirenTime){
+            sirenTime = [NSDate dateWithTimeIntervalSince1970:currentSiren.timestamp];
         }
         
         

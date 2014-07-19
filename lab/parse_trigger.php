@@ -24,7 +24,7 @@ $recodedResponse = '{
 
 
 
-/*
+
 $curl = curl_init('http://www.oref.org.il/WarningMessages/alerts.json');
 
 // curl_setopt($curl, CURLOPT_HEADER, true); // get response header
@@ -36,7 +36,7 @@ $externalAlertResponse = curl_exec($curl);
 curl_close($curl);
 
 
-$recodedResponse = mb_convert_encoding($externalAlertResponse, 'utf-8', 'utf-16');*/
+$recodedResponse = mb_convert_encoding($externalAlertResponse, 'utf-8', 'utf-16');
 
 
 
