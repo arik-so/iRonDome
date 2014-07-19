@@ -22,10 +22,11 @@ curl_close($curl);
 $recodedResponse = mb_convert_encoding($externalAlertResponse, 'utf-8', 'utf-16');*/
 
 $recodedResponse = '{
-"id" : "1405774600004",
+"id" : "1405789053297",
 "title" : "פיקוד העורף התרעה במרחב ",
 "data" : [
-"אשדוד 281"
+"אשקלון 254",
+"עוטף עזה 216"
 ]
 }';
 
