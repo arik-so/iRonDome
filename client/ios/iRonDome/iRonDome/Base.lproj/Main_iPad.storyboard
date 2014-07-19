@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="12F45" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="qHU-0C-Rpa">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
@@ -69,6 +69,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="IA8-jq-3iP" kind="push" identifier="showRocketDetail" id="0gM-Kh-ffB"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -90,7 +93,44 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3SB-HZ-dyU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1068" y="129"/>
+            <point key="canvasLocation" x="1068" y="113"/>
+        </scene>
+        <!--Map Zoom View Controller-->
+        <scene sceneID="Nan-j2-Ljz">
+            <objects>
+                <viewController id="IA8-jq-3iP" customClass="IRDMapZoomViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="iaB-sZ-eSS"/>
+                        <viewControllerLayoutGuide type="bottom" id="AYZ-BM-9sn"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lhu-9E-khH">
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="sWh-i7-Y1d">
+                                <rect key="frame" x="0.0" y="1" width="768" height="960"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="IA8-jq-3iP" id="PPz-XI-o2r"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="sWh-i7-Y1d" firstAttribute="leading" secondItem="lhu-9E-khH" secondAttribute="leading" id="8EP-ax-REw"/>
+                            <constraint firstItem="sWh-i7-Y1d" firstAttribute="top" secondItem="iaB-sZ-eSS" secondAttribute="bottom" id="LPQ-gX-zyT"/>
+                            <constraint firstAttribute="bottom" secondItem="sWh-i7-Y1d" secondAttribute="bottom" id="YBW-rI-OaK"/>
+                            <constraint firstAttribute="trailing" secondItem="sWh-i7-Y1d" secondAttribute="trailing" id="a45-uP-LiL"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="3pa-7k-fv1"/>
+                    <connections>
+                        <outlet property="mapView" destination="sWh-i7-Y1d" id="LTh-02-a2c"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="C2H-GJ-aTz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2068" y="605"/>
         </scene>
         <!--Settings Table View Controller - Settings-->
         <scene sceneID="RTD-Hi-nOZ">
@@ -149,7 +189,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OPs-33-odj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2092" y="129"/>
+            <point key="canvasLocation" x="2068" y="-551"/>
         </scene>
     </scenes>
     <resources>

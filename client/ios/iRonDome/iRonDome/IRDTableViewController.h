@@ -12,6 +12,7 @@
 #import <MapKit/MapKit.h>
 #import "CustomAnnotationView.h"
 #import "IRDMapAnnotation.h"
+#import "IRDMapZoomViewController.h"
 
 #import "SCLocalRocket.h"
 
