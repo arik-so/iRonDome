@@ -556,6 +556,16 @@ calloutAccessoryControlTapped:(UIControl *)control{
     return 40;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
+    
+    if(section == 1){
+        return @"Count since July 20, 2014 IDT";
+    }
+    
+    return nil;
+    
+}
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
     NSArray *rocketArray = @[];
