@@ -13,6 +13,9 @@
 #define kAvenirLight @"Avenir-Light"
 #define kAvenirBook @"Avenir-Book"
 
+#define MAP_PADDING 1.3
+#define MINIMUM_VISIBLE_LATITUDE 0.01
+
 @interface IRDTableViewController ()
 
 // @property (nonatomic, strong) NSMutableArray *currentRockets;
@@ -84,6 +87,9 @@
     self.sirensByAlertID = @{}.mutableCopy;
     
     
+    NSMutableArray *currentSirens = @[].mutableCopy;
+    
+    
     // let's fetch the necessary stuff
     
     [self.mapView removeAnnotations:self.mapView.annotations];
@@ -94,6 +100,8 @@
     
     NSString *dbTable = [SCLocalSiren getDatabaseTable];
     NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ ORDER BY alertID DESC, timestamp DESC, toponym ASC", dbTable];
+    
+    __block BOOL incomingRockets = NO; 
     
     [[SCSQLiteManager getActiveManager].dbQueue inDatabase:^(FMDatabase *db) {
         
@@ -125,6 +133,11 @@
                     
                     [NSTimer scheduledTimerWithTimeInterval:timeDelta target:self selector:@selector(refreshLocalSirens) userInfo:nil repeats:NO];
                     
+                    
+                    incomingRockets = YES;
+                    
+                    
+                    
                     /* [self.currentAlertIDs addObject:@(currentRocket.alertID)];
                     
                     [self.currentRockets addObject:currentRocket];
@@ -153,6 +166,12 @@
                 
                 [self.mapView addAnnotation:rocketAnnotation];
                 
+                
+                
+                [currentSirens addObject:currentSiren];
+                
+                
+                
             }
         
             [self.sirensByAlertID[alertIDObject] addObject:currentSiren];
@@ -160,6 +179,27 @@
         }
         
     }];
+    
+    
+    
+    if(incomingRockets){
+        
+        MKCoordinateRegion rocketBounds = [IRDImpactCalculator determineImpactBoundsForSirens:currentSirens];
+        MKCoordinateRegion region = rocketBounds;
+        // region.center.latitude = (latitudeSouth + latitudeNorth) / 2;
+        // region.center.longitude = (longitudeWest + longitudeEast) / 2;
+        
+        region.span.latitudeDelta *= MAP_PADDING;
+        region.span.latitudeDelta = (region.span.latitudeDelta < MINIMUM_VISIBLE_LATITUDE) ? MINIMUM_VISIBLE_LATITUDE : region.span.latitudeDelta;
+        region.span.longitudeDelta *= MAP_PADDING;
+        
+        MKCoordinateRegion scaledRegion = [self.mapView regionThatFits:region];
+        [self.mapView setRegion:scaledRegion animated:YES];
+        
+        
+    }
+    
+    
     
 }
 
