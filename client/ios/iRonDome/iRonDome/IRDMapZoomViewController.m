@@ -39,11 +39,6 @@
     
     self.sirens = @[].mutableCopy;
     
-    __block double latitudeNorth = -1;
-    __block double latitudeSouth = -1;
-    __block double longitudeWest = -1;
-    __block double longitudeEast = -1;
-    
     
     NSString *dbTable = [SCLocalSiren getDatabaseTable];
     NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE alertID = :alertID ORDER BY timestamp DESC, toponym ASC", dbTable];
@@ -58,30 +53,6 @@
             [currentSiren initWithFetchResponse:result.resultDictionary];
             
             [self.sirens addObject:currentSiren];
-            
-            if(latitudeNorth == -1){
-                latitudeNorth = currentSiren.latitudeNorth;
-            }else{
-                latitudeNorth = MAX(latitudeNorth, currentSiren.latitudeNorth);
-            }
-            
-            if(latitudeSouth == -1){
-                latitudeSouth = currentSiren.latitudeSouth;
-            }else{
-                latitudeSouth = MIN(latitudeSouth, currentSiren.latitudeSouth);
-            }
-            
-            if(longitudeEast == -1){
-                longitudeEast = currentSiren.longitudeEast;
-            }else{
-                longitudeEast = MAX(longitudeEast, currentSiren.longitudeEast);
-            }
-            
-            if(longitudeWest == -1){
-                longitudeWest = currentSiren.longitudeWest;
-            }else{
-                longitudeWest = MIN(longitudeWest, currentSiren.longitudeWest);
-            }
             
             CLLocationCoordinate2D  ctrpoint;
             ctrpoint.latitude = currentSiren.latitude;
@@ -98,16 +69,34 @@
     
     }];
     
-    MKCoordinateRegion region;
-    region.center.latitude = (latitudeSouth + latitudeNorth) / 2;
-    region.center.longitude = (longitudeWest + longitudeEast) / 2;
+    MKCoordinateRegion rocketBounds = [IRDImpactCalculator determineImpactBoundsForSirens:self.sirens];
+    MKCoordinateRegion region = rocketBounds;
+    // region.center.latitude = (latitudeSouth + latitudeNorth) / 2;
+    // region.center.longitude = (longitudeWest + longitudeEast) / 2;
     
-    region.span.latitudeDelta = (latitudeNorth - latitudeSouth) * MAP_PADDING;
+    region.span.latitudeDelta *= MAP_PADDING;
     region.span.latitudeDelta = (region.span.latitudeDelta < MINIMUM_VISIBLE_LATITUDE) ? MINIMUM_VISIBLE_LATITUDE : region.span.latitudeDelta;
-    region.span.longitudeDelta = (longitudeEast - longitudeWest) * MAP_PADDING;
+    region.span.longitudeDelta *= MAP_PADDING;
     
     MKCoordinateRegion scaledRegion = [self.mapView regionThatFits:region];
     [self.mapView setRegion:scaledRegion animated:YES];
+    
+    
+    
+    
+    
+    // add the projected rocket impact
+    
+    /* IRDMapAnnotation *rocketAnnotation = [[IRDMapAnnotation alloc] init];
+    [rocketAnnotation initWithCoordinate:rocketBounds.center userTitle:@"Projected Impact" userSubtitle:nil];
+    [self.mapView addAnnotation:rocketAnnotation]; */
+    
+    
+    CLLocationDistance impactRadius = [IRDImpactCalculator determineImpactRadiusForSirens:self.sirens];
+    MKCircle *circle = [MKCircle circleWithCenterCoordinate:rocketBounds.center radius:impactRadius];
+    [self.mapView addOverlay:circle];
+    
+    
     
 }
 
@@ -155,6 +144,18 @@
 calloutAccessoryControlTapped:(UIControl *)control{
     NSLog(@"calloutAccessoryControlTapped:");
 }
+
+
+
+- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay{
+    MKCircleView *circleView = [[MKCircleView alloc] initWithOverlay:overlay];
+    circleView.fillColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:0.1];
+    circleView.strokeColor = [UIColor blackColor];
+    // [circleView setAlpha:0.5f];
+    return circleView;
+}
+
+
 
 /* - (void)mapView:(MKMapView *)mv didAddAnnotationViews:(NSArray *)views
 {

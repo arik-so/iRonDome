@@ -13,6 +13,7 @@
 #import "IRDMapAnnotation.h"
 
 #import "SCLocalSiren.h"
+#import "IRDImpactCalculator.h"
 
 @interface IRDMapZoomViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate>
 

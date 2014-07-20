@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		514893FA197BDDE000D32AE9 /* IRDImpactCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 514893F9197BDDE000D32AE9 /* IRDImpactCalculator.m */; };
 		5179927419771B6300830A21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5179927319771B6300830A21 /* Foundation.framework */; };
 		5179927619771B6300830A21 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5179927519771B6300830A21 /* CoreGraphics.framework */; };
 		5179927819771B6300830A21 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5179927719771B6300830A21 /* UIKit.framework */; };
@@ -62,6 +63,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		514893F8197BDDE000D32AE9 /* IRDImpactCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRDImpactCalculator.h; path = ../IRDImpactCalculator.h; sourceTree = "<group>"; };
+		514893F9197BDDE000D32AE9 /* IRDImpactCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRDImpactCalculator.m; path = ../IRDImpactCalculator.m; sourceTree = "<group>"; };
 		5179927019771B6300830A21 /* iRonDome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iRonDome.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5179927319771B6300830A21 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5179927519771B6300830A21 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -209,6 +212,8 @@
 				517C25C1197A903500052133 /* major_alert_alarm.m4a */,
 				517C25C2197A904000052133 /* minor_alert_alarm.m4a */,
 				517992AF19784D2200830A21 /* storage */,
+				514893F8197BDDE000D32AE9 /* IRDImpactCalculator.h */,
+				514893F9197BDDE000D32AE9 /* IRDImpactCalculator.m */,
 				5179928219771B6300830A21 /* IRDAppDelegate.h */,
 				5179928319771B6300830A21 /* IRDAppDelegate.m */,
 				FE58AB0A19783EF00084808E /* IRDTableViewController.h */,
@@ -413,6 +418,7 @@
 				517992C419784D5200830A21 /* FMDatabaseQueue.m in Sources */,
 				517992C519784D5200830A21 /* FMResultSet.m in Sources */,
 				517992C319784D5200830A21 /* FMDatabasePool.m in Sources */,
+				514893FA197BDDE000D32AE9 /* IRDImpactCalculator.m in Sources */,
 				FE52C90A1977B699000ED87D /* CustomAnnotationView.m in Sources */,
 				FE58AB0C19783EF00084808E /* IRDTableViewController.m in Sources */,
 				5179928419771B6300830A21 /* IRDAppDelegate.m in Sources */,
@@ -563,9 +569,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iRonDome/iRonDome-Prefix.pch";
 				INFOPLIST_FILE = "iRonDome/iRonDome-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "EF19132F-CC14-4D5B-AAE6-20C9E7696439";
+				PROVISIONING_PROFILE = "6989489D-7DA7-458E-B882-197BAA00A55C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -583,9 +589,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iRonDome/iRonDome-Prefix.pch";
 				INFOPLIST_FILE = "iRonDome/iRonDome-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "EF19132F-CC14-4D5B-AAE6-20C9E7696439";
+				PROVISIONING_PROFILE = "6989489D-7DA7-458E-B882-197BAA00A55C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
