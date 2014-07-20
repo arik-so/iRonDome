@@ -345,10 +345,16 @@
 }
 
 - (NSString *)formatDate:(NSDate *)date{
-    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
-    [timeFormatter setDateFormat:@"MM/dd/yyyy HH:mm:ss"];
-    [timeFormatter setTimeZone:[NSTimeZone systemTimeZone]];
-    NSString *newTime = [timeFormatter stringFromDate:[[NSDate alloc]init] ];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.locale = [NSLocale currentLocale];
+    formatter.timeZone = [NSTimeZone localTimeZone];
+    
+    formatter.doesRelativeDateFormatting = YES;
+    formatter.dateStyle = NSDateFormatterMediumStyle;
+    formatter.timeStyle = NSDateFormatterMediumStyle;
+    
+    NSString *newTime = [formatter stringFromDate:date];
     return newTime;
 }
 
