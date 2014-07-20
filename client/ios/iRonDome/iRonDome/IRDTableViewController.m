@@ -388,8 +388,8 @@
         
         //pinView.leftCalloutAccessoryView = customPinView;
         pinView.canShowCallout = YES;
-        pinView.calloutOffset = CGPointMake(10, 25);
-        pinView.centerOffset = CGPointMake(-5, -5);
+        // pinView.calloutOffset = CGPointMake(10, 25);
+        // pinView.centerOffset = CGPointMake(-5, -5);
     }
     else{
         pinView.annotation = annotation;
