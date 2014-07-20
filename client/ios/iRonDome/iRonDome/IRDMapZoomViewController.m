@@ -109,12 +109,15 @@
     }
     NSString *annotationIdentifier = @"PinViewAnnotation";
     
-    CustomAnnotationView *pinView = (CustomAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
+    // CustomAnnotationView *pinView = (CustomAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
+    MKPinAnnotationView *pinView = (MKPinAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
+    
     
     if (!pinView){
-        pinView = [[CustomAnnotationView alloc]
-                   initWithAnnotation:annotation
-                   reuseIdentifier:annotationIdentifier];
+        // pinView = [[CustomAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotationIdentifier];
+        pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotationIdentifier];
+        pinView.animatesDrop = YES;
+        
         
         //        UIImageView *customPinView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"annotationIcon.png"]];
         //        [customPinView setFrame:CGRectMake(0, 0, 32, 32)];
@@ -129,8 +132,8 @@
         
         //pinView.leftCalloutAccessoryView = customPinView;
         pinView.canShowCallout = YES;
-        pinView.calloutOffset = CGPointMake(10, 25);
-        pinView.centerOffset = CGPointMake(-5, -5);
+        // pinView.calloutOffset = CGPointMake(10, 25);
+        // pinView.centerOffset = CGPointMake(-5, -5);
     }
     else{
         pinView.annotation = annotation;
