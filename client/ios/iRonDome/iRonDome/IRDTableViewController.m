@@ -13,7 +13,7 @@
 #define kAvenirLight @"Avenir-Light"
 #define kAvenirBook @"Avenir-Book"
 
-#define MAP_PADDING 1.3
+#define MAP_PADDING 2 // we want it a bit higher in here
 #define MINIMUM_VISIBLE_LATITUDE 0.01
 
 @interface IRDTableViewController ()
@@ -361,12 +361,13 @@
     }
     NSString *annotationIdentifier = @"PinViewAnnotation";
     
-    CustomAnnotationView *pinView = (CustomAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
+    // CustomAnnotationView *pinView = (CustomAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
+    MKPinAnnotationView *pinView = (MKPinAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
     
     if (!pinView){
-        pinView = [[CustomAnnotationView alloc]
-                   initWithAnnotation:annotation
-                   reuseIdentifier:annotationIdentifier];
+        // pinView = [[CustomAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotationIdentifier];
+        pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotationIdentifier];
+        pinView.animatesDrop = YES;
         
         //        UIImageView *customPinView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"annotationIcon.png"]];
         //        [customPinView setFrame:CGRectMake(0, 0, 32, 32)];
