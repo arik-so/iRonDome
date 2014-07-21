@@ -35,16 +35,22 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     self.banner.backgroundColor = [UIColor clearColor];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:@"hideAd" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:@"showAd" object:nil];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
 }
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error{
     [UIView animateWithDuration:0.4 animations:^{
         banner.alpha = 0.0F;
     } completion:^(BOOL finished) {
-        
     }];
 }
 
@@ -53,36 +59,7 @@
         [UIView animateWithDuration:0.4 animations:^{
             banner.alpha = 1.0F;
         } completion:^(BOOL finished) {
-            
         }];
-    }
-}
-
--(void)hidesBanner {
-    NSLog(@"HIDING BANNER");
-    [UIView animateWithDuration:0.4 animations:^{
-        self.banner.alpha = 0.0F;
-    } completion:^(BOOL finished) {
-        
-    }];
-}
-
-
--(void)showsBanner {
-    NSLog(@"SHOWING BANNER");
-    [UIView animateWithDuration:0.4 animations:^{
-        self.banner.alpha = 1.0F;
-    } completion:^(BOOL finished) {
-        
-    }];
-}
-
-//Handle Notification
-- (void)handleNotification:(NSNotification *)notification{
-    if ([notification.name isEqualToString:@"hideAd"]) {
-        [self hidesBanner];
-    }else if ([notification.name isEqualToString:@"showAd"]) {
-        [self showsBanner];
     }
 }
 
@@ -124,14 +101,16 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    
-    return 2;
+    if (section == 0) {
+        return 2;
+    }
+    return 0;
     
 }
 
@@ -147,12 +126,12 @@
     UILabel *titleLabel = (UILabel *)[cell viewWithTag:1];
     UILabel *subtitleLabel = (UILabel *)[cell viewWithTag:2];
     UILabel *twitterLabel = (UILabel *)[cell viewWithTag:3];
-    if (indexPath.row == 0) {
+    if (indexPath.section == 0 && indexPath.row == 0) {
         titleLabel.text = @"Ben Honig";
         subtitleLabel.text = @"Developer / Designer";
         twitterLabel.text = @"@iPhonig";
     }
-    if (indexPath.row == 1) {
+    if (indexPath.section == 0 && indexPath.row == 1) {
         titleLabel.text = @"Arik Sosman";
         subtitleLabel.text = @"Developer";
         twitterLabel.text = @"@arikaleph";
@@ -162,7 +141,28 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (section == 1) {
+        return 120;
+    }
     return 40;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    if (section == 0) {
+        self.banner = [[ADBannerView alloc] initWithFrame:CGRectZero];
+        self.banner.delegate = self;
+        [self.banner setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+        
+        CGRect frame = self.banner.frame;
+        frame.origin.y = -frame.size.height;
+        frame.origin.x = 0.0f;
+        
+        self.banner.frame = frame;
+        
+        return self.banner;
+    }
+    
+    return nil;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -178,6 +178,19 @@
         titleHeader.textColor = [UIColor blackColor];
         [headerView addSubview:titleHeader];
     }
+    if (section == 1) {
+        headerView.frame = CGRectMake(0, 0, tableView.frame.size.width, 20);
+        headerView.backgroundColor = [UIColor clearColor];
+        UILabel *titleHeader = [[UILabel alloc] init];
+        titleHeader.frame = CGRectMake(0, 15, headerView.frame.size.width, 125.0);
+        [titleHeader setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+        titleHeader.font = [UIFont fontWithName:kAvenirLight size:12];
+        titleHeader.textAlignment = NSTextAlignmentCenter;
+        titleHeader.numberOfLines = 2;
+        titleHeader.text = [NSString stringWithFormat:@"iRon Dome\nVersion 1.0"];
+        titleHeader.textColor = [UIColor blackColor];
+        [headerView addSubview:titleHeader];
+    }
     return headerView;
 }
 
@@ -188,10 +201,6 @@
     if (indexPath.section == 0 && indexPath.row == 1) {
         [self followOnTwitter:@"ArikAleph"];
     }
-}
-
-- (void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 /*
