@@ -82,9 +82,6 @@
     [self.mapView setRegion:scaledRegion animated:YES];
     
     
-    
-    
-    
     // add the projected rocket impact
     
     /* IRDMapAnnotation *rocketAnnotation = [[IRDMapAnnotation alloc] init];
@@ -95,8 +92,6 @@
     CLLocationDistance impactRadius = [IRDImpactCalculator determineImpactRadiusForSirens:self.sirens];
     MKCircle *circle = [MKCircle circleWithCenterCoordinate:rocketBounds.center radius:impactRadius];
     [self.mapView addOverlay:circle];
-    
-    
     
 }
 
@@ -112,12 +107,10 @@
     // CustomAnnotationView *pinView = (CustomAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
     MKPinAnnotationView *pinView = (MKPinAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
     
-    
     if (!pinView){
         // pinView = [[CustomAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotationIdentifier];
         pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotationIdentifier];
         pinView.animatesDrop = YES;
-        
         
         //        UIImageView *customPinView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"annotationIcon.png"]];
         //        [customPinView setFrame:CGRectMake(0, 0, 32, 32)];
@@ -148,8 +141,6 @@ calloutAccessoryControlTapped:(UIControl *)control{
     NSLog(@"calloutAccessoryControlTapped:");
 }
 
-
-
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay{
     MKCircleView *circleView = [[MKCircleView alloc] initWithOverlay:overlay];
     circleView.fillColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:0.1];
@@ -158,13 +149,11 @@ calloutAccessoryControlTapped:(UIControl *)control{
     return circleView;
 }
 
-
-
-/* - (void)mapView:(MKMapView *)mv didAddAnnotationViews:(NSArray *)views
+ - (void)mapView:(MKMapView *)mv didAddAnnotationViews:(NSArray *)views
 {
     
     // add the animation here
-    CGRect visibleRect = [_mapView annotationVisibleRect];
+    CGRect visibleRect = [self.mapView annotationVisibleRect];
     
     for(MKAnnotationView *view in views){
         if([view isKindOfClass:[CustomAnnotationView class]]){
@@ -184,7 +173,7 @@ calloutAccessoryControlTapped:(UIControl *)control{
             }];
         }
     }
-} */
+}
 
 
 - (void)didReceiveMemoryWarning

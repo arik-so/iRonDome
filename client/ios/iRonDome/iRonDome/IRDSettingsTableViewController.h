@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <iAd/iAd.h>
 
-@interface IRDSettingsTableViewController : UITableViewController
+@interface IRDSettingsTableViewController : UITableViewController <ADBannerViewDelegate>
+
+@property (nonatomic, weak) IBOutlet ADBannerView *banner;
+
+-(void)hidesBanner;
+-(void)showsBanner;
+
 
 @end

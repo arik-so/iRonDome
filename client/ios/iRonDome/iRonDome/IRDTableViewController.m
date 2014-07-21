@@ -166,11 +166,7 @@
                 
                 [self.mapView addAnnotation:rocketAnnotation];
                 
-                
-                
                 [currentSirens addObject:currentSiren];
-                
-                
                 
             }
         
@@ -179,8 +175,6 @@
         }
         
     }];
-    
-    
     
     if(incomingRockets){
         
@@ -198,8 +192,6 @@
         
         
     }
-    
-    
     
 }
 
@@ -273,41 +265,6 @@
                 SCLocalSiren *siren = [SCLocalSiren create];
                 [siren initFromServerResponse:object];
                 
-                
-                /* CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
-                CLLocation *location = [[CLLocation alloc] initWithLatitude:rocket.latitude longitude:rocket.longitude];
-                [geoCoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-                    
-                    if(!placemarks){ return; }
-                    
-                    CLPlacemark *firstPlacemark = placemarks[0];
-                    if(!firstPlacemark){ return; }
-                    
-                    rocket.toponym = firstPlacemark.name;
-                    [rocket saveAttribute:@"toponym"];
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        
-                        [self.tableView reloadData];
-                        
-                    });
-                    
-                }]; */
-                
-                
-                /* PFGeoPoint *location = object[@"location"];
-                NSLog(@"Object Id: %@ Latitude: %f Longitude: %f", object.objectId, location.latitude, location.longitude);
-                [self.currentRockets addObject:[NSArray arrayWithObjects:object.objectId, [NSNumber numberWithDouble:location.latitude], [NSNumber numberWithDouble:location.longitude], nil]];
-                //add pins to map
-                CLLocationCoordinate2D  ctrpoint;
-                ctrpoint.latitude = location.latitude;
-                ctrpoint.longitude = location.longitude;
-                IRDMapAnnotation *rocketAnnotation = [[IRDMapAnnotation alloc] init];
-                [rocketAnnotation initWithCoordinate:ctrpoint userTitle:@"Rocket" userSubtitle:[NSString stringWithFormat:@"%f;%f", location.latitude, location.longitude]];
-                rocketAnnotation.rocketId = object.objectId;
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.mapView performSelector:@selector(addAnnotation:) withObject:rocketAnnotation afterDelay:0.2];
-                }); */
             }
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -592,14 +549,14 @@ calloutAccessoryControlTapped:(UIControl *)control{
             currentRocketsLabel.text = @"Current Rockets: 0";
         }
         else{
-            currentRocketsLabel.text = [NSString stringWithFormat:@"Current Rockets: %i", rocketArray.count];
+            currentRocketsLabel.text = [NSString stringWithFormat:@"Current Rockets: %lu", (unsigned long)rocketArray.count];
         }
     }
     if (section == 1) {
         if (rocketArray.count < 1) {
             currentRocketsLabel.text = @"Past Rockets: 0";
         }
-        currentRocketsLabel.text = [NSString stringWithFormat:@"Past Rockets: %i", rocketArray.count];
+        currentRocketsLabel.text = [NSString stringWithFormat:@"Past Rockets: %lu", (unsigned long)rocketArray.count];
     }
     return headerView;
 }

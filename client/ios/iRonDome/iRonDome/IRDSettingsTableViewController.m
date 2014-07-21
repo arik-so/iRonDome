@@ -33,6 +33,57 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    self.banner.backgroundColor = [UIColor clearColor];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:@"hideAd" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:@"showAd" object:nil];
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error{
+    [UIView animateWithDuration:0.4 animations:^{
+        banner.alpha = 0.0F;
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner{
+    if (!banner.isBannerLoaded) {
+        [UIView animateWithDuration:0.4 animations:^{
+            banner.alpha = 1.0F;
+        } completion:^(BOOL finished) {
+            
+        }];
+    }
+}
+
+-(void)hidesBanner {
+    NSLog(@"HIDING BANNER");
+    [UIView animateWithDuration:0.4 animations:^{
+        self.banner.alpha = 0.0F;
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+
+-(void)showsBanner {
+    NSLog(@"SHOWING BANNER");
+    [UIView animateWithDuration:0.4 animations:^{
+        self.banner.alpha = 1.0F;
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+//Handle Notification
+- (void)handleNotification:(NSNotification *)notification{
+    if ([notification.name isEqualToString:@"hideAd"]) {
+        [self hidesBanner];
+    }else if ([notification.name isEqualToString:@"showAd"]) {
+        [self showsBanner];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -137,6 +188,10 @@
     if (indexPath.section == 0 && indexPath.row == 1) {
         [self followOnTwitter:@"ArikAleph"];
     }
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 /*

@@ -45,10 +45,6 @@
         }
     }
     
-    
-    
-    
-    
     // let's start monitoring location, right?
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.distanceFilter = kCLDistanceFilterNone;
@@ -75,8 +71,6 @@
     AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"newRocket" object:nil];
-    
-    
     
     if (application.applicationState == UIApplicationStateInactive) {
         // The application was just brought from the background to the foreground,
