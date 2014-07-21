@@ -9,6 +9,9 @@
 #import "IRDAppDelegate.h"
 #import <Parse/Parse.h>
 
+#import "Flurry.h"
+#import "FlurryAds.h"
+
 #define kParseApplicationId @"KFQeWT9x9MoHlUvBUlEDj77Rh3zZ8piQIMzQ2Anf"
 #define kParseClientKey @"ibx6T6Bvmuxa5gTaY3zSzLajDPpumblyybno3orz"
 
@@ -44,6 +47,13 @@
             [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
         }
     }
+    
+    
+    
+    [Flurry startSession:@"VR6WNDMCRNHG5KJ48QQW"];
+    [FlurryAds initialize:self.window.rootViewController];
+    
+    
     
     // let's start monitoring location, right?
     self.locationManager = [[CLLocationManager alloc] init];

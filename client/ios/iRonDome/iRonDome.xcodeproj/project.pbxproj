@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		514893FA197BDDE000D32AE9 /* IRDImpactCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 514893F9197BDDE000D32AE9 /* IRDImpactCalculator.m */; };
+		515C633E197DAEE000C3BAB5 /* libFlurry_5.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 515C6339197DAEE000C3BAB5 /* libFlurry_5.2.0.a */; };
+		515C633F197DAEE000C3BAB5 /* libFlurryAds_5.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 515C633D197DAEE000C3BAB5 /* libFlurryAds_5.2.0.a */; };
+		515C6341197DAF0F00C3BAB5 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 515C6340197DAF0F00C3BAB5 /* AdSupport.framework */; };
+		515C6343197DAF1E00C3BAB5 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 515C6342197DAF1E00C3BAB5 /* MediaPlayer.framework */; };
 		5179927419771B6300830A21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5179927319771B6300830A21 /* Foundation.framework */; };
 		5179927619771B6300830A21 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5179927519771B6300830A21 /* CoreGraphics.framework */; };
 		5179927819771B6300830A21 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5179927719771B6300830A21 /* UIKit.framework */; };
@@ -66,6 +70,13 @@
 /* Begin PBXFileReference section */
 		514893F8197BDDE000D32AE9 /* IRDImpactCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRDImpactCalculator.h; path = ../IRDImpactCalculator.h; sourceTree = "<group>"; };
 		514893F9197BDDE000D32AE9 /* IRDImpactCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRDImpactCalculator.m; path = ../IRDImpactCalculator.m; sourceTree = "<group>"; };
+		515C6338197DAEE000C3BAB5 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		515C6339197DAEE000C3BAB5 /* libFlurry_5.2.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_5.2.0.a; sourceTree = "<group>"; };
+		515C633B197DAEE000C3BAB5 /* FlurryAdDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAdDelegate.h; sourceTree = "<group>"; };
+		515C633C197DAEE000C3BAB5 /* FlurryAds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAds.h; sourceTree = "<group>"; };
+		515C633D197DAEE000C3BAB5 /* libFlurryAds_5.2.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAds_5.2.0.a; sourceTree = "<group>"; };
+		515C6340197DAF0F00C3BAB5 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		515C6342197DAF1E00C3BAB5 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		5179927019771B6300830A21 /* iRonDome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iRonDome.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5179927319771B6300830A21 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5179927519771B6300830A21 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -133,11 +144,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				515C6343197DAF1E00C3BAB5 /* MediaPlayer.framework in Frameworks */,
+				515C6341197DAF0F00C3BAB5 /* AdSupport.framework in Frameworks */,
+				515C633F197DAEE000C3BAB5 /* libFlurryAds_5.2.0.a in Frameworks */,
 				FE9D2400197C97EF00CE79E7 /* iAd.framework in Frameworks */,
 				517992C7197852B300830A21 /* libsqlite3.0.dylib in Frameworks */,
 				FE52C8F819778CBD000ED87D /* CoreLocation.framework in Frameworks */,
 				FE52C9031977A1EC000ED87D /* MapKit.framework in Frameworks */,
 				FE52C8F719778CBD000ED87D /* CFNetwork.framework in Frameworks */,
+				515C633E197DAEE000C3BAB5 /* libFlurry_5.2.0.a in Frameworks */,
 				FE52C8F819778CBD000ED87D /* CoreLocation.framework in Frameworks */,
 				FE52C8F919778CBD000ED87D /* libz.dylib in Frameworks */,
 				FE52C8FA19778CBD000ED87D /* MobileCoreServices.framework in Frameworks */,
@@ -166,6 +181,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		515C6337197DAEE000C3BAB5 /* Flurry */ = {
+			isa = PBXGroup;
+			children = (
+				515C6338197DAEE000C3BAB5 /* Flurry.h */,
+				515C6339197DAEE000C3BAB5 /* libFlurry_5.2.0.a */,
+			);
+			path = Flurry;
+			sourceTree = "<group>";
+		};
+		515C633A197DAEE000C3BAB5 /* FlurryAds */ = {
+			isa = PBXGroup;
+			children = (
+				515C633B197DAEE000C3BAB5 /* FlurryAdDelegate.h */,
+				515C633C197DAEE000C3BAB5 /* FlurryAds.h */,
+				515C633D197DAEE000C3BAB5 /* libFlurryAds_5.2.0.a */,
+			);
+			path = FlurryAds;
+			sourceTree = "<group>";
+		};
 		5179926719771B6300830A21 = {
 			isa = PBXGroup;
 			children = (
@@ -188,6 +222,8 @@
 		5179927219771B6300830A21 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				515C6342197DAF1E00C3BAB5 /* MediaPlayer.framework */,
+				515C6340197DAF0F00C3BAB5 /* AdSupport.framework */,
 				FE9D23FF197C97EF00CE79E7 /* iAd.framework */,
 				517992C6197852B300830A21 /* libsqlite3.0.dylib */,
 				FE52C9021977A1EC000ED87D /* MapKit.framework */,
@@ -215,6 +251,8 @@
 				517C25C3197A916A00052133 /* major_alert.caf */,
 				517C25C1197A903500052133 /* major_alert_alarm.m4a */,
 				517C25C2197A904000052133 /* minor_alert_alarm.m4a */,
+				515C6337197DAEE000C3BAB5 /* Flurry */,
+				515C633A197DAEE000C3BAB5 /* FlurryAds */,
 				517992AF19784D2200830A21 /* storage */,
 				514893F8197BDDE000D32AE9 /* IRDImpactCalculator.h */,
 				514893F9197BDDE000D32AE9 /* IRDImpactCalculator.m */,
@@ -574,6 +612,11 @@
 				GCC_PREFIX_HEADER = "iRonDome/iRonDome-Prefix.pch";
 				INFOPLIST_FILE = "iRonDome/iRonDome-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/iRonDome/Flurry",
+					"$(PROJECT_DIR)/iRonDome/FlurryAds",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "34D48AA6-B8B8-47C2-8641-1CD1F1279119";
 				WRAPPER_EXTENSION = app;
@@ -594,6 +637,11 @@
 				GCC_PREFIX_HEADER = "iRonDome/iRonDome-Prefix.pch";
 				INFOPLIST_FILE = "iRonDome/iRonDome-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/iRonDome/Flurry",
+					"$(PROJECT_DIR)/iRonDome/FlurryAds",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "34D48AA6-B8B8-47C2-8641-1CD1F1279119";
 				WRAPPER_EXTENSION = app;

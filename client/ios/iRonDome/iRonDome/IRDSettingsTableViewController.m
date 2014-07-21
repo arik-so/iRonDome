@@ -9,6 +9,8 @@
 #import "IRDSettingsTableViewController.h"
 #define kAvenirLight @"Avenir-Light"
 
+#import "FlurryAds.h"
+
 @interface IRDSettingsTableViewController ()
 
 @end
@@ -33,6 +35,12 @@
     self.banner.delegate = self;
     [self.banner setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     
+    
+    
+    // [FlurryAds fetchAndDisplayAdForSpace:@"iRon Dome Ads" view:self.view size:BANNER_BOTTOM];
+    
+    
+    
     // CGRect frame = self.banner.frame;
     // frame.origin.y = -frame.size.height;
     // frame.origin.x = 0.0f;
@@ -55,11 +63,19 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    [FlurryAds setAdDelegate:self];
+    
+    [FlurryAds fetchAndDisplayAdForSpace:@"iRon Dome Ads" view:self.view size:BANNER_BOTTOM];
+    
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    
+    [FlurryAds setAdDelegate:nil];
+    
 }
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error{
