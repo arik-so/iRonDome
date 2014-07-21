@@ -241,6 +241,7 @@
     }];
     
     PFQuery *newSirenQuery = [PFQuery queryWithClassName:@"Siren"];
+    [newSirenQuery orderByDescending:@"alertID"];
     
     if(alertID && [alertID isKindOfClass:[NSNumber class]]){
     

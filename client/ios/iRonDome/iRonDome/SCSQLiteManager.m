@@ -206,13 +206,13 @@ static SCSQLiteManager *activeManager;
 
 - (NSDictionary *)fetchObjectByServerID:(NSString *)serverID inTable:(NSString *)table{
     
-    NSString *queryString = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE serverID = %@", table, serverID];
+    NSString *queryString = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE serverID = :serverID", table];
     
     NSMutableArray *resultArray = @[].mutableCopy;
     
     [self.dbQueue inDatabase:^(FMDatabase *db) {
         
-        FMResultSet *result = [db executeQuery:queryString];
+        FMResultSet *result = [db executeQuery:queryString withParameterDictionary:@{@"serverID": serverID}];
         
         if(result.next){
             [resultArray addObject:result.resultDictionary];
