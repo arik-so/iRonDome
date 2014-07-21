@@ -10,13 +10,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iRonDome/IRDTableViewController.m"
-            timestampString = "427600498.77692"
+            timestampString = "427600901.285298"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "588"
-            endingLineNumber = "588"
-            landmarkName = "-tableView:viewForHeaderInSection:"
-            landmarkType = "5">
+            startingLineNumber = "578"
+            endingLineNumber = "578"
+            landmarkName = "@implementation IRDTableViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

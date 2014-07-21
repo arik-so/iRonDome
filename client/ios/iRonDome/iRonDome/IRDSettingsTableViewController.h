@@ -11,10 +11,7 @@
 
 @interface IRDSettingsTableViewController : UITableViewController <ADBannerViewDelegate>
 
-@property (nonatomic, weak) IBOutlet ADBannerView *banner;
-
--(void)hidesBanner;
--(void)showsBanner;
+@property (nonatomic, strong) ADBannerView *banner;
 
 
 @end

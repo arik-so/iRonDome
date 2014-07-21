@@ -514,16 +514,6 @@ calloutAccessoryControlTapped:(UIControl *)control{
     return 40;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
-    
-    if(section == 1){
-        return @"Count since July 20, 2014 IDT";
-    }
-    
-    return nil;
-    
-}
-
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
     NSArray *rocketArray = @[];
@@ -555,9 +545,9 @@ calloutAccessoryControlTapped:(UIControl *)control{
     }
     if (section == 1) {
         if (rocketArray.count < 1) {
-            currentRocketsLabel.text = @"Past Rockets: 0";
+            currentRocketsLabel.text = @"Past Rockets: 0 - Since 7/20/2014 IDT";
         }
-        currentRocketsLabel.text = [NSString stringWithFormat:@"Past Rockets: %lu", (unsigned long)rocketArray.count];
+        currentRocketsLabel.text = [NSString stringWithFormat:@"Past Rockets: %lu - Since 7/20/2014 IDT", (unsigned long)rocketArray.count];
     }
     return headerView;
 }
