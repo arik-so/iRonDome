@@ -28,6 +28,21 @@
 {
     [super viewDidLoad];
     
+    
+    self.banner = [[ADBannerView alloc] initWithFrame:CGRectZero];
+    self.banner.delegate = self;
+    [self.banner setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    
+    // CGRect frame = self.banner.frame;
+    // frame.origin.y = -frame.size.height;
+    // frame.origin.x = 0.0f;
+    
+    // self.banner.frame = frame;
+    
+    // return self.banner;
+    
+    
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -149,20 +164,24 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     if (section == 0) {
-        self.banner = [[ADBannerView alloc] initWithFrame:CGRectZero];
-        self.banner.delegate = self;
-        [self.banner setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-        
-        CGRect frame = self.banner.frame;
-        frame.origin.y = -frame.size.height;
-        frame.origin.x = 0.0f;
-        
-        self.banner.frame = frame;
         
         return self.banner;
+        
     }
     
     return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    
+    if (section == 0) {
+        
+        return self.banner.frame.size.height;
+        
+    }
+    
+    return 0;
+    
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
