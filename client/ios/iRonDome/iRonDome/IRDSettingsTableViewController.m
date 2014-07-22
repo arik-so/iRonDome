@@ -76,6 +76,8 @@
     
     [FlurryAds setAdDelegate:nil];
     
+    [FlurryAds removeAdFromSpace:@"iRon Dome Ads"];
+    
 }
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error{
@@ -92,6 +94,16 @@
         } completion:^(BOOL finished) {
         }];
     }
+}
+
+- (void)spaceDidReceiveAd:(NSString *)adSpace {
+    NSLog(@"=========== Ad Space [%@] Did Receive Ad ================ ", adSpace);
+    
+}
+
+- (void)spaceDidFailToReceiveAd:(NSString *)adSpace error:(NSError *)error {
+    NSLog(@"=========== Ad Space [%@] Did Fail to Receive Ad with error [%@] ================ ", adSpace, error);
+    
 }
 
 - (void)didReceiveMemoryWarning

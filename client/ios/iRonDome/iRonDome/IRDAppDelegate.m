@@ -14,6 +14,7 @@
 
 #define kParseApplicationId @"KFQeWT9x9MoHlUvBUlEDj77Rh3zZ8piQIMzQ2Anf"
 #define kParseClientKey @"ibx6T6Bvmuxa5gTaY3zSzLajDPpumblyybno3orz"
+#define kFlurryAPIKey @"VR6WNDMCRNHG5KJ48QQW"
 
 @interface IRDAppDelegate()
 
@@ -50,7 +51,7 @@
     
     
     
-    [Flurry startSession:@"VR6WNDMCRNHG5KJ48QQW"];
+    [Flurry startSession:kFlurryAPIKey];
     [FlurryAds initialize:self.window.rootViewController];
     
     
