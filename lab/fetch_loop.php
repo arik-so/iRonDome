@@ -9,7 +9,7 @@
 echo '<pre>';
 
 $localPathPrefix = dirname(__FILE__).'/';
-$triggerLocation = $localPathPrefix.'parse_trigger.php';
+$triggerLocation = $localPathPrefix.'parse_trigger_2.php';
 
 $commandString = 'nohup php '.$triggerLocation;
 $commandSuffix = ' > /dev/null &';
