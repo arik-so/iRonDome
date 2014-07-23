@@ -152,7 +152,7 @@ Parse.Cloud.define('pushFromHFC', function(request, response){
                         where: urgentPushNotificationQuery,
                         data: {
                             alert: 'TAKE COVER!',
-                            sound: 'major_alert_alarm.m4a',
+                            sound: 'major_alert.caf',
                             badge: 'Increment'
                         }
                     }, {

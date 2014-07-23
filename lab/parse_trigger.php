@@ -26,11 +26,20 @@ $noCurl = $_GET['nocurl'] || in_array('nocurl', $argv);
 
 
 $recodedResponse = '{
-"id" : "1405808361393",
+"id" : "1405974086170",
 "title" : "פיקוד העורף התרעה במרחב ",
 "data" : [
 "אשקלון 238, עוטף עזה 238",
 "31"
+]
+}
+';
+
+$recodedResponse = '{
+"id" : "1405974086178",
+"title" : "פיקוד העורף התרעה במרחב ",
+"data" : [
+"292"
 ]
 }
 ';
@@ -41,7 +50,8 @@ $recodedResponse = '{
 
 if(!$noCurl){
 
-    $curl = curl_init('http://www.oref.org.il/WarningMessages/alerts.json');
+    // $curl = curl_init('http://www.oref.org.il/WarningMessages/alerts.json');
+    $curl = curl_init('http://www.klh-dev.com/adom/alert/alerts.json');
 
     // curl_setopt($curl, CURLOPT_HEADER, true); // get response header
     // curl_setopt($curl, CURLOPT_VERBOSE, true); // no idea what that means
@@ -100,6 +110,7 @@ foreach($affectedCodesRaw as $currentCodeRaw){
 
         $currentCode = preg_replace('/[^0-9]/', null, $currentPartialCodeRaw);
 
+        if(empty($currentCode)){ continue; } // this code is weird
         if(in_array($currentCode, $affectedCodes)){ continue; } // we already know this code
 
         $affectedCodes[] = $currentCode;
@@ -146,6 +157,8 @@ foreach($affectedCodesRaw as $currentCodeRaw){
     // print_r($currentLookup);
 
 }
+
+if(empty($affectedCodes)){ die(); } // nothing relevant }
 
 
 

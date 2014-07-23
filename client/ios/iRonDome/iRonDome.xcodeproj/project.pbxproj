@@ -34,10 +34,9 @@
 		517992C419784D5200830A21 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992BE19784D5200830A21 /* FMDatabaseQueue.m */; };
 		517992C519784D5200830A21 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992C019784D5200830A21 /* FMResultSet.m */; };
 		517992C7197852B300830A21 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 517992C6197852B300830A21 /* libsqlite3.0.dylib */; };
-		517C25C4197AAD5E00052133 /* major_alert.caf in Resources */ = {isa = PBXBuildFile; fileRef = 517C25C3197A916A00052133 /* major_alert.caf */; };
-		517C25C5197AAD6000052133 /* major_alert_alarm.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 517C25C1197A903500052133 /* major_alert_alarm.m4a */; };
 		517C25C6197AAD6300052133 /* minor_alert_alarm.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 517C25C2197A904000052133 /* minor_alert_alarm.m4a */; };
 		517C25C9197AD76500052133 /* SCLocalSiren.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C25C8197AD76500052133 /* SCLocalSiren.m */; };
+		51DCEB0F197DD5E90036CFCE /* major_alert.caf in Resources */ = {isa = PBXBuildFile; fileRef = 51DCEB0E197DD5E90036CFCE /* major_alert.caf */; };
 		FE52C8EC197788FD000ED87D /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8EB197788FD000ED87D /* Parse.framework */; };
 		FE52C8EE19778C4D000ED87D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8ED19778C4D000ED87D /* AudioToolbox.framework */; };
 		FE52C8F719778CBD000ED87D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8EF19778CBD000ED87D /* CFNetwork.framework */; };
@@ -110,11 +109,12 @@
 		517992BF19784D5200830A21 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		517992C019784D5200830A21 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		517992C6197852B300830A21 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
-		517C25C1197A903500052133 /* major_alert_alarm.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = major_alert_alarm.m4a; sourceTree = "<group>"; };
+		517C25C1197A903500052133 /* major_alert_alarm_old.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = major_alert_alarm_old.m4a; sourceTree = "<group>"; };
 		517C25C2197A904000052133 /* minor_alert_alarm.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = minor_alert_alarm.m4a; sourceTree = "<group>"; };
-		517C25C3197A916A00052133 /* major_alert.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = major_alert.caf; sourceTree = "<group>"; };
+		517C25C3197A916A00052133 /* major_alert_old.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = major_alert_old.caf; sourceTree = "<group>"; };
 		517C25C7197AD76500052133 /* SCLocalSiren.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLocalSiren.h; sourceTree = "<group>"; };
 		517C25C8197AD76500052133 /* SCLocalSiren.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLocalSiren.m; sourceTree = "<group>"; };
+		51DCEB0E197DD5E90036CFCE /* major_alert.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = major_alert.caf; sourceTree = "<group>"; };
 		FE52C8EB197788FD000ED87D /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		FE52C8ED19778C4D000ED87D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		FE52C8EF19778CBD000ED87D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -248,8 +248,9 @@
 		5179927919771B6300830A21 /* iRonDome */ = {
 			isa = PBXGroup;
 			children = (
-				517C25C3197A916A00052133 /* major_alert.caf */,
-				517C25C1197A903500052133 /* major_alert_alarm.m4a */,
+				51DCEB0E197DD5E90036CFCE /* major_alert.caf */,
+				517C25C3197A916A00052133 /* major_alert_old.caf */,
+				517C25C1197A903500052133 /* major_alert_alarm_old.m4a */,
 				517C25C2197A904000052133 /* minor_alert_alarm.m4a */,
 				515C6337197DAEE000C3BAB5 /* Flurry */,
 				515C633A197DAEE000C3BAB5 /* FlurryAds */,
@@ -432,9 +433,8 @@
 				5179928F19771B6300830A21 /* Images.xcassets in Resources */,
 				5179928719771B6300830A21 /* Main_iPhone.storyboard in Resources */,
 				5179927E19771B6300830A21 /* InfoPlist.strings in Resources */,
-				517C25C4197AAD5E00052133 /* major_alert.caf in Resources */,
 				517C25C6197AAD6300052133 /* minor_alert_alarm.m4a in Resources */,
-				517C25C5197AAD6000052133 /* major_alert_alarm.m4a in Resources */,
+				51DCEB0F197DD5E90036CFCE /* major_alert.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -558,8 +558,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "47A798F4-9FD2-4F1D-A5B4-0A26C5B8585F";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -591,7 +592,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PROVISIONING_PROFILE = "47A798F4-9FD2-4F1D-A5B4-0A26C5B8585F";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -611,7 +613,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iRonDome/iRonDome-Prefix.pch";
 				INFOPLIST_FILE = "iRonDome/iRonDome-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iRonDome/Flurry",
@@ -636,7 +638,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iRonDome/iRonDome-Prefix.pch";
 				INFOPLIST_FILE = "iRonDome/iRonDome-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iRonDome/Flurry",
