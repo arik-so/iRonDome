@@ -61,7 +61,7 @@
     [self prepareRocketData];
     
     //download rocket data
-    [self downloadRocketData];
+    // [self downloadRocketData];
     
 
     
@@ -203,8 +203,6 @@
     
     
     
-    
-    
     // let's get the older rocket
     
     NSString *oldestAlarmQuery = [NSString stringWithFormat:@"SELECT * FROM %@ ORDER BY alertID ASC LIMIT 0,1", dbTable];
@@ -212,7 +210,7 @@
         
         FMResultSet *result = [db executeQuery:oldestAlarmQuery];
         
-        if(result.next){
+        while(result.next){
             
             SCLocalSiren *oldestSiren = [[SCLocalSiren alloc] init];
             [oldestSiren initWithFetchResponse:result.resultDictionary];
@@ -240,6 +238,7 @@
 }
 
 - (void)setupMap{
+    
     self.geocoder = [[CLGeocoder alloc] init];
     
     CLLocationCoordinate2D zoomLocation;

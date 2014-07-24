@@ -13,6 +13,8 @@
 
 @interface IRDSettingsTableViewController ()
 
+@property (strong, nonatomic) NSArray *developers;
+
 @end
 
 @implementation IRDSettingsTableViewController
@@ -31,9 +33,37 @@
     [super viewDidLoad];
     
     
+    
     self.banner = [[ADBannerView alloc] initWithFrame:CGRectZero];
     self.banner.delegate = self;
     [self.banner setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    
+    self.tableView.scrollEnabled = NO;
+    
+    
+    
+    
+    self.developers = @[
+                        @{
+                            @"name": @"Arik Sosman",
+                            @"function": @"Developer",
+                            @"twitter": @"arikaleph"
+                            },
+                        @{
+                            @"name": @"Ben Honig",
+                            @"function": @"Developer / Designer",
+                            @"twitter": @"iPhonig"
+                            }
+                        ];
+    
+    
+    int random = arc4random() % 2;
+    if(random == 1){
+        
+        self.developers = @[self.developers[1], self.developers[0]];
+        
+    }
+    
     
     
     
@@ -169,15 +199,14 @@
     UILabel *titleLabel = (UILabel *)[cell viewWithTag:1];
     UILabel *subtitleLabel = (UILabel *)[cell viewWithTag:2];
     UILabel *twitterLabel = (UILabel *)[cell viewWithTag:3];
-    if (indexPath.section == 0 && indexPath.row == 0) {
-        titleLabel.text = @"Ben Honig";
-        subtitleLabel.text = @"Developer / Designer";
-        twitterLabel.text = @"@iPhonig";
-    }
-    if (indexPath.section == 0 && indexPath.row == 1) {
-        titleLabel.text = @"Arik Sosman";
-        subtitleLabel.text = @"Developer";
-        twitterLabel.text = @"@arikaleph";
+    
+    if (indexPath.section == 0) {
+        
+        NSDictionary *devDetails = self.developers[indexPath.row];
+        
+        titleLabel.text = devDetails[@"name"];
+        subtitleLabel.text = devDetails[@"function"];
+        twitterLabel.text = [NSString stringWithFormat:@"@%@", devDetails[@"twitter"]];
     }
     
     return cell;
@@ -242,11 +271,11 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 0 && indexPath.row == 0) {
-        [self followOnTwitter:@"iPhonig"];
-    }
-    if (indexPath.section == 0 && indexPath.row == 1) {
-        [self followOnTwitter:@"ArikAleph"];
+    if (indexPath.section == 0) {
+        
+        NSDictionary *devDetails = self.developers[indexPath.row];
+        [self followOnTwitter:devDetails[@"twitter"]];
+        
     }
 }
 
