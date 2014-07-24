@@ -17,7 +17,6 @@
 @interface IRDSingleRocketTableViewController ()
 
 @property (strong, nonatomic) NSMutableArray *sirens;
-@property (strong, nonatomic) MKMapView *mapView;
 
 @end
 
@@ -75,9 +74,6 @@
 
 - (void)prepareMap{
     
-    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 300)];
-    self.mapView.delegate = self;
-    
     for(SCLocalSiren *currentSiren in self.sirens){
         
         CLLocationCoordinate2D  ctrpoint;
@@ -92,8 +88,6 @@
         [self.mapView addAnnotation:rocketAnnotation];
         
     }
-    
-    
     
     MKCoordinateRegion rocketBounds = [IRDImpactCalculator determineImpactBoundsForSirens:self.sirens];
     MKCoordinateRegion region = rocketBounds;
@@ -152,6 +146,7 @@
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath: (NSIndexPath *) indexPath {
     return 70;
 }
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 40;
 }

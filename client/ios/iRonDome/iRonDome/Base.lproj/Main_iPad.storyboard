@@ -149,24 +149,31 @@
         <scene sceneID="Kk5-Kx-toq">
             <objects>
                 <tableViewController id="8pk-hZ-rSq" customClass="IRDSingleRocketTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="70" sectionHeaderHeight="10" sectionFooterHeight="10" id="SYn-oA-bTP">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="SYn-oA-bTP">
                         <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <mapView key="tableHeaderView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="N8b-SU-SOV">
+                            <rect key="frame" x="0.0" y="0.0" width="768" height="378"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <connections>
+                                <outlet property="delegate" destination="8pk-hZ-rSq" id="TQ4-JU-5e3"/>
+                            </connections>
+                        </mapView>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" rowHeight="80" id="fyx-II-rA8">
-                                <rect key="frame" x="0.0" y="55" width="768" height="80"/>
+                                <rect key="frame" x="0.0" y="400" width="768" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fyx-II-rA8" id="Rs6-1P-B6g">
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="79"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="siren_filled" translatesAutoresizingMaskIntoConstraints="NO" id="tT5-xZ-hCH">
-                                            <rect key="frame" x="20" y="17" width="45" height="45"/>
+                                            <rect key="frame" x="20" y="20" width="40" height="40"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Siren" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Vf-tq-3vh">
-                                            <rect key="frame" x="76" y="27" width="639" height="25"/>
+                                            <rect key="frame" x="73" y="27" width="639" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="18"/>
                                             <nil key="highlightedColor"/>
@@ -181,6 +188,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="tfE-ku-fwJ"/>
+                    <connections>
+                        <outlet property="mapView" destination="N8b-SU-SOV" id="pmn-6Y-ghh"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lRr-Up-ZVK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

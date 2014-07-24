@@ -18,5 +18,6 @@
 @interface IRDSingleRocketTableViewController : UITableViewController <MKMapViewDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) NSNumber *alertID;
+@property (nonatomic, weak) IBOutlet MKMapView *mapView;
 
 @end
