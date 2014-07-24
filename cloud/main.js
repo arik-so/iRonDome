@@ -126,6 +126,10 @@ Parse.Cloud.define('pushFromHFC', function(request, response){
 
                     cityNameString = cityNameString.substr(0, cityNameString.length-2);
 
+                    if(cityNameString.length > 140){
+                        cityNameString = cityNameString.substr(0, 140)+'…';
+                    }
+
 
                     // debugging so I always also get a push notification
                     // affectedDeviceIDs.push('iXfNcrybPd'); // Arik's iPhone
