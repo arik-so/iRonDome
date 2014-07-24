@@ -38,6 +38,7 @@
 		517C25C9197AD76500052133 /* SCLocalSiren.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C25C8197AD76500052133 /* SCLocalSiren.m */; };
 		519D550D19810086007C26FE /* IRDSingleRocketTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 519D550C19810086007C26FE /* IRDSingleRocketTableViewController.m */; };
 		51DCEB0F197DD5E90036CFCE /* major_alert.caf in Resources */ = {isa = PBXBuildFile; fileRef = 51DCEB0E197DD5E90036CFCE /* major_alert.caf */; };
+		51EB700D1981239800D92D22 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 51EB700F1981239800D92D22 /* Localizable.strings */; };
 		FE52C8EC197788FD000ED87D /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8EB197788FD000ED87D /* Parse.framework */; };
 		FE52C8EE19778C4D000ED87D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8ED19778C4D000ED87D /* AudioToolbox.framework */; };
 		FE52C8F719778CBD000ED87D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8EF19778CBD000ED87D /* CFNetwork.framework */; };
@@ -118,6 +119,12 @@
 		519D550B19810086007C26FE /* IRDSingleRocketTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRDSingleRocketTableViewController.h; sourceTree = "<group>"; };
 		519D550C19810086007C26FE /* IRDSingleRocketTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRDSingleRocketTableViewController.m; sourceTree = "<group>"; };
 		51DCEB0E197DD5E90036CFCE /* major_alert.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = major_alert.caf; sourceTree = "<group>"; };
+		51EB7007198122D800D92D22 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		51EB7008198122D800D92D22 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
+		51EB7009198122D800D92D22 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Main_iPad.strings; sourceTree = "<group>"; };
+		51EB700A198122D800D92D22 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		51EB700E1981239800D92D22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		51EB7011198123A700D92D22 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FE52C8EB197788FD000ED87D /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		FE52C8ED19778C4D000ED87D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		FE52C8EF19778CBD000ED87D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -270,6 +277,7 @@
 				FE9A3E2E197847770070AB27 /* IRDSettingsTableViewController.m */,
 				519D550B19810086007C26FE /* IRDSingleRocketTableViewController.h */,
 				519D550C19810086007C26FE /* IRDSingleRocketTableViewController.m */,
+				51EB700F1981239800D92D22 /* Localizable.strings */,
 				FE52C90B1977BCFC000ED87D /* MapView */,
 				5179928519771B6300830A21 /* Main_iPhone.storyboard */,
 				5179928819771B6300830A21 /* Main_iPad.storyboard */,
@@ -417,6 +425,7 @@
 			knownRegions = (
 				en,
 				Base,
+				he,
 			);
 			mainGroup = 5179926719771B6300830A21;
 			productRefGroup = 5179927119771B6300830A21 /* Products */;
@@ -437,6 +446,7 @@
 				5179928A19771B6300830A21 /* Main_iPad.storyboard in Resources */,
 				5179928F19771B6300830A21 /* Images.xcassets in Resources */,
 				5179928719771B6300830A21 /* Main_iPhone.storyboard in Resources */,
+				51EB700D1981239800D92D22 /* Localizable.strings in Resources */,
 				5179927E19771B6300830A21 /* InfoPlist.strings in Resources */,
 				517C25C6197AAD6300052133 /* minor_alert_alarm.m4a in Resources */,
 				51DCEB0F197DD5E90036CFCE /* major_alert.caf in Resources */,
@@ -501,6 +511,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				5179927D19771B6300830A21 /* en */,
+				51EB7007198122D800D92D22 /* he */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -509,6 +520,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				5179928619771B6300830A21 /* Base */,
+				51EB7008198122D800D92D22 /* he */,
 			);
 			name = Main_iPhone.storyboard;
 			sourceTree = "<group>";
@@ -517,6 +529,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				5179928919771B6300830A21 /* Base */,
+				51EB7009198122D800D92D22 /* he */,
 			);
 			name = Main_iPad.storyboard;
 			sourceTree = "<group>";
@@ -525,8 +538,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				5179929F19771B6300830A21 /* en */,
+				51EB700A198122D800D92D22 /* he */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		51EB700F1981239800D92D22 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				51EB700E1981239800D92D22 /* Base */,
+				51EB7011198123A700D92D22 /* he */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

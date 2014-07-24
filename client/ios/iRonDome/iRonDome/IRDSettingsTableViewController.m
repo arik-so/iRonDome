@@ -250,7 +250,7 @@
         titleHeader.frame = CGRectMake(20, 10, 320, 21);
         titleHeader.font = [UIFont fontWithName:kAvenirLight size:16];
         titleHeader.textAlignment = NSTextAlignmentLeft;
-        titleHeader.text = @"Support & Credits";
+        titleHeader.text = NSLocalizedString(@"credits", nil);
         titleHeader.textColor = [UIColor blackColor];
         [headerView addSubview:titleHeader];
     }
