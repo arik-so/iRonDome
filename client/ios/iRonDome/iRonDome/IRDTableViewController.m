@@ -417,10 +417,6 @@ calloutAccessoryControlTapped:(UIControl *)control{
     
 }
 
-- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath: (NSIndexPath *) indexPath {
-    return 70;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
@@ -487,6 +483,7 @@ calloutAccessoryControlTapped:(UIControl *)control{
     
     subtitleLabel.text = placeLabels;
     subtitleLabel.numberOfLines = 0;
+    
     titleLabel.text = [self formatDate:sirenTime];
     
     return cell;
