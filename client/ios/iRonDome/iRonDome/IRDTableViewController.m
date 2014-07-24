@@ -53,17 +53,7 @@
     
     [self setupMap];
     
-    
-    
-    
-    
-    
     [self prepareRocketData];
-    
-    //download rocket data
-    // [self downloadRocketData];
-    
-
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(downloadRocketData) forControlEvents:UIControlEventValueChanged];
@@ -141,23 +131,7 @@
                     
                     [NSTimer scheduledTimerWithTimeInterval:timeDelta target:self selector:@selector(refreshLocalSirens) userInfo:nil repeats:NO];
                     
-                    
                     incomingRockets = YES;
-                    
-                    
-                    
-                    /* [self.currentAlertIDs addObject:@(currentRocket.alertID)];
-                    
-                    [self.currentRockets addObject:currentRocket];
-                    
-                    CLLocationCoordinate2D  ctrpoint;
-                    ctrpoint.latitude = currentRocket.latitude;
-                    ctrpoint.longitude = currentRocket.longitude;
-                    IRDMapAnnotation *rocketAnnotation = [[IRDMapAnnotation alloc] init];
-                    [rocketAnnotation initWithCoordinate:ctrpoint userTitle:@"Rocket" userSubtitle:[NSString stringWithFormat:@"%f;%f", currentRocket.latitude, currentRocket.longitude]];
-                    rocketAnnotation.rocketId = currentRocket.serverID;
-                    
-                    [self.mapView addAnnotation:rocketAnnotation]; */
                     
                 }
                 
@@ -200,8 +174,6 @@
         
         
     }
-    
-    
     
     // let's get the older rocket
     
@@ -320,11 +292,8 @@
             [self.refreshControl endRefreshing];
             
         }
-        
+
     }];
-    
-    
-    
 }
 
 #pragma mark - Date Creator
@@ -520,28 +489,6 @@ calloutAccessoryControlTapped:(UIControl *)control{
     subtitleLabel.numberOfLines = 0;
     titleLabel.text = [self formatDate:sirenTime];
     
-    
-    // [rocket reload]; // the data might have been modified, so we should reload it just in case
-    
-    // Configure the cell...
-    /* UILabel *titleLabel = (UILabel *)[cell viewWithTag:1];
-    UILabel *subtitleLabel = (UILabel *)[cell viewWithTag:2];
-    if (rocketArray.count == 0) {
-        //dont set the text yet
-    }
-    else{
-        
-        if(rocket.toponym){
-            
-            titleLabel.text = rocket.toponym;
-            titleLabel.adjustsFontSizeToFitWidth = YES;
-            
-        }
-        
-        subtitleLabel.text = [NSString stringWithFormat:@"%f, %f", rocket.latitude, rocket.longitude];
-        
-    } */
-    
     return cell;
 }
 
@@ -616,7 +563,6 @@ calloutAccessoryControlTapped:(UIControl *)control{
     self.pendingSegueAlertID = currentAlertID;
     
     [self performSegueWithIdentifier:@"showRocketSegue" sender:nil];
-    
 }
 
 /*
@@ -663,26 +609,7 @@ calloutAccessoryControlTapped:(UIControl *)control{
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
-    if ([segue.identifier isEqualToString:@"showRocketDetail"]) {
-        
-        
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        
-        IRDMapZoomViewController *zoomView = segue.destinationViewController;
-        
-        
-        NSArray *rocketArray = @[];
-        
-        if(indexPath.section == 0){
-            rocketArray = self.currentAlertIDs.copy;
-        }else if(indexPath.section == 1){
-            rocketArray = self.pastAlertIDs.copy;
-        }
-        
-        NSNumber *currentAlertID = rocketArray[indexPath.row];
-        zoomView.alertID = currentAlertID;
-        
-    }else if([segue.identifier isEqualToString:@"showRocketSegue"]){
+    if([segue.identifier isEqualToString:@"showRocketSegue"]){
         
         NSNumber *currentAlertID = self.pendingSegueAlertID;
         self.pendingSegueAlertID = nil;

@@ -11,6 +11,9 @@
 #define MAP_PADDING 1.3
 #define MINIMUM_VISIBLE_LATITUDE 0.01
 
+#define kAvenirLight @"Avenir-Light"
+#define kAvenirBook @"Avenir-Book"
+
 @interface IRDSingleRocketTableViewController ()
 
 @property (strong, nonatomic) NSMutableArray *sirens;
@@ -43,6 +46,7 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
 }
 
 - (void)loadSirens{
@@ -135,18 +139,22 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return self.sirens.count;
 }
 
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath: (NSIndexPath *) indexPath {
+    return 70;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 40;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -155,15 +163,31 @@
     SCLocalSiren *currentSiren = self.sirens[indexPath.row];
     
     // Configure the cell...
-    cell.textLabel.text = currentSiren.toponym;
+    UILabel *titleLabel = (UILabel *)[cell viewWithTag:1];
+    titleLabel.text = currentSiren.toponym;
+    
+    //TODO: animate Siren
     
     return cell;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-    return @"Sirens";
+    UIView *headerView = [[UIView alloc] init];
     
+    headerView.frame = CGRectMake(0, 0, 320, 20);
+    headerView.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:236.0/255.0 blue:237.0/255.0 alpha:1.0];
+    UILabel *sirensLabel = [[UILabel alloc] init];
+    sirensLabel.frame = CGRectMake(20, 10, 320, 21);
+    sirensLabel.font = [UIFont fontWithName:kAvenirBook size:16];
+    sirensLabel.textAlignment = NSTextAlignmentLeft;
+    sirensLabel.textColor = [UIColor blackColor];
+    [headerView addSubview:sirensLabel];
+    
+    sirensLabel.text = @"Sirens";
+    
+    return headerView;
 }
 
 /*

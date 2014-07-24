@@ -54,7 +54,6 @@
 		FE52C90A1977B699000ED87D /* CustomAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE52C9091977B699000ED87D /* CustomAnnotationView.m */; };
 		FE58AB0C19783EF00084808E /* IRDTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE58AB0B19783EF00084808E /* IRDTableViewController.m */; };
 		FE9A3E2F197847770070AB27 /* IRDSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9A3E2E197847770070AB27 /* IRDSettingsTableViewController.m */; };
-		FE9D23FD197AB4AF00CE79E7 /* IRDMapZoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9D23FC197AB4AF00CE79E7 /* IRDMapZoomViewController.m */; };
 		FE9D2400197C97EF00CE79E7 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE9D23FF197C97EF00CE79E7 /* iAd.framework */; };
 /* End PBXBuildFile section */
 
@@ -144,8 +143,6 @@
 		FE58AB0B19783EF00084808E /* IRDTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRDTableViewController.m; sourceTree = "<group>"; };
 		FE9A3E2D197847770070AB27 /* IRDSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRDSettingsTableViewController.h; sourceTree = "<group>"; };
 		FE9A3E2E197847770070AB27 /* IRDSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRDSettingsTableViewController.m; sourceTree = "<group>"; };
-		FE9D23FB197AB4AF00CE79E7 /* IRDMapZoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRDMapZoomViewController.h; sourceTree = "<group>"; };
-		FE9D23FC197AB4AF00CE79E7 /* IRDMapZoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRDMapZoomViewController.m; sourceTree = "<group>"; };
 		FE9D23FF197C97EF00CE79E7 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -271,8 +268,6 @@
 				5179928319771B6300830A21 /* IRDAppDelegate.m */,
 				FE58AB0A19783EF00084808E /* IRDTableViewController.h */,
 				FE58AB0B19783EF00084808E /* IRDTableViewController.m */,
-				FE9D23FB197AB4AF00CE79E7 /* IRDMapZoomViewController.h */,
-				FE9D23FC197AB4AF00CE79E7 /* IRDMapZoomViewController.m */,
 				FE9A3E2D197847770070AB27 /* IRDSettingsTableViewController.h */,
 				FE9A3E2E197847770070AB27 /* IRDSettingsTableViewController.m */,
 				519D550B19810086007C26FE /* IRDSingleRocketTableViewController.h */,
@@ -483,7 +478,6 @@
 				FE9A3E2F197847770070AB27 /* IRDSettingsTableViewController.m in Sources */,
 				517C25C9197AD76500052133 /* SCLocalSiren.m in Sources */,
 				5179928019771B6300830A21 /* main.m in Sources */,
-				FE9D23FD197AB4AF00CE79E7 /* IRDMapZoomViewController.m in Sources */,
 				517992C219784D5200830A21 /* FMDatabaseAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -64,23 +64,6 @@
         
     }
     
-    
-    
-    
-    // [FlurryAds fetchAndDisplayAdForSpace:@"iRon Dome Ads" view:self.view size:BANNER_BOTTOM];
-    
-    
-    
-    // CGRect frame = self.banner.frame;
-    // frame.origin.y = -frame.size.height;
-    // frame.origin.x = 0.0f;
-    
-    // self.banner.frame = frame;
-    
-    // return self.banner;
-    
-    
-    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
