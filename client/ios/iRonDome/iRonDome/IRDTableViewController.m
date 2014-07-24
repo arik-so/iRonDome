@@ -25,6 +25,7 @@
 @property (nonatomic, strong) NSMutableArray *pastAlertIDs;
 
 @property (strong, nonatomic) NSMutableDictionary *sirensByAlertID;
+@property NSTimeInterval olderSirenTime;
 
 
 @end
@@ -49,13 +50,19 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+    [self setupMap];
+    
+    
+    
+    
+    
     
     [self prepareRocketData];
     
     //download rocket data
     [self downloadRocketData];
     
-    [self setupMap];
+
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(downloadRocketData) forControlEvents:UIControlEventValueChanged];
@@ -193,6 +200,31 @@
         
     }
     
+    
+    
+    
+    
+    // let's get the older rocket
+    
+    NSString *oldestAlarmQuery = [NSString stringWithFormat:@"SELECT * FROM %@ ORDER BY alertID ASC LIMIT 0,1", dbTable];
+    [[SCSQLiteManager getActiveManager].dbQueue inDatabase:^(FMDatabase *db) {
+        
+        FMResultSet *result = [db executeQuery:query];
+        
+        if(result.next){
+            
+            SCLocalSiren *oldestSiren = [[SCLocalSiren alloc] init];
+            [oldestSiren initWithFetchResponse:result.resultDictionary];
+            
+            self.olderSirenTime = oldestSiren.timestamp;
+            
+        }
+        
+    }];
+    
+    
+    
+    
 }
 
 - (void)refreshLocalSirens{
@@ -266,13 +298,15 @@
                 SCLocalSiren *siren = [SCLocalSiren create];
                 [siren initFromServerResponse:object];
                 
+                // [siren remove];
+                
             }
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 [self prepareRocketData];
                 
-                [self.refreshControl endRefreshing];
+                // [self.refreshControl endRefreshing];
                 
                 [self.tableView reloadData];
                 
@@ -545,9 +579,24 @@ calloutAccessoryControlTapped:(UIControl *)control{
     }
     if (section == 1) {
         if (rocketArray.count < 1) {
-            currentRocketsLabel.text = @"Past Rockets: 0 - Since 7/20/2014 IDT";
+            currentRocketsLabel.text = @"Past Rockets: 0";
+        }else{
+            
+            
+            NSDate *oldestSirenDate = [NSDate dateWithTimeIntervalSince1970:self.olderSirenTime];
+            
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            formatter.locale = [NSLocale currentLocale];
+            formatter.timeZone = [NSTimeZone localTimeZone];
+            
+            // formatter.doesRelativeDateFormatting = YES;
+            formatter.dateStyle = NSDateFormatterShortStyle;
+            formatter.timeStyle = NSDateFormatterShortStyle;
+            
+            NSString *newTime = [formatter stringFromDate:oldestSirenDate];
+            
+            currentRocketsLabel.text = [NSString stringWithFormat:@"Past: %lu – Since %@", (unsigned long)rocketArray.count, newTime];
         }
-        currentRocketsLabel.text = [NSString stringWithFormat:@"Past Rockets: %lu - Since 7/20/2014 IDT", (unsigned long)rocketArray.count];
     }
     return headerView;
 }
