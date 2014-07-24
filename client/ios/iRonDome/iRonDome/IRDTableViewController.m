@@ -210,7 +210,7 @@
     NSString *oldestAlarmQuery = [NSString stringWithFormat:@"SELECT * FROM %@ ORDER BY alertID ASC LIMIT 0,1", dbTable];
     [[SCSQLiteManager getActiveManager].dbQueue inDatabase:^(FMDatabase *db) {
         
-        FMResultSet *result = [db executeQuery:query];
+        FMResultSet *result = [db executeQuery:oldestAlarmQuery];
         
         if(result.next){
             
