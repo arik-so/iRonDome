@@ -13,6 +13,7 @@
 #import "CustomAnnotationView.h"
 #import "IRDMapAnnotation.h"
 #import "IRDMapZoomViewController.h"
+#import "IRDSingleRocketTableViewController.h"
 
 #import "SCLocalSiren.h"
 

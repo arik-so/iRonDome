@@ -27,6 +27,7 @@
 @property (strong, nonatomic) NSMutableDictionary *sirensByAlertID;
 @property NSTimeInterval olderSirenTime;
 
+@property (strong, nonatomic) NSNumber *pendingSegueAlertID;
 
 @end
 
@@ -306,7 +307,7 @@
                 
                 [self prepareRocketData];
                 
-                // [self.refreshControl endRefreshing];
+                [self.refreshControl endRefreshing];
                 
                 [self.tableView reloadData];
                 
@@ -516,8 +517,9 @@ calloutAccessoryControlTapped:(UIControl *)control{
     UILabel *titleLabel = (UILabel *)[cell viewWithTag:1];
     UILabel *subtitleLabel = (UILabel *)[cell viewWithTag:2];
     
-    titleLabel.text = placeLabels;
-    subtitleLabel.text = [self formatDate:sirenTime];
+    subtitleLabel.text = placeLabels;
+    subtitleLabel.numberOfLines = 0;
+    titleLabel.text = [self formatDate:sirenTime];
     
     
     // [rocket reload]; // the data might have been modified, so we should reload it just in case
@@ -603,6 +605,19 @@ calloutAccessoryControlTapped:(UIControl *)control{
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    NSArray *rocketArray = @[];
+    
+    if(indexPath.section == 0){
+        rocketArray = self.currentAlertIDs.copy;
+    }else if(indexPath.section == 1){
+        rocketArray = self.pastAlertIDs.copy;
+    }
+
+    NSNumber *currentAlertID = rocketArray[indexPath.row];
+    self.pendingSegueAlertID = currentAlertID;
+    
+    [self performSegueWithIdentifier:@"showRocketSegue" sender:nil];
+    
 }
 
 /*
@@ -667,6 +682,14 @@ calloutAccessoryControlTapped:(UIControl *)control{
         
         NSNumber *currentAlertID = rocketArray[indexPath.row];
         zoomView.alertID = currentAlertID;
+        
+    }else if([segue.identifier isEqualToString:@"showRocketSegue"]){
+        
+        NSNumber *currentAlertID = self.pendingSegueAlertID;
+        self.pendingSegueAlertID = nil;
+        
+        IRDSingleRocketTableViewController *destVC = segue.destinationViewController;
+        destVC.alertID = currentAlertID;
         
     }
 }

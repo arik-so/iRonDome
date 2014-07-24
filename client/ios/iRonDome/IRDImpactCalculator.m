@@ -85,8 +85,6 @@
     double longitudeWest = -1;
     double longitudeEast = -1;
     
-    NSDate *sirenTime = nil;
-    
     for(SCLocalSiren *currentSiren in sirens){
         
         if(latitudeNorth == -1){
@@ -111,10 +109,6 @@
             longitudeWest = currentSiren.longitudeWest;
         }else{
             longitudeWest = MIN(longitudeWest, currentSiren.longitudeWest);
-        }
-        
-        if(!sirenTime){
-            sirenTime = [NSDate dateWithTimeIntervalSince1970:currentSiren.timestamp];
         }
         
     }
