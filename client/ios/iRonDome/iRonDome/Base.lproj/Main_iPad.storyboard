@@ -64,7 +64,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="639" translatesAutoresizingMaskIntoConstraints="NO" id="sEt-Sp-d16">
-                                            <rect key="frame" x="76" y="52" width="639" height="20"/>
+                                            <rect key="frame" x="76" y="52" width="639" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -75,7 +75,7 @@
                                         <constraint firstItem="6Gw-Rg-HS9" firstAttribute="leading" secondItem="77V-Zn-Vhi" secondAttribute="leading" constant="76" id="3BH-kq-DPs"/>
                                         <constraint firstItem="sEt-Sp-d16" firstAttribute="top" secondItem="6Gw-Rg-HS9" secondAttribute="bottom" constant="7" id="AYe-kK-ZOc"/>
                                         <constraint firstAttribute="trailing" secondItem="sEt-Sp-d16" secondAttribute="trailing" constant="20" id="LYn-Nh-8Ga"/>
-                                        <constraint firstAttribute="bottom" secondItem="sEt-Sp-d16" secondAttribute="bottom" constant="18" id="Xrk-cW-Rf0"/>
+                                        <constraint firstAttribute="bottom" secondItem="sEt-Sp-d16" secondAttribute="bottom" constant="20" id="Xrk-cW-Rf0"/>
                                         <constraint firstItem="6Gw-Rg-HS9" firstAttribute="top" secondItem="77V-Zn-Vhi" secondAttribute="top" constant="20" id="ZGN-kJ-WRK"/>
                                         <constraint firstAttribute="trailing" secondItem="6Gw-Rg-HS9" secondAttribute="trailing" constant="20" id="fpF-Jw-Tjb"/>
                                         <constraint firstItem="sEt-Sp-d16" firstAttribute="leading" secondItem="77V-Zn-Vhi" secondAttribute="leading" constant="76" id="ohi-c1-TZX"/>
