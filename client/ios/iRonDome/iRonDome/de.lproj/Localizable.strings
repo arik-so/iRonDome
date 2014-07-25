@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  iRonDome
+
+  Created by Arik Sosman on 7/24/14.
+  Copyright (c) 2014 Arik. All rights reserved.
+*/
+
+"credits" = "Unterstützung & Credits";
+
+"current_rockets" = "Jetzige Raketen: {count}";
+"past_rockets" = "Vorige: {count} – Since {since}";
+"no_past_rockets" = "Vorige Raketen: 0";
+
+"sirens" = "Sirenen";
+

@@ -516,35 +516,48 @@ calloutAccessoryControlTapped:(UIControl *)control{
     currentRocketsLabel.textAlignment = NSTextAlignmentLeft;
     currentRocketsLabel.textColor = [UIColor blackColor];
     [headerView addSubview:currentRocketsLabel];
-
+    
     if (section == 0) {
-        if(rocketArray.count < 1){
-            currentRocketsLabel.text = @"Current Rockets: 0";
-        }
-        else{
-            currentRocketsLabel.text = [NSString stringWithFormat:@"Current Rockets: %lu", (unsigned long)rocketArray.count];
-        }
+        
+        NSString *currentRocketsText = NSLocalizedString(@"current_rockets", nil);
+        currentRocketsText = [currentRocketsText stringByReplacingOccurrencesOfString:@"{count}" withString:@(rocketArray.count).stringValue];
+        
+        currentRocketsLabel.text = currentRocketsText;
     }
     if (section == 1) {
+        
+        
+        NSDate *oldestSirenDate = [NSDate dateWithTimeIntervalSince1970:self.olderSirenTime];
+        
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.locale = [NSLocale currentLocale];
+        formatter.timeZone = [NSTimeZone localTimeZone];
+        
+        // formatter.doesRelativeDateFormatting = YES;
+        formatter.dateStyle = NSDateFormatterShortStyle;
+        formatter.timeStyle = NSDateFormatterShortStyle;
+        
+        NSString *newTime = [formatter stringFromDate:oldestSirenDate];
+        
+        
+        
+        
+        
+        NSString *pastRocketsText = NSLocalizedString(@"past_rockets", nil);
+        pastRocketsText = [pastRocketsText stringByReplacingOccurrencesOfString:@"{count}" withString:@(rocketArray.count).stringValue];
+        pastRocketsText = [pastRocketsText stringByReplacingOccurrencesOfString:@"{since}" withString:newTime];
+        
+        
         if (rocketArray.count < 1) {
-            currentRocketsLabel.text = @"Past Rockets: 0";
+            
+            currentRocketsLabel.text = NSLocalizedString(@"no_past_rockets", nil);
+            
         }else{
             
+            currentRocketsLabel.text = pastRocketsText;
             
-            NSDate *oldestSirenDate = [NSDate dateWithTimeIntervalSince1970:self.olderSirenTime];
-            
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            formatter.locale = [NSLocale currentLocale];
-            formatter.timeZone = [NSTimeZone localTimeZone];
-            
-            // formatter.doesRelativeDateFormatting = YES;
-            formatter.dateStyle = NSDateFormatterShortStyle;
-            formatter.timeStyle = NSDateFormatterShortStyle;
-            
-            NSString *newTime = [formatter stringFromDate:oldestSirenDate];
-            
-            currentRocketsLabel.text = [NSString stringWithFormat:@"Past: %lu – Since %@", (unsigned long)rocketArray.count, newTime];
         }
+        
     }
     return headerView;
 }

@@ -1,0 +1,21 @@
+
+/* Class = "IBUILabel"; text = "Subtitle Label"; ObjectID = "04V-pT-AKU"; */
+"04V-pT-AKU.text" = "Subtitle Label";
+
+/* Class = "IBUILabel"; text = "Title Label"; ObjectID = "AZs-g1-fJ8"; */
+"AZs-g1-fJ8.text" = "Title Label";
+
+/* Class = "IBUILabel"; text = "Rocket"; ObjectID = "K6m-Es-iqu"; */
+"K6m-Es-iqu.text" = "Rocket";
+
+/* Class = "IBUILabel"; text = "Twitter Label"; ObjectID = "aAv-It-9bo"; */
+"aAv-It-9bo.text" = "Twitter Label";
+
+/* Class = "IBUINavigationItem"; title = "Settings"; ObjectID = "ao9-kO-Ada"; */
+"ao9-kO-Ada.title" = "Settings";
+
+/* Class = "IBUILabel"; text = "Siren"; ObjectID = "eBx-qb-ZLr"; */
+"eBx-qb-ZLr.text" = "Siren";
+
+/* Class = "IBUINavigationItem"; title = "iRon Dome"; ObjectID = "qVh-bR-G6y"; */
+"qVh-bR-G6y.title" = "iRon Dome";

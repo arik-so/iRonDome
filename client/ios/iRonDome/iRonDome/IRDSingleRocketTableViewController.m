@@ -180,7 +180,7 @@
     sirensLabel.textColor = [UIColor blackColor];
     [headerView addSubview:sirensLabel];
     
-    sirensLabel.text = @"Sirens";
+    sirensLabel.text = NSLocalizedString(@"sirens", nil);
     
     return headerView;
 }
