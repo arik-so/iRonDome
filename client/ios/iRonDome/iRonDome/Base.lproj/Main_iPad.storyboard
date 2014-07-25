@@ -31,7 +31,7 @@
         <scene sceneID="oKD-hI-B8K">
             <objects>
                 <tableViewController id="Mau-N0-hBN" customClass="IRDTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="110" sectionHeaderHeight="22" sectionFooterHeight="22" id="gYx-Lm-xv5">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="91" sectionHeaderHeight="22" sectionFooterHeight="22" id="gYx-Lm-xv5">
                         <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -43,32 +43,48 @@
                             </connections>
                         </mapView>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="s6O-eh-gkA">
-                                <rect key="frame" x="0.0" y="400" width="768" height="110"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomCell" rowHeight="91" id="s6O-eh-gkA" customClass="CustomTableViewCell">
+                                <rect key="frame" x="0.0" y="400" width="768" height="91"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="s6O-eh-gkA" id="77V-Zn-Vhi">
-                                    <rect key="frame" x="0.0" y="0.0" width="735" height="109"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="735" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rocket" translatesAutoresizingMaskIntoConstraints="NO" id="vx1-Ql-3u2">
-                                            <rect key="frame" x="20" y="35" width="40" height="40"/>
+                                            <rect key="frame" x="20" y="25" width="40" height="40"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Rocket" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Gw-Rg-HS9">
-                                            <rect key="frame" x="76" y="23" width="639" height="24"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Gw-Rg-HS9">
+                                            <rect key="frame" x="76" y="20" width="639" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="25" id="Nrd-pN-HRQ"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="18"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sEt-Sp-d16">
-                                            <rect key="frame" x="76" y="47" width="639" height="40"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="639" translatesAutoresizingMaskIntoConstraints="NO" id="sEt-Sp-d16">
+                                            <rect key="frame" x="76" y="52" width="639" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="6Gw-Rg-HS9" firstAttribute="leading" secondItem="77V-Zn-Vhi" secondAttribute="leading" constant="76" id="3BH-kq-DPs"/>
+                                        <constraint firstItem="sEt-Sp-d16" firstAttribute="top" secondItem="6Gw-Rg-HS9" secondAttribute="bottom" constant="7" id="AYe-kK-ZOc"/>
+                                        <constraint firstAttribute="trailing" secondItem="sEt-Sp-d16" secondAttribute="trailing" constant="20" id="LYn-Nh-8Ga"/>
+                                        <constraint firstAttribute="bottom" secondItem="sEt-Sp-d16" secondAttribute="bottom" constant="18" id="Xrk-cW-Rf0"/>
+                                        <constraint firstItem="6Gw-Rg-HS9" firstAttribute="top" secondItem="77V-Zn-Vhi" secondAttribute="top" constant="20" id="ZGN-kJ-WRK"/>
+                                        <constraint firstAttribute="trailing" secondItem="6Gw-Rg-HS9" secondAttribute="trailing" constant="20" id="fpF-Jw-Tjb"/>
+                                        <constraint firstItem="sEt-Sp-d16" firstAttribute="leading" secondItem="77V-Zn-Vhi" secondAttribute="leading" constant="76" id="ohi-c1-TZX"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="sirenLabel" destination="sEt-Sp-d16" id="TSi-Hq-pqE"/>
+                                    <outlet property="timeLabel" destination="6Gw-Rg-HS9" id="c31-TP-eEV"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

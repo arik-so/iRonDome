@@ -13,7 +13,7 @@
 #import "CustomAnnotationView.h"
 #import "IRDMapAnnotation.h"
 #import "IRDSingleRocketTableViewController.h"
-
+#import "CustomTableViewCell.h"
 #import "SCLocalSiren.h"
 
 @interface IRDTableViewController : UITableViewController <MKMapViewDelegate, CLLocationManagerDelegate>
