@@ -143,7 +143,7 @@
                 ctrpoint.latitude = currentSiren.latitude;
                 ctrpoint.longitude = currentSiren.longitude;
                 IRDMapAnnotation *rocketAnnotation = [[IRDMapAnnotation alloc] init];
-                [rocketAnnotation initWithCoordinate:ctrpoint userTitle:@"Rocket" userSubtitle:[NSString stringWithFormat:@"%f;%f", currentSiren.latitude, currentSiren.longitude]];
+                [rocketAnnotation initWithCoordinate:ctrpoint userTitle:NSLocalizedString(@"rocket", nil) userSubtitle:[NSString stringWithFormat:@"%f;%f", currentSiren.latitude, currentSiren.longitude]];
                 rocketAnnotation.rocketId = currentSiren.serverID;
                 
                 [self.mapView addAnnotation:rocketAnnotation];
