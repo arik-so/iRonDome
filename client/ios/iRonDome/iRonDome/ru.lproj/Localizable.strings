@@ -8,9 +8,9 @@
 
 "credits" = "Support & Credits";
 
-"current_rockets" = "Current Rockets: {count}";
-"past_rockets" = "Past: {count} – Since {since}";
-"no_past_rockets" = "Past Rockets: 0";
+"current_rockets" = "Нынешние ракеты: {count}";
+"past_rockets" = "Бывшие: {count} – Since {since}";
+"no_past_rockets" = "Бывшие ракеты: 0";
 
-"sirens" = "Sirens";
+"sirens" = "Сирены";
 

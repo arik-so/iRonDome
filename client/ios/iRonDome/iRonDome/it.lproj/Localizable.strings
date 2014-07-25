@@ -8,9 +8,9 @@
 
 "credits" = "Support & Credits";
 
-"current_rockets" = "Current Rockets: {count}";
-"past_rockets" = "Past: {count} – Since {since}";
-"no_past_rockets" = "Past Rockets: 0";
+"current_rockets" = "Missili Correnti : {count}";
+"past_rockets" = "Passati : {count} – Da {since}";
+"no_past_rockets" = "Missli Passati: 0";
 
-"sirens" = "Sirens";
+"sirens" = "Allarmi";
 

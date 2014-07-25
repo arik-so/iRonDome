@@ -6,11 +6,11 @@
   Copyright (c) 2014 Arik. All rights reserved.
 */
 
-"credits" = "Support & Credits";
+"credits" = "Support";
 
-"current_rockets" = "Current Rockets: {count}";
-"past_rockets" = "Past: {count} – Since {since}";
-"no_past_rockets" = "Past Rockets: 0";
+"current_rockets" = "Missiles Courants: {count}";
+"past_rockets" = "Passé: {count} – à partir de {since}";
+"no_past_rockets" = "Missiles Passées: 0";
 
-"sirens" = "Sirens";
+"sirens" = "Alarmes";
 
