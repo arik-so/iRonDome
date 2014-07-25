@@ -6,3 +6,10 @@
   Copyright (c) 2014 Arik. All rights reserved.
 */
 
+"credits" = "סמוך וזיכויים";
+
+"current_rockets" = "טילים הנוכחיים : {count}";
+"past_rockets" = "בעבר : {count} – אחרי {since}";
+"no_past_rockets" = "טילים בעבר : 0";
+
+"sirens" = "צופר";
