@@ -7,7 +7,7 @@
 //
 
 #import "IRDTableViewController.h"
-#define kRocketTimeThreshold -60*2 // two minutes
+#define kRocketTimeThreshold -60*2000 // two minutes
 #define kMapZoomLatitude 400000
 #define kMapZoomLongitude 400000
 #define kAvenirLight @"Avenir-Light"
