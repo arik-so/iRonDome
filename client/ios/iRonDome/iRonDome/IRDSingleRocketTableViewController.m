@@ -83,7 +83,7 @@
         placeLabel = [NSString stringWithFormat:@"%@, %@", placeLabel, currentSiren.toponym];
         placeLabel = [placeLabel substringFromIndex:2];
         IRDMapAnnotation *rocketAnnotation = [[IRDMapAnnotation alloc] init];
-        [rocketAnnotation initWithCoordinate:ctrpoint userTitle:@"Siren" userSubtitle:placeLabel];
+        [rocketAnnotation initWithCoordinate:ctrpoint userTitle:NSLocalizedString(@"siren", nil) userSubtitle:placeLabel];
         
         [self.mapView addAnnotation:rocketAnnotation];
         
