@@ -7,7 +7,7 @@
 //
 
 #import "IRDTableViewController.h"
-#define kRocketTimeThreshold -60*2 // two minutes
+#define kRocketTimeThreshold -60*2000 // two minutes
 #define kMapZoomLatitude 400000
 #define kMapZoomLongitude 400000
 #define kAvenirLight @"Avenir-Light"
@@ -155,7 +155,7 @@
                 ctrpoint.latitude = currentSiren.latitude;
                 ctrpoint.longitude = currentSiren.longitude;
                 IRDMapAnnotation *rocketAnnotation = [[IRDMapAnnotation alloc] init];
-                [rocketAnnotation initWithCoordinate:ctrpoint userTitle:NSLocalizedString(@"rocket", nil) userSubtitle:[NSString stringWithFormat:@"%f;%f", currentSiren.latitude, currentSiren.longitude]];
+                [rocketAnnotation initWithCoordinate:ctrpoint userTitle:NSLocalizedString(@"siren", nil) userSubtitle:[NSString stringWithFormat:@"%f;%f", currentSiren.latitude, currentSiren.longitude]];
                 rocketAnnotation.rocketId = currentSiren.serverID;
                 
                 [self.mapView addAnnotation:rocketAnnotation];
