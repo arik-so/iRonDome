@@ -239,7 +239,7 @@
         titleHeader.font = [UIFont fontWithName:kAvenirLight size:12];
         titleHeader.textAlignment = NSTextAlignmentCenter;
         titleHeader.numberOfLines = 2;
-        titleHeader.text = [NSString stringWithFormat:@"iRon Dome\nVersion 1.0"];
+        titleHeader.text = [NSString stringWithFormat:@"iRon Dome\nVersion 1.1"];
         titleHeader.textColor = [UIColor blackColor];
         [headerView addSubview:titleHeader];
     }
