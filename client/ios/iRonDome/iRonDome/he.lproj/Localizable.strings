@@ -12,5 +12,5 @@
 "past_rockets" = "בעבר : {count} – אחרי {since}";
 "no_past_rockets" = "טילים בעבר : 0";
 
-"sirens" = "צופר";
+"sirens" = "צופרים";
 "rocket" = "טיל";
