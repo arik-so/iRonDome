@@ -31,6 +31,9 @@
 
 @property (strong, nonatomic) CustomTableViewCell *customCell;
 
+@property (strong, nonatomic) UIBarButtonItem *refreshButton;
+@property (strong, nonatomic) UIActivityIndicatorView *downloadIndicator;
+
 @end
 
 @implementation IRDTableViewController
@@ -62,6 +65,13 @@
     [self.tableView addSubview:self.refreshControl];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:@"newRocket" object:nil];
+    
+    
+    self.downloadIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    self.refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(downloadRocketData)];
+    
+    self.navigationItem.rightBarButtonItem = self.refreshButton;
+    
 
 }
 
@@ -229,6 +239,11 @@
 - (void)downloadRocketData{
     //make sure array is null and then init it for refresh
     
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.downloadIndicator];
+    [self.downloadIndicator startAnimating];
+    
+    
+    
     NSString *dbTable = [SCLocalSiren getDatabaseTable];
     NSString *query = [NSString stringWithFormat:@"SELECT alertID FROM %@ ORDER BY alertID DESC LIMIT 0,1", dbTable];
     
@@ -248,6 +263,7 @@
     
     PFQuery *newSirenQuery = [PFQuery queryWithClassName:@"Siren"];
     [newSirenQuery orderByDescending:@"alertID"];
+    [newSirenQuery setLimit:1000];
     
     if(alertID && [alertID isKindOfClass:[NSNumber class]]){
     
@@ -281,6 +297,7 @@
                 [self prepareRocketData];
                 
                 [self.refreshControl endRefreshing];
+                self.navigationItem.rightBarButtonItem = self.refreshButton;
                 
                 [self.tableView reloadData];
                 
