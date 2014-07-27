@@ -9,6 +9,7 @@
 #import "IRDSettingsTableViewController.h"
 #define kAvenirLight @"Avenir-Light"
 
+#import <Parse/Parse.h>
 #import "FlurryAds.h"
 
 @interface IRDSettingsTableViewController ()
@@ -21,6 +22,9 @@
 @end
 
 @implementation IRDSettingsTableViewController
+
+static NSString * const KEY_MUTE_NOTIFICATIONS = @"muteNotifications";
+static NSString * const KEY_DISABLE_NOTIFICATIONS = @"disableNotifications";
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -44,8 +48,18 @@
     self.tableView.bounces = NO;
     
     
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    NSNumber *defaultMute = [currentInstallation objectForKey:KEY_MUTE_NOTIFICATIONS];
+    NSNumber *defaultDisable = [currentInstallation objectForKey:KEY_DISABLE_NOTIFICATIONS];
+    
     self.muteSwitch = [[UISwitch alloc] init];
     self.notificationSwitch = [[UISwitch alloc] init];
+    
+    self.muteSwitch.on = defaultMute.boolValue;
+    self.notificationSwitch.on = defaultDisable.boolValue;
+    
+    [self.muteSwitch addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.notificationSwitch addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
     
     
     self.developers = @[
@@ -76,6 +90,23 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     self.banner.backgroundColor = [UIColor clearColor];
+}
+
+- (void)switchValueChanged:(UISwitch *)affectedSwitch{
+
+    BOOL currentlyOn = affectedSwitch.on;
+    
+    NSNumber *newNumber = @(currentlyOn);
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    
+    if(affectedSwitch == self.muteSwitch){
+        [currentInstallation setObject:newNumber forKey:KEY_MUTE_NOTIFICATIONS];
+    }else if(affectedSwitch == self.notificationSwitch){
+        [currentInstallation setObject:newNumber forKey:KEY_DISABLE_NOTIFICATIONS];
+    }
+    
+    [currentInstallation saveInBackground];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -195,14 +226,18 @@
     if(indexPath.section == 0){
 
         UISwitch *accessorySwitch;
+        NSString *titleString;
         
         if(indexPath.row == 0){
             accessorySwitch = self.muteSwitch;
+            titleString = NSLocalizedString(@"mute_notifications", nil);
         }else if(indexPath.row == 1){
             accessorySwitch = self.notificationSwitch;
+            titleString = NSLocalizedString(@"disable_notifications", nil);
         }
         
         cell.accessoryView = accessorySwitch;
+        titleLabel.text = titleString;
         
     }
     

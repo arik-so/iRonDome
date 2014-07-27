@@ -74,6 +74,22 @@
     SCSQLiteManager *manager = [SCSQLiteManager initManager];
     [SCSQLiteManager setActiveManager:manager];
     
+    
+    
+    
+    // let's tell Parse we are developers! provided the app is in debug mode, naturally
+    #ifdef DEBUG
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    NSNumber *previousValue = [currentInstallation objectForKey:@"developer"];
+    [currentInstallation setObject:@(YES) forKey:@"developer"];
+    [currentInstallation saveInBackground];
+    #endif
+    
+    
+    
+    
+    
+    
     return YES;
 }
 
