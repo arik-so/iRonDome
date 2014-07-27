@@ -15,6 +15,9 @@
 
 @property (strong, nonatomic) NSArray *developers;
 
+@property (strong, nonatomic) UISwitch *muteSwitch;
+@property (strong, nonatomic) UISwitch *notificationSwitch;
+
 @end
 
 @implementation IRDSettingsTableViewController
@@ -38,9 +41,11 @@
     self.banner.delegate = self;
     [self.banner setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     
-    self.tableView.scrollEnabled = NO;
+    self.tableView.bounces = NO;
     
     
+    self.muteSwitch = [[UISwitch alloc] init];
+    self.notificationSwitch = [[UISwitch alloc] init];
     
     
     self.developers = @[
@@ -157,14 +162,18 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    if (section == 0) {
+    if(section == 0){
         return 2;
+    }
+    
+    if (section == 1) {
+        return self.developers.count;
     }
     return 0;
     
@@ -183,7 +192,21 @@
     UILabel *subtitleLabel = (UILabel *)[cell viewWithTag:2];
     UILabel *twitterLabel = (UILabel *)[cell viewWithTag:3];
     
-    if (indexPath.section == 0) {
+    if(indexPath.section == 0){
+
+        UISwitch *accessorySwitch;
+        
+        if(indexPath.row == 0){
+            accessorySwitch = self.muteSwitch;
+        }else if(indexPath.row == 1){
+            accessorySwitch = self.notificationSwitch;
+        }
+        
+        cell.accessoryView = accessorySwitch;
+        
+    }
+    
+    if (indexPath.section == 1) {
         
         NSDictionary *devDetails = self.developers[indexPath.row];
         
@@ -196,14 +219,14 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == 1) {
+    if (section == 2) {
         return 120;
     }
     return 40;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    if (section == 0) {
+    if (section == 1) {
         return self.banner;
     }
     return nil;
@@ -211,7 +234,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     
-    if (section == 0) {
+    if (section == 1) {
         return self.banner.frame.size.height;
     }
     return 0;
@@ -226,11 +249,22 @@
         titleHeader.frame = CGRectMake(20, 10, 320, 21);
         titleHeader.font = [UIFont fontWithName:kAvenirLight size:16];
         titleHeader.textAlignment = NSTextAlignmentLeft;
-        titleHeader.text = NSLocalizedString(@"credits", nil);
+        titleHeader.text = NSLocalizedString(@"notifications", nil);
         titleHeader.textColor = [UIColor blackColor];
         [headerView addSubview:titleHeader];
     }
     if (section == 1) {
+        headerView.frame = CGRectMake(0, 0, 320, 20);
+        headerView.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:236.0/255.0 blue:237.0/255.0 alpha:1.0];
+        UILabel *titleHeader = [[UILabel alloc] init];
+        titleHeader.frame = CGRectMake(20, 10, 320, 21);
+        titleHeader.font = [UIFont fontWithName:kAvenirLight size:16];
+        titleHeader.textAlignment = NSTextAlignmentLeft;
+        titleHeader.text = NSLocalizedString(@"credits", nil);
+        titleHeader.textColor = [UIColor blackColor];
+        [headerView addSubview:titleHeader];
+    }
+    if (section == 2) {
         headerView.frame = CGRectMake(0, 0, tableView.frame.size.width, 20);
         headerView.backgroundColor = [UIColor clearColor];
         UILabel *titleHeader = [[UILabel alloc] init];
@@ -247,7 +281,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 0) {
+    if (indexPath.section == 1) {
         
         NSDictionary *devDetails = self.developers[indexPath.row];
         [self followOnTwitter:devDetails[@"twitter"]];
