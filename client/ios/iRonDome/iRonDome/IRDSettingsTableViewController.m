@@ -222,9 +222,9 @@ static NSString * const KEY_DISABLE_NOTIFICATIONS = @"disableNotifications";
     UILabel *titleLabel = (UILabel *)[cell viewWithTag:1];
     UILabel *subtitleLabel = (UILabel *)[cell viewWithTag:2];
     UILabel *twitterLabel = (UILabel *)[cell viewWithTag:3];
+    UILabel *notificationsLabel = (UILabel *)[cell viewWithTag:4];
     
     if(indexPath.section == 0){
-
         UISwitch *accessorySwitch;
         NSString *titleString;
         
@@ -237,7 +237,14 @@ static NSString * const KEY_DISABLE_NOTIFICATIONS = @"disableNotifications";
         }
         
         cell.accessoryView = accessorySwitch;
-        titleLabel.text = titleString;
+        notificationsLabel.text = titleString;
+        
+        //hide other labels
+        titleLabel.hidden = YES;
+        subtitleLabel.hidden = YES;
+        twitterLabel.hidden = YES;
+        
+        return cell;
         
     }
     
@@ -248,6 +255,11 @@ static NSString * const KEY_DISABLE_NOTIFICATIONS = @"disableNotifications";
         titleLabel.text = devDetails[@"name"];
         subtitleLabel.text = devDetails[@"function"];
         twitterLabel.text = [NSString stringWithFormat:@"@%@", devDetails[@"twitter"]];
+        
+        //hide notifications label
+        notificationsLabel.hidden = YES;
+        
+        return cell;
     }
     
     return cell;
@@ -268,7 +280,6 @@ static NSString * const KEY_DISABLE_NOTIFICATIONS = @"disableNotifications";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    
     if (section == 1) {
         return self.banner.frame.size.height;
     }
@@ -308,7 +319,8 @@ static NSString * const KEY_DISABLE_NOTIFICATIONS = @"disableNotifications";
         titleHeader.font = [UIFont fontWithName:kAvenirLight size:12];
         titleHeader.textAlignment = NSTextAlignmentCenter;
         titleHeader.numberOfLines = 2;
-        titleHeader.text = [NSString stringWithFormat:@"iRon Dome\nVersion 1.1"];
+        NSString *versionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey];
+        titleHeader.text = [NSString stringWithFormat:@"iRon Dome\nVersion %@", versionString];
         titleHeader.textColor = [UIColor blackColor];
         [headerView addSubview:titleHeader];
     }
@@ -317,10 +329,8 @@ static NSString * const KEY_DISABLE_NOTIFICATIONS = @"disableNotifications";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1) {
-        
         NSDictionary *devDetails = self.developers[indexPath.row];
         [self followOnTwitter:devDetails[@"twitter"]];
-        
     }
 }
 

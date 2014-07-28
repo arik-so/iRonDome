@@ -16,3 +16,7 @@
 "siren" = "Siren";
 "rocket" = "Rocket";
 
+"mute_notifications" = "Mute Notifications";
+"disable_notifications" = "Disable Notifications";
+"notifications" = "Notifications";
+

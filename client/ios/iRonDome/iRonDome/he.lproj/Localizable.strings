@@ -15,3 +15,7 @@
 "sirens" = "צופרים";
 "siren" = "צופר";
 "rocket" = "טיל";
+
+"mute_notifications" = "להשתיק הודעות";
+"disable_notifications" = "להפסיק הודעות";
+"notifications" = "הודעות";
