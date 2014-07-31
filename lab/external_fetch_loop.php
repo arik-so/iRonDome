@@ -10,7 +10,7 @@ echo '<pre>';
 set_time_limit(0); // we want this thing to run forever
 
 $localPathPrefix = dirname(__FILE__).'/';
-$triggerLocation = $localPathPrefix.'parse_trigger.php';
+$triggerLocation = $localPathPrefix.'parse_external.php';
 
 $commandString = 'nohup php '.$triggerLocation;
 $commandSuffix = ' > /dev/null &';

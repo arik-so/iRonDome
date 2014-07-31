@@ -7,30 +7,31 @@
  */
 
 echo '<pre>';
-set_time_limit(0); // we want this thing to run forever
 
 $localPathPrefix = dirname(__FILE__).'/';
 $triggerLocation = $localPathPrefix.'parse_trigger.php';
 
 $commandString = 'nohup php '.$triggerLocation;
+$reTriggerCommandString = 'nohup php '.__FILE__;
 $commandSuffix = ' > /dev/null &';
 
 
-if($_GET['debug'] == 1){
-
-    $response = shell_exec($commandString.' debug nocurl '.$commandSuffix);
-    echo $response;
-
-    die();
-
-}
 
 
-$i = 0;
+shell_exec($commandString.$commandSuffix);
 
-while(file_get_contents($localPathPrefix.'fetch_loop.txt') === '1'){
 
-    shell_exec($commandString.$commandSuffix);
+
+
+if(file_get_contents($localPathPrefix.'fetch_loop.txt') === '1'){
+
+
+    usleep(250 * 1000);
+
+
+
+
+    shell_exec($reTriggerCommandString.$commandSuffix);
 
 
     // date_default_timezone_set('CET');
@@ -39,6 +40,6 @@ while(file_get_contents($localPathPrefix.'fetch_loop.txt') === '1'){
 
     // echo ++$i.PHP_EOL;
 
-    usleep(250 * 1000);
+
 
 }

@@ -15,15 +15,43 @@ $convenientLookupCopy = $convenientLookup;
 
 foreach($convenientLookupCopy as $code => $localities){
 
-    foreach($localities as $currentName => $googleDetails){
+    foreach($localities as $cityName => $googleDetails){
 
-        if($googleDetails){
+        if($googleDetails !== 'ambiguous_results'){
 
             continue;
 
         }
 
-        echo $code.' -> '.$currentName.PHP_EOL;
+        echo $code.' -> '.$cityName.PHP_EOL;
+
+
+
+
+        $url = 'http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($cityName).'&components=country:IL';
+        // echo $url.PHP_EOL;
+        $googleLookupRaw = file_get_contents($url);
+        $googleLookupData = json_decode($googleLookupRaw, true);
+
+        $googleResults = $googleLookupData['results'];
+        $filteredGoogleLookup = $googleResults[0];
+        // $filteredGoogleLookup = $googleLookupData['results'];
+
+        if(count($googleResults) < 1){
+            $filteredGoogleLookup = 'ambiguous_results';
+
+            echo count($googleResults).': '.$url.PHP_EOL.PHP_EOL;
+
+        }
+
+        // print_r($googleResults);
+
+        $convenientLookup[$code][$cityName] = $filteredGoogleLookup;
+
+        file_put_contents('areas.json', json_encode($convenientLookup, JSON_PRETTY_PRINT));
+
+
+
 
         /* $googleLookupRaw = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($currentName));
         $googleLookupData = json_decode($googleLookupRaw, true);

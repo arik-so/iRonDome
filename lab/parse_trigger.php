@@ -7,6 +7,8 @@
  */
 
 error_reporting(E_ALL);
+echo 'here';
+
 
 
 
@@ -35,14 +37,10 @@ $recodedResponse = '{
 }
 ';
 
-$recodedResponse = '{
-"id" : "1405974086178",
-"title" : "פיקוד העורף התרעה במרחב ",
-"data" : [
-"292"
-]
-}
-';
+$recodedResponse = '{ "id" : "1406642190975", "title" : "פיקוד העורף התרעה במרחב ", "data" : [ "217" ] }';
+
+
+
 
 
 
@@ -50,8 +48,8 @@ $recodedResponse = '{
 
 if(!$noCurl){
 
-    // $curl = curl_init('http://www.oref.org.il/WarningMessages/alerts.json');
-    $curl = curl_init('http://www.klh-dev.com/adom/alert/alerts.json');
+    $curl = curl_init('http://www.oref.org.il/WarningMessages/alerts.json');
+    // $curl = curl_init('http://www.klh-dev.com/adom/alert/alerts.json');
 
     // curl_setopt($curl, CURLOPT_HEADER, true); // get response header
     // curl_setopt($curl, CURLOPT_VERBOSE, true); // no idea what that means
@@ -65,6 +63,8 @@ if(!$noCurl){
     $recodedResponse = mb_convert_encoding($externalAlertResponse, 'utf-8', 'utf-16');
 
 }
+
+
 
 
 
@@ -92,14 +92,20 @@ $convenientLookup = json_decode(file_get_contents($localPathPrefix.'areas.json')
 
 
 
+
 $affectedCodesRaw = $processedExternalAlert['data'];
 if(empty($affectedCodesRaw)){ die(); } // there's nothing to do here
 
-$affectedCodes = [];
-$affectedCities = [];
-$affectedBounds = [];
 
-$simplifiedCities = [];
+
+$affectedCodes = array();
+$affectedCities = array();
+$affectedBounds = array();
+
+$simplifiedCities = array();
+
+$usedCenters = array();
+
 
 
 foreach($affectedCodesRaw as $currentCodeRaw){
@@ -113,7 +119,8 @@ foreach($affectedCodesRaw as $currentCodeRaw){
         if(empty($currentCode)){ continue; } // this code is weird
         if(in_array($currentCode, $affectedCodes)){ continue; } // we already know this code
 
-        $affectedCodes[] = $currentCode;
+        // $affectedCodes[] = $currentCode;
+        array_push($affectedCodes, $currentCode);
 
         $currentLookup = $convenientLookup[$currentCode];
         $affectedCities[$currentCode] = $currentLookup;
@@ -131,19 +138,28 @@ foreach($affectedCodesRaw as $currentCodeRaw){
 
             $currentBounds = $geometry['bounds'];
             if(!empty($currentBounds)){
-                $affectedBounds[] = $currentBounds;
+                // $affectedBounds[] = $currentBounds;
+                array_push($affectedBounds, $currentBounds);
+            }else{
+                continue; // continuing if bounds empty
             }
 
             if($relevantAddressComponent['types'][0] !== 'locality'){
                 continue; // we don't want bus stations and shit
             }
 
-            $currentCityDetails = [];
+            $center = $geometry['location'];
+
+            if(in_array($center, $usedCenters)){ continue; }
+            array_push($usedCenters, $center);
+
+            $currentCityDetails = array();
             $currentCityDetails['name'] = str_replace(', Israel', null, $relevantAddressComponent['long_name']); // some names end with ', Israel', and we don't want that
             $currentCityDetails['bounds'] = $currentBounds;
-            $currentCityDetails['center'] = $geometry['location'];
+            $currentCityDetails['center'] = $center;
 
-            $simplifiedCities[] = $currentCityDetails;
+            // $simplifiedCities[] = $currentCityDetails;
+            array_push($simplifiedCities, $currentCityDetails);
 
             // print_r($relevantAddressComponent);
 
@@ -161,7 +177,7 @@ foreach($affectedCodesRaw as $currentCodeRaw){
 if(empty($affectedCodes)){ die(); } // nothing relevant }
 
 
-
+/*
 if($doDebug){
 
 
@@ -207,7 +223,7 @@ if($doDebug){
 
 
 }
-
+*/
 
 
 
@@ -224,7 +240,7 @@ print_r($simplifiedCities);
 
 
 
-$parseOutput = [];
+$parseOutput = array();
 $parseOutput['alertID'] = $processedExternalAlert['id'];
 $parseOutput['data'] = $simplifiedCities;
 
@@ -236,6 +252,8 @@ $parsePushAlert = json_encode($parseOutput);
 
 echo $parsePushAlert;
 
+// if($noCurl){ die(); }
+
 
 define('APPLICATION_ID', 'KFQeWT9x9MoHlUvBUlEDj77Rh3zZ8piQIMzQ2Anf');
 define('API_KEY', 'o5MGYiye3pau4Gj3ogyr4l7o3BGtYtEP3RO0Ltu3');
@@ -246,11 +264,11 @@ curl_setopt($curl, CURLOPT_PORT, 443);
 curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
-curl_setopt($curl, CURLOPT_HTTPHEADER, [
+curl_setopt($curl, CURLOPT_HTTPHEADER, array(
     'X-Parse-Application-Id: '.APPLICATION_ID,
     'X-Parse-REST-API-Key: '.API_KEY,
     'Content-Type: application/json'
-]);
+));
 
 // curl_setopt($curl, CURLOPT_HEADER, true); // get response header
 // curl_setopt($curl, CURLOPT_VERBOSE, true); // no idea what that means
@@ -265,3 +283,17 @@ curl_close($curl);
 echo '<pre>';
 $response = json_decode($responseJSON, true);
 print_r($response);
+
+
+// we need to keep track of what's happening because of these fucking duplicate alerts, goddammit!
+
+mysql_connect('127.0.0.1', 'irda', 'iRonDome18');
+mysql_set_charset('utf8'); // very important to set the utf8 charset
+
+mysql_select_db('alerts');
+
+// this place is proper
+mysql_query('INSERT INTO `alerts` SET `alertID` = "'.mysql_real_escape_string($processedExternalAlert['id']).'", `oref` = "'.mysql_real_escape_string($recodedResponse).'", `json` = "'.mysql_real_escape_string($parsePushAlert).'", `response` = "'.mysql_real_escape_string($responseJSON).'" ');
+
+
+

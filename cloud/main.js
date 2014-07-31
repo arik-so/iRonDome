@@ -36,188 +36,194 @@ Parse.Cloud.define('pushFromHFC', function(request, response){
 
               if(count > 0){
 
-                  // we don't need it
-                  isDuplicateAlert = true;
-                  response.error('Duplicate alert');
+                  response.error('Duplicate alert id: '+alertID);
 
               }
 
-        }
+              if(count < 0){
 
-    }).then(function(){
+                  response.error('Could not check duplicates?!');
 
+              }
 
-        // first, let's check whether this alert ID has already been processed
-        if(isDuplicateAlert){ return; } // we already know this shit
+              if(count == 0){
 
-        var affectedDeviceIDs = [];
-        var cityNameString = '';
 
+                  // only add this new stuff if the count is zero
 
-        var iClosure = 0;
-        var iClosureMaximum = data.length-1;
 
-        for(var i = 0; i < data.length; i++){
+                  // first, let's check whether this alert ID has already been processed
+                  if(isDuplicateAlert){ return; } // we already know this shit
 
-            var currentCity = data[i];
-            var currentCityName = currentCity['name'];
+                  var affectedDeviceIDs = [];
+                  var cityNameString = '';
 
-            cityNameString += currentCityName+', ';
 
-            if(!currentCity['bounds']){
+                  var iClosure = 0;
+                  var iClosureMaximum = data.length;
 
-                iClosureMaximum--;
-                continue;
+                  console.log('Max necessary closure call count: '+iClosureMaximum);
 
-            }
+                  for(var i = 0; i < data.length; i++){
 
-            var edgeNE = new Parse.GeoPoint(parseFloat(currentCity['bounds']['northeast']['lat']), parseFloat(currentCity['bounds']['northeast']['lng']));
-            var edgeSW = new Parse.GeoPoint(parseFloat(currentCity['bounds']['southwest']['lat']), parseFloat(currentCity['bounds']['southwest']['lng']));
-            var center = new Parse.GeoPoint(parseFloat(currentCity['center']['lat']), parseFloat(currentCity['center']['lng']));
+                      var currentCity = data[i];
+                      var currentCityName = currentCity['name'];
 
+                      cityNameString += currentCityName+', ';
 
-            var currentSiren = new Siren();
-            currentSiren.set('edgeNE', edgeNE);
-            currentSiren.set('edgeSW', edgeSW);
-            currentSiren.set('center', center);
-            currentSiren.set('toponym', currentCityName);
-            currentSiren.set('alertID', alertID);
-            currentSiren.save();
+                      if(!currentCity['bounds']){
 
+                          iClosureMaximum--;
+                          continue;
 
+                      }
 
+                      var edgeNE = new Parse.GeoPoint(parseFloat(currentCity['bounds']['northeast']['lat']), parseFloat(currentCity['bounds']['northeast']['lng']));
+                      var edgeSW = new Parse.GeoPoint(parseFloat(currentCity['bounds']['southwest']['lat']), parseFloat(currentCity['bounds']['southwest']['lng']));
+                      var center = new Parse.GeoPoint(parseFloat(currentCity['center']['lat']), parseFloat(currentCity['center']['lng']));
 
 
+                      var currentSiren = new Siren();
+                      currentSiren.set('edgeNE', edgeNE);
+                      currentSiren.set('edgeSW', edgeSW);
+                      currentSiren.set('center', center);
+                      currentSiren.set('toponym', currentCityName);
+                      currentSiren.set('alertID', alertID);
+                      currentSiren.save();
 
 
-            console.log('Current Bounds: ');
-            console.log(edgeNE);
-            console.log(edgeSW);
 
-            var currentDeviceQuery = new Parse.Query(Parse.Installation); // let's create a Parse installation query
-            currentDeviceQuery.withinGeoBox('lastKnownLocation', edgeSW, edgeNE);
 
-            currentDeviceQuery.find({
 
-                success: function(results){
 
-                    for(var j = 0; j < results.length; j++){
 
-                        var currentDevice = results[j];
-                        affectedDeviceIDs.push(currentDevice.id);
+                      console.log('Current Bounds: '+JSON.stringify(edgeNE)+'; '+JSON.stringify(edgeSW));
+                      // console.log(edgeNE);
+                      // console.log(edgeSW);
 
-                    }
+                      var currentDeviceQuery = new Parse.Query(Parse.Installation); // let's create a Parse installation query
+                      currentDeviceQuery.withinGeoBox('lastKnownLocation', edgeSW, edgeNE);
 
-                }, error:function(error){
+                      currentDeviceQuery.find({
 
-                    console.log('Could not find the geo-relevant devices because: '+JSON.stringify(error));
+                          success: function(results){
 
-                }
+                              for(var j = 0; j < results.length; j++){
 
-            }).then(function(){
+                                  var currentDevice = results[j];
+                                  affectedDeviceIDs.push(currentDevice.id);
 
-                iClosure++; // we need to check the stuff in here
+                              }
 
-                if(iClosure == iClosureMaximum){ // we have reached the end of this loop
+                              console.log('Found geo-relevant devices');
 
+                          }, error:function(error){
 
-                    console.log('Affected devuces: '+JSON.stringify(affectedDeviceIDs));
+                              console.log('Could not find the geo-relevant devices because: '+JSON.stringify(error));
+                              response.error('Could not find devices within last known location.');
 
+                          }
 
-                    cityNameString = cityNameString.substr(0, cityNameString.length-2);
+                      }).then(function(){
 
-                    if(cityNameString.length > 140){
-                        cityNameString = cityNameString.substr(0, 140)+'…';
-                    }
+                          iClosure++; // we need to check the stuff in here
 
+                          console.log('Current closure count: '+iClosure);
 
-                    // debugging so I always also get a push notification
-                    // affectedDeviceIDs.push('iXfNcrybPd'); // Arik's iPhone
-                    // affectedDeviceIDs.push('O7XytkyAfE'); // Arik's iPad
 
+                          if(iClosure == iClosureMaximum){ // we have reached the end of this loop
 
 
+                              console.log('Affected devuces: '+JSON.stringify(affectedDeviceIDs));
 
-                    // we have found all the necessary device IDs
 
-                    var urgentPushNotificationQuery = new Parse.Query(Parse.Installation);
-                    urgentPushNotificationQuery.containedIn('objectId', affectedDeviceIDs);
+                              cityNameString = cityNameString.substr(0, cityNameString.length-2);
 
+                              if(cityNameString.length > 140){
+                                  cityNameString = cityNameString.substr(0, 140)+'…';
+                              }
 
 
-                    var informativePushNotificationQuery = new Parse.Query(Parse.Installation);
-                    informativePushNotificationQuery.notContainedIn('objectId', affectedDeviceIDs);
+                              // debugging so I always also get a push notification
+                              // affectedDeviceIDs.push('iXfNcrybPd'); // Arik's iPhone
+                              // affectedDeviceIDs.push('O7XytkyAfE'); // Arik's iPad
 
 
 
 
+                              // we have found all the necessary device IDs
 
-                    Parse.Push.send({
-                        where: urgentPushNotificationQuery,
-                        data: {
-                            alert: 'TAKE COVER!',
-                            sound: 'major_alert.caf',
-                            badge: 'Increment'
-                        }
-                    }, {
-                        success: function(){
+                              var urgentPushNotificationQuery = new Parse.Query(Parse.Installation);
+                              urgentPushNotificationQuery.containedIn('objectId', affectedDeviceIDs);
 
-                            // response.success('Push sent!');
 
-                        },
-                        error: function(error){
 
-                            console.error('Could not send push notification');
-                            // response.error(error);
+                              var informativePushNotificationQuery = new Parse.Query(Parse.Installation);
+                              informativePushNotificationQuery.notContainedIn('objectId', affectedDeviceIDs);
 
-                        }
-                    }).then(function(){
 
 
 
 
+                              Parse.Push.send({
+                                  where: urgentPushNotificationQuery,
+                                  data: {
+                                      alert: 'TAKE COVER!',
+                                      sound: 'major_alert.caf',
+                                      badge: 'Increment'
+                                  }
+                              }, {
+                                  success: function(){
 
+                                      // response.success('Push sent!');
 
-                        // only after the emergency alarms have been sent need we also send the ones about whether or not to take cover
+                                  },
+                                  error: function(error){
 
-                        Parse.Push.send({
-                            where: informativePushNotificationQuery,
-                            data: {
-                                alert: 'Sirens in: '+cityNameString,
-                                sound: 'minor_alert_alarm.m4a',
-                                badge: 'Increment'
-                            }
-                        }, {
-                            success: function(){
+                                      console.error('Could not send push notification');
+                                      response.error('Could not send urgent push notification.');
+                                      // response.error(error);
 
-                                // response.success('Push sent!');
+                                  }
+                              }).then(function(){
 
-                            },
-                            error: function(error){
 
-                                console.error('Could not send push notification');
-                                // response.error(error);
 
-                            }
-                        }).then(function(){
 
 
 
-                            response.success('everything is done');
+                                  // only after the emergency alarms have been sent need we also send the ones about whether or not to take cover
 
+                                  Parse.Push.send({
+                                      where: informativePushNotificationQuery,
+                                      data: {
+                                          alert: 'Sirens in: '+cityNameString,
+                                          sound: 'minor_alert_alarm.m4a',
+                                          badge: 'Increment'
+                                      }
+                                  }, {
+                                      success: function(){
 
+                                          // response.success('Push sent!');
 
-                        });
+                                      },
+                                      error: function(error){
 
+                                          console.error('Could not send push notification');
+                                          response.error('Could not send non-urgent push notification.');
+                                          // response.error(error);
 
+                                      }
+                                  }).then(function(){
 
 
 
+                                      response.success('everything is done');
 
 
 
+                                  });
 
-                    });
 
 
 
@@ -225,11 +231,29 @@ Parse.Cloud.define('pushFromHFC', function(request, response){
 
 
 
-                    // response.success(affectedDeviceIDs);
 
-                }
+                              });
 
-            });
+
+
+
+
+
+
+                              // response.success(affectedDeviceIDs);
+
+                          }
+
+                      });
+
+                  }
+
+
+
+
+
+
+              }
 
         }
 

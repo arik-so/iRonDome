@@ -6,9 +6,6 @@
  * Time: 4:14 PM
  */
 
-
-die();
-
 $convenientLookup = [];
 
 $rawLookupData = file_get_contents('pikud_areas.csv');
@@ -16,7 +13,7 @@ $lookupRows = explode(PHP_EOL, $rawLookupData);
 
 foreach($lookupRows as $currentRow){
 
-    if(++$i == 10){
+    if(++$i == 2){
 
         // break;
 
@@ -27,10 +24,18 @@ foreach($lookupRows as $currentRow){
     $cityName = $rowParts[0];
     $areaCode = $rowParts[1];
 
-    $googleLookupRaw = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($cityName));
+    $url = 'http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($cityName).'&components=country:IL';
+    echo $url.PHP_EOL;
+    $googleLookupRaw = file_get_contents($url);
     $googleLookupData = json_decode($googleLookupRaw, true);
-    $filteredGoogleLookup = $googleLookupData['results'][0];
 
+    $googleResults = $googleLookupData['results'];
+    $filteredGoogleLookup = $googleResults[0];
+    // $filteredGoogleLookup = $googleLookupData['results'];
+
+    if(count($googleResults) != 1){
+        $filteredGoogleLookup = 'ambiguous_results';
+    }
 
 
     $convenientLookup[$areaCode][$cityName] = $filteredGoogleLookup;
@@ -39,6 +44,9 @@ foreach($lookupRows as $currentRow){
 
 echo '<pre>';
 
+print_r($convenientLookup);
+
+// die();
+
 file_put_contents('areas.json', json_encode($convenientLookup, JSON_PRETTY_PRINT));
 
-print_r($convenientLookup);
