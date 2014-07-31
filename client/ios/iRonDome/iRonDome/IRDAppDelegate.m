@@ -58,7 +58,7 @@
     
     // let's start monitoring location, right?
     self.locationManager = [[CLLocationManager alloc] init];
-    self.locationManager.distanceFilter = kCLDistanceFilterNone;
+    self.locationManager.distanceFilter = 100; // we want it updated for a one hundred meter distance filter
     self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // this is not super precise, but sufficient for our purpose
     self.locationManager.activityType = CLActivityTypeOther;
     self.locationManager.pausesLocationUpdatesAutomatically = NO; // we want it to constantly keep the user updated. IT IS IMPORTANT!
