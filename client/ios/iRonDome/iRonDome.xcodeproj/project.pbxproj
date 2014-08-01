@@ -55,6 +55,8 @@
 		FE58AB0C19783EF00084808E /* IRDTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE58AB0B19783EF00084808E /* IRDTableViewController.m */; };
 		FE9A3E2F197847770070AB27 /* IRDSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9A3E2E197847770070AB27 /* IRDSettingsTableViewController.m */; };
 		FE9D2400197C97EF00CE79E7 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE9D23FF197C97EF00CE79E7 /* iAd.framework */; };
+		FEC6518C198AF406006ACDB4 /* InAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC65189198AF406006ACDB4 /* InAppManager.m */; };
+		FEC6518D198AF406006ACDB4 /* InAppObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC6518B198AF406006ACDB4 /* InAppObserver.m */; };
 		FED363AE1982EDFB0031BD31 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FED363AD1982EDFB0031BD31 /* CustomTableViewCell.m */; };
 /* End PBXBuildFile section */
 
@@ -165,6 +167,10 @@
 		FE9A3E2D197847770070AB27 /* IRDSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRDSettingsTableViewController.h; sourceTree = "<group>"; };
 		FE9A3E2E197847770070AB27 /* IRDSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRDSettingsTableViewController.m; sourceTree = "<group>"; };
 		FE9D23FF197C97EF00CE79E7 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		FEC65188198AF406006ACDB4 /* InAppManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InAppManager.h; sourceTree = "<group>"; };
+		FEC65189198AF406006ACDB4 /* InAppManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InAppManager.m; sourceTree = "<group>"; };
+		FEC6518A198AF406006ACDB4 /* InAppObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InAppObserver.h; sourceTree = "<group>"; };
+		FEC6518B198AF406006ACDB4 /* InAppObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InAppObserver.m; sourceTree = "<group>"; };
 		FED363AC1982EDFB0031BD31 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		FED363AD1982EDFB0031BD31 /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -285,6 +291,7 @@
 				515C6337197DAEE000C3BAB5 /* Flurry */,
 				515C633A197DAEE000C3BAB5 /* FlurryAds */,
 				517992AF19784D2200830A21 /* storage */,
+				FEC65187198AF406006ACDB4 /* iAPManager */,
 				514893F8197BDDE000D32AE9 /* IRDImpactCalculator.h */,
 				514893F9197BDDE000D32AE9 /* IRDImpactCalculator.m */,
 				5179928219771B6300830A21 /* IRDAppDelegate.h */,
@@ -375,6 +382,17 @@
 				FE52C9091977B699000ED87D /* CustomAnnotationView.m */,
 			);
 			name = MapView;
+			sourceTree = "<group>";
+		};
+		FEC65187198AF406006ACDB4 /* iAPManager */ = {
+			isa = PBXGroup;
+			children = (
+				FEC65188198AF406006ACDB4 /* InAppManager.h */,
+				FEC65189198AF406006ACDB4 /* InAppManager.m */,
+				FEC6518A198AF406006ACDB4 /* InAppObserver.h */,
+				FEC6518B198AF406006ACDB4 /* InAppObserver.m */,
+			);
+			path = iAPManager;
 			sourceTree = "<group>";
 		};
 		FED363AB1982EDDE0031BD31 /* CustomCell */ = {
@@ -506,6 +524,7 @@
 				517992C119784D5200830A21 /* FMDatabase.m in Sources */,
 				FE52C9071977B572000ED87D /* IRDMapAnnotation.m in Sources */,
 				517992C419784D5200830A21 /* FMDatabaseQueue.m in Sources */,
+				FEC6518D198AF406006ACDB4 /* InAppObserver.m in Sources */,
 				519D550D19810086007C26FE /* IRDSingleRocketTableViewController.m in Sources */,
 				517992C519784D5200830A21 /* FMResultSet.m in Sources */,
 				517992C319784D5200830A21 /* FMDatabasePool.m in Sources */,
@@ -516,6 +535,7 @@
 				FE9A3E2F197847770070AB27 /* IRDSettingsTableViewController.m in Sources */,
 				517C25C9197AD76500052133 /* SCLocalSiren.m in Sources */,
 				5179928019771B6300830A21 /* main.m in Sources */,
+				FEC6518C198AF406006ACDB4 /* InAppManager.m in Sources */,
 				517992C219784D5200830A21 /* FMDatabaseAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -700,6 +720,7 @@
 					"$(PROJECT_DIR)/iRonDome/Flurry",
 					"$(PROJECT_DIR)/iRonDome/FlurryAds",
 				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "47A798F4-9FD2-4F1D-A5B4-0A26C5B8585F";
 				WRAPPER_EXTENSION = app;
@@ -725,6 +746,7 @@
 					"$(PROJECT_DIR)/iRonDome/Flurry",
 					"$(PROJECT_DIR)/iRonDome/FlurryAds",
 				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "47A798F4-9FD2-4F1D-A5B4-0A26C5B8585F";
 				WRAPPER_EXTENSION = app;

@@ -39,8 +39,6 @@ static NSString * const KEY_DISABLE_NOTIFICATIONS = @"disableNotifications";
 {
     [super viewDidLoad];
     
-    
-    
     self.banner = [[ADBannerView alloc] initWithFrame:CGRectZero];
     self.banner.delegate = self;
     [self.banner setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
@@ -90,6 +88,8 @@ static NSString * const KEY_DISABLE_NOTIFICATIONS = @"disableNotifications";
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     self.banner.backgroundColor = [UIColor clearColor];
+    
+    [InAppManager sharedManager];
 }
 
 - (void)switchValueChanged:(UISwitch *)affectedSwitch{
@@ -193,7 +193,7 @@ static NSString * const KEY_DISABLE_NOTIFICATIONS = @"disableNotifications";
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -204,8 +204,13 @@ static NSString * const KEY_DISABLE_NOTIFICATIONS = @"disableNotifications";
     }
     
     if (section == 1) {
+        return 2;
+    }
+    
+    if (section == 2) {
         return self.developers.count;
     }
+    
     return 0;
     
 }
@@ -248,7 +253,27 @@ static NSString * const KEY_DISABLE_NOTIFICATIONS = @"disableNotifications";
         
     }
     
-    if (indexPath.section == 1) {
+    if(indexPath.section == 1){
+        NSString *titleString;
+        
+        if(indexPath.row == 0){
+            titleString = NSLocalizedString(@"remove_ads", nil);
+        }else if(indexPath.row == 1){
+            titleString = NSLocalizedString(@"restore_purchases", nil);
+        }
+        
+        notificationsLabel.text = titleString;
+        
+        //hide other labels
+        titleLabel.hidden = YES;
+        subtitleLabel.hidden = YES;
+        twitterLabel.hidden = YES;
+        
+        return cell;
+        
+    }
+    
+    if (indexPath.section == 2) {
         
         NSDictionary *devDetails = self.developers[indexPath.row];
         
@@ -266,21 +291,21 @@ static NSString * const KEY_DISABLE_NOTIFICATIONS = @"disableNotifications";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == 2) {
+    if (section == 3) {
         return 120;
     }
     return 40;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    if (section == 1) {
+    if (section == 3) {
         return self.banner;
     }
     return nil;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if (section == 1) {
+    if (section == 3) {
         return self.banner.frame.size.height;
     }
     return 0;
@@ -306,11 +331,22 @@ static NSString * const KEY_DISABLE_NOTIFICATIONS = @"disableNotifications";
         titleHeader.frame = CGRectMake(20, 10, 320, 21);
         titleHeader.font = [UIFont fontWithName:kAvenirLight size:16];
         titleHeader.textAlignment = NSTextAlignmentLeft;
-        titleHeader.text = NSLocalizedString(@"credits", nil);
+        titleHeader.text = NSLocalizedString(@"store", nil);
         titleHeader.textColor = [UIColor blackColor];
         [headerView addSubview:titleHeader];
     }
     if (section == 2) {
+        headerView.frame = CGRectMake(0, 0, 320, 20);
+        headerView.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:236.0/255.0 blue:237.0/255.0 alpha:1.0];
+        UILabel *titleHeader = [[UILabel alloc] init];
+        titleHeader.frame = CGRectMake(20, 10, 320, 21);
+        titleHeader.font = [UIFont fontWithName:kAvenirLight size:16];
+        titleHeader.textAlignment = NSTextAlignmentLeft;
+        titleHeader.text = NSLocalizedString(@"credits", nil);
+        titleHeader.textColor = [UIColor blackColor];
+        [headerView addSubview:titleHeader];
+    }
+    if (section == 3) {
         headerView.frame = CGRectMake(0, 0, tableView.frame.size.width, 20);
         headerView.backgroundColor = [UIColor clearColor];
         UILabel *titleHeader = [[UILabel alloc] init];
@@ -329,6 +365,25 @@ static NSString * const KEY_DISABLE_NOTIFICATIONS = @"disableNotifications";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1) {
+        if (indexPath.row == 0) {
+            //remove ads
+            if ([[InAppManager sharedManager] isRemoveAdsPurchasedAlready]) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention"
+                                                                message:@"You have already removed ads!"
+                                                               delegate:nil
+                                                      cancelButtonTitle:nil
+                                                      otherButtonTitles:@"OK", nil];
+                [alert show];
+            }else{
+                [[InAppManager sharedManager] buyRemoveAds];
+            }
+        }else{
+            //restore purchases
+            [[InAppManager sharedManager] restoreCompletedTransactions];
+        }
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+    if (indexPath.section == 2) {
         NSDictionary *devDetails = self.developers[indexPath.row];
         [self followOnTwitter:devDetails[@"twitter"]];
     }
