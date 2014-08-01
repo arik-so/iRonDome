@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <iAd/iAd.h>
+#import "InAppManager.h"
 
 @interface IRDSettingsTableViewController : UITableViewController <ADBannerViewDelegate>
 

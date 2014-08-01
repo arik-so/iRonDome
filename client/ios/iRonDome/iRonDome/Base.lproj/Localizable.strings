@@ -20,3 +20,7 @@
 "disable_notifications" = "Disable Notifications";
 "notifications" = "Notifications";
 
+"store" = "Store";
+"remove_ads" = "Remove Ads";
+"restore_purchases" = "Restore Purchases";
+
