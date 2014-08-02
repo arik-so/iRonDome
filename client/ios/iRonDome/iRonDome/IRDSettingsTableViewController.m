@@ -10,6 +10,7 @@
 #define kAvenirLight @"Avenir-Light"
 
 #import <Parse/Parse.h>
+#import "Flurry/Flurry.h"
 #import "FlurryAds.h"
 
 @interface IRDSettingsTableViewController ()
@@ -19,12 +20,16 @@
 @property (strong, nonatomic) UISwitch *muteSwitch;
 @property (strong, nonatomic) UISwitch *notificationSwitch;
 
+@property (strong, nonatomic) UIView *flurryContainer;
+
 @end
 
 @implementation IRDSettingsTableViewController
 
 static NSString * const KEY_MUTE_NOTIFICATIONS = @"muteNotifications";
 static NSString * const KEY_DISABLE_NOTIFICATIONS = @"disableNotifications";
+
+static NSString * const AD_SPACE_NAME = @"iRon Dome Ads";
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -38,6 +43,21 @@ static NSString * const KEY_DISABLE_NOTIFICATIONS = @"disableNotifications";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    
+    
+    [Flurry setDebugLogEnabled:YES];
+    
+    [FlurryAds setAdDelegate:self];
+    
+    //set this on to see if test ads appear, make sure to turn it off once the test ads appear
+    [FlurryAds enableTestAds:YES];  
+    
+    
+    
+    
+    
     
     self.banner = [[ADBannerView alloc] initWithFrame:CGRectZero];
     self.banner.delegate = self;
@@ -89,6 +109,9 @@ static NSString * const KEY_DISABLE_NOTIFICATIONS = @"disableNotifications";
     
     self.banner.backgroundColor = [UIColor clearColor];
     
+    self.flurryContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    self.tableView.tableFooterView = self.flurryContainer;
+    
     [InAppManager sharedManager];
 }
 
@@ -115,9 +138,50 @@ static NSString * const KEY_DISABLE_NOTIFICATIONS = @"disableNotifications";
     
     [FlurryAds setAdDelegate:self];
     
-    [FlurryAds fetchAndDisplayAdForSpace:@"iRon Dome Ads" view:self.view size:BANNER_BOTTOM];
+    [FlurryAds fetchAdForSpace:AD_SPACE_NAME frame:self.flurryContainer.frame size:FULLSCREEN];
+    // [FlurryAds fetchAndDisplayAdForSpace:@"iRon Dome Ads" view:self.view size:BANNER_BOTTOM];
     
 }
+
+
+
+
+-(void) displayFlurryAd {
+    
+    if ([FlurryAds adReadyForSpace:AD_SPACE_NAME]) {
+        [FlurryAds displayAdForSpace:AD_SPACE_NAME onView:self.flurryContainer];
+        
+    } else {
+        // Fetch an ad
+        /* width = self.view.frame.size.width;
+        height = self.view.frame.size.height;
+        
+        currentViewWidth = (UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))? MAX (width, height) : MIN (width, height);
+        
+        currentViewHeight = (UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))? MIN (width, height) : MAX (width, height);
+        
+        // reconstruct the flurryContainer with the current width, height
+        
+        [self.flurryContainer setFrame:CGRectMake(0, 0, currentViewWidth, currentViewHeight)]; */
+        
+        
+        [FlurryAds fetchAdForSpace:AD_SPACE_NAME frame:self.flurryContainer.frame size:FULLSCREEN];
+    }
+    
+}
+
+
+/**
+ *  Invoke a takeover at a natural pause in your app. For example, when a
+ *  level is completed, an article is read or a button is pressed.
+ */
+- (IBAction)displayAd:(UIButton *)sender forEvent:(UIEvent *)event {
+    
+    [self displayFlurryAd];
+}
+
+
+
 
 - (void)viewDidDisappear:(BOOL)animated
 {
@@ -147,6 +211,8 @@ static NSString * const KEY_DISABLE_NOTIFICATIONS = @"disableNotifications";
 
 - (void)spaceDidReceiveAd:(NSString *)adSpace {
     NSLog(@"=========== Ad Space [%@] Did Receive Ad ================ ", adSpace);
+    
+    [self displayFlurryAd];
     
 }
 
