@@ -6,7 +6,7 @@
   Copyright (c) 2014 Arik. All rights reserved.
 */
 
-"credits" = "Support & Credits";
+"credits" = "Поддержка";
 
 "current_rockets" = "Нынешние ракеты: {count}";
 "past_rockets" = "Бывшие: {count} – Since {since}";
