@@ -1,21 +1,16 @@
 //
-//  SCLocalSiren.h
+//  SCLocalAlarm.h
 //  iRonDome
 //
-//  Created by Arik Sosman on 7/19/14.
-//  Copyright (c) 2014 Arik. All rights reserved.
+//  Created by Arik Sosman on 7/8/15.
+//  Copyright (c) 2015 Arik. All rights reserved.
 //
 
 #import "SCLocalObject.h"
 
-@interface SCLocalSiren : SCLocalObject
+@interface SCLocalAlarm : SCLocalObject
 
 @property (strong, nonatomic, readonly) NSString *serverID;
-
-@property (readonly) NSTimeInterval timestamp;
-@property (readonly) long long alertID;
-
-
 
 @property (readonly) double latitude;
 @property (readonly) double longitude;
@@ -26,10 +21,11 @@
 @property (readonly) double longitudeWest;
 @property (readonly) double longitudeEast;
 
-@property (strong, nonatomic) NSString *toponym;
+@property (readonly) NSTimeInterval timestamp;
 
+@property (strong, nonatomic) NSString *toponymShort;
+@property (strong, nonatomic) NSString *toponymLong;
 
-
-- (void)initFromServerResponse:(NSDictionary *)serverSiren;
+- (void)initFromServerResponse:(PFObject *)serverSiren;
 
 @end

@@ -12,17 +12,7 @@
 
 @property (readwrite) NSString *serverID;
 
-@property (readwrite) double latitude;
-@property (readwrite) double longitude;
-
-@property (readwrite) double latitudeNorth;
-@property (readwrite) double latitudeSouth;
-
-@property (readwrite) double longitudeWest;
-@property (readwrite) double longitudeEast;
-
 @property (readwrite) NSTimeInterval timestamp;
-@property (readwrite) long long alertID;
 
 @end
 
@@ -30,29 +20,12 @@
 
 + (NSString *)getDatabaseTable { return @"sirens"; }
 
-- (void)initFromServerResponse:(PFObject *)serverSiren{
+- (void)initFromServerResponse:(NSDictionary *)serverSiren{
     
-    PFGeoPoint *location = serverSiren[@"center"];
-    PFGeoPoint *edgeNE = serverSiren[@"edgeNE"];
-    PFGeoPoint *edgeSW = serverSiren[@"edgeSW"];
+    self.serverID = serverSiren[@"alert_id"];
+    self.timestamp = [serverSiren[@"timestamp"] longLongValue];
     
-    self.serverID = serverSiren.objectId;
-    
-    self.toponym = serverSiren[@"toponym"];
-    
-    self.latitude = location.latitude;
-    self.longitude = location.longitude;
-    
-    self.latitudeNorth = edgeNE.latitude;
-    self.latitudeSouth = edgeSW.latitude;
-    
-    self.longitudeWest = edgeSW.longitude;
-    self.longitudeEast = edgeNE.longitude;
-    
-    self.timestamp = serverSiren.createdAt.timeIntervalSince1970;
-    self.alertID = [serverSiren[@"alertID"] longLongValue];
-    
-    [self saveAttributes:@[@"serverID", @"toponym", @"latitude", @"longitude", @"latitudeNorth", @"latitudeSouth", @"longitudeWest", @"longitudeEast", @"timestamp", @"alertID"]];
+    [self saveAttributes:@[@"serverID", @"timestamp"]];
     
 }
 

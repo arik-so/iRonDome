@@ -14,6 +14,8 @@
 #define kAvenirLight @"Avenir-Light"
 #define kAvenirBook @"Avenir-Book"
 
+#import "iRonDome-Swift.h"
+
 @interface IRDSingleRocketTableViewController ()
 
 @property (strong, nonatomic) NSMutableArray *sirens;
@@ -54,6 +56,7 @@
     
     NSString *dbTable = [SCLocalSiren getDatabaseTable];
     NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE alertID = :alertID GROUP BY alertID, latitude, longitude ORDER BY toponym ASC", dbTable];
+
     
     [[SCSQLiteManager getActiveManager].dbQueue inDatabase:^(FMDatabase *db) {
         

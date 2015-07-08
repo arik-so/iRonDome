@@ -8,6 +8,8 @@
 
 #import "IRDTableViewController.h"
 #import "Reachability.h"
+#import "iRonDome-Bridging-Header.h"
+
 #define kRocketTimeThreshold -60*2 // two minutes
 #define kMapZoomLatitude 400000
 #define kMapZoomLongitude 400000
@@ -130,6 +132,8 @@
         FMResultSet *result = [db executeQuery:query];
         
         while([result next]){
+
+            // Siren *siren;
             
             SCLocalSiren *currentSiren = [[SCLocalSiren alloc] init];
             [currentSiren initWithFetchResponse:result.resultDictionary];

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14D131" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Area" representedClassName="Area" syncable="YES">
+        <attribute name="areaID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="centerLatitude" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="centerLongitude" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="eastEdgeLongitude" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="northEdgeLatitude" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="southEdgeLatitude" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="toponymLong" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="toponymShort" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="westEdgeLongitude" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="sirens" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Siren" inverseName="areas" inverseEntity="Siren" syncable="YES"/>
+    </entity>
+    <entity name="Siren" representedClassName="Siren" syncable="YES">
+        <attribute name="alertID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="areas" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Area" inverseName="sirens" inverseEntity="Area" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Siren" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="Area" positionX="-54" positionY="9" width="128" height="195"/>
+    </elements>
+</model>

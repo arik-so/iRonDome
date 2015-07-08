@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07B29C141B4D4BA5008E6A50 /* SCLocalAlarm.m in Sources */ = {isa = PBXBuildFile; fileRef = 07B29C131B4D4BA5008E6A50 /* SCLocalAlarm.m */; };
+		07B29C161B4D4CF2008E6A50 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B29C151B4D4CF2008E6A50 /* CoreData.framework */; };
+		07B29C191B4D4D3F008E6A50 /* IRDModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 07B29C171B4D4D3F008E6A50 /* IRDModel.xcdatamodeld */; };
+		07B29C231B4D50ED008E6A50 /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B29C221B4D50ED008E6A50 /* Area.swift */; };
+		07B29C251B4D50EE008E6A50 /* Siren.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B29C241B4D50EE008E6A50 /* Siren.swift */; };
 		514893FA197BDDE000D32AE9 /* IRDImpactCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 514893F9197BDDE000D32AE9 /* IRDImpactCalculator.m */; };
 		515C633E197DAEE000C3BAB5 /* libFlurry_5.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 515C6339197DAEE000C3BAB5 /* libFlurry_5.2.0.a */; };
 		515C633F197DAEE000C3BAB5 /* libFlurryAds_5.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 515C633D197DAEE000C3BAB5 /* libFlurryAds_5.2.0.a */; };
@@ -72,6 +77,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		07B29C121B4D4BA5008E6A50 /* SCLocalAlarm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLocalAlarm.h; sourceTree = "<group>"; };
+		07B29C131B4D4BA5008E6A50 /* SCLocalAlarm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLocalAlarm.m; sourceTree = "<group>"; };
+		07B29C151B4D4CF2008E6A50 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		07B29C181B4D4D3F008E6A50 /* IRDModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = IRDModel.xcdatamodel; sourceTree = "<group>"; };
+		07B29C211B4D50EC008E6A50 /* iRonDome-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iRonDome-Bridging-Header.h"; sourceTree = "<group>"; };
+		07B29C221B4D50ED008E6A50 /* Area.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Area.swift; sourceTree = "<group>"; };
+		07B29C241B4D50EE008E6A50 /* Siren.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Siren.swift; sourceTree = "<group>"; };
 		514893F8197BDDE000D32AE9 /* IRDImpactCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRDImpactCalculator.h; path = ../IRDImpactCalculator.h; sourceTree = "<group>"; };
 		514893F9197BDDE000D32AE9 /* IRDImpactCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRDImpactCalculator.m; path = ../IRDImpactCalculator.m; sourceTree = "<group>"; };
 		515C6338197DAEE000C3BAB5 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
@@ -183,6 +195,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07B29C161B4D4CF2008E6A50 /* CoreData.framework in Frameworks */,
 				515C6343197DAF1E00C3BAB5 /* MediaPlayer.framework in Frameworks */,
 				515C6341197DAF0F00C3BAB5 /* AdSupport.framework in Frameworks */,
 				515C633F197DAEE000C3BAB5 /* libFlurryAds_5.2.0.a in Frameworks */,
@@ -220,6 +233,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		07B29C1A1B4D5025008E6A50 /* core-data */ = {
+			isa = PBXGroup;
+			children = (
+				07B29C171B4D4D3F008E6A50 /* IRDModel.xcdatamodeld */,
+				07B29C241B4D50EE008E6A50 /* Siren.swift */,
+				07B29C221B4D50ED008E6A50 /* Area.swift */,
+				07B29C211B4D50EC008E6A50 /* iRonDome-Bridging-Header.h */,
+			);
+			name = "core-data";
+			sourceTree = "<group>";
+		};
 		515C6337197DAEE000C3BAB5 /* Flurry */ = {
 			isa = PBXGroup;
 			children = (
@@ -261,6 +285,7 @@
 		5179927219771B6300830A21 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				07B29C151B4D4CF2008E6A50 /* CoreData.framework */,
 				515C6342197DAF1E00C3BAB5 /* MediaPlayer.framework */,
 				515C6340197DAF0F00C3BAB5 /* AdSupport.framework */,
 				FE9D23FF197C97EF00CE79E7 /* iAd.framework */,
@@ -348,6 +373,7 @@
 		517992AF19784D2200830A21 /* storage */ = {
 			isa = PBXGroup;
 			children = (
+				07B29C1A1B4D5025008E6A50 /* core-data */,
 				517992B619784D4200830A21 /* sqlite */,
 				517992B019784D3B00830A21 /* SCSQLiteManager.h */,
 				517992B119784D3B00830A21 /* SCSQLiteManager.m */,
@@ -355,6 +381,8 @@
 				517992B319784D3B00830A21 /* SCLocalObject.m */,
 				517C25C7197AD76500052133 /* SCLocalSiren.h */,
 				517C25C8197AD76500052133 /* SCLocalSiren.m */,
+				07B29C121B4D4BA5008E6A50 /* SCLocalAlarm.h */,
+				07B29C131B4D4BA5008E6A50 /* SCLocalAlarm.m */,
 			);
 			name = storage;
 			sourceTree = "<group>";
@@ -526,8 +554,11 @@
 				FED363AE1982EDFB0031BD31 /* CustomTableViewCell.m in Sources */,
 				517992B419784D3B00830A21 /* SCSQLiteManager.m in Sources */,
 				517992B519784D3B00830A21 /* SCLocalObject.m in Sources */,
+				07B29C191B4D4D3F008E6A50 /* IRDModel.xcdatamodeld in Sources */,
 				517992C119784D5200830A21 /* FMDatabase.m in Sources */,
+				07B29C141B4D4BA5008E6A50 /* SCLocalAlarm.m in Sources */,
 				FE52C9071977B572000ED87D /* IRDMapAnnotation.m in Sources */,
+				07B29C251B4D50EE008E6A50 /* Siren.swift in Sources */,
 				517992C419784D5200830A21 /* FMDatabaseQueue.m in Sources */,
 				FEC6518D198AF406006ACDB4 /* InAppObserver.m in Sources */,
 				519D550D19810086007C26FE /* IRDSingleRocketTableViewController.m in Sources */,
@@ -535,6 +566,7 @@
 				517992C319784D5200830A21 /* FMDatabasePool.m in Sources */,
 				514893FA197BDDE000D32AE9 /* IRDImpactCalculator.m in Sources */,
 				FE52C90A1977B699000ED87D /* CustomAnnotationView.m in Sources */,
+				07B29C231B4D50ED008E6A50 /* Area.swift in Sources */,
 				FE58AB0C19783EF00084808E /* IRDTableViewController.m in Sources */,
 				5179928419771B6300830A21 /* IRDAppDelegate.m in Sources */,
 				FE29BE971B4CC00A008EF958 /* Reachability.m in Sources */,
@@ -712,7 +744,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -721,6 +756,7 @@
 				GCC_PREFIX_HEADER = "iRonDome/iRonDome-Prefix.pch";
 				INFOPLIST_FILE = "iRonDome/iRonDome-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iRonDome/Flurry",
@@ -729,6 +765,8 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "47A798F4-9FD2-4F1D-A5B4-0A26C5B8585F";
+				SWIFT_OBJC_BRIDGING_HEADER = "iRonDome/iRonDome-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -738,7 +776,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -747,6 +788,7 @@
 				GCC_PREFIX_HEADER = "iRonDome/iRonDome-Prefix.pch";
 				INFOPLIST_FILE = "iRonDome/iRonDome-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iRonDome/Flurry",
@@ -755,6 +797,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "47A798F4-9FD2-4F1D-A5B4-0A26C5B8585F";
+				SWIFT_OBJC_BRIDGING_HEADER = "iRonDome/iRonDome-Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -830,6 +873,19 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		07B29C171B4D4D3F008E6A50 /* IRDModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				07B29C181B4D4D3F008E6A50 /* IRDModel.xcdatamodel */,
+			);
+			currentVersion = 07B29C181B4D4D3F008E6A50 /* IRDModel.xcdatamodel */;
+			path = IRDModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 5179926819771B6300830A21 /* Project object */;
 }
