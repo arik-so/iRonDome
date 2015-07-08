@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07AE6A061B4D7EAD00B32B48 /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AE6A051B4D7EAD00B32B48 /* Area.swift */; };
+		07AE6A081B4D7EAE00B32B48 /* Siren.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AE6A071B4D7EAE00B32B48 /* Siren.swift */; };
 		07B29C161B4D4CF2008E6A50 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B29C151B4D4CF2008E6A50 /* CoreData.framework */; };
 		07B29C191B4D4D3F008E6A50 /* IRDModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 07B29C171B4D4D3F008E6A50 /* IRDModel.xcdatamodeld */; };
-		07B29C231B4D50ED008E6A50 /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B29C221B4D50ED008E6A50 /* Area.swift */; };
-		07B29C251B4D50EE008E6A50 /* Siren.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B29C241B4D50EE008E6A50 /* Siren.swift */; };
 		25DE05FDD61A7C1145E73F50 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AE7818C59A6F469CC45AB35 /* libPods.a */; };
 		514893FA197BDDE000D32AE9 /* IRDImpactCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 514893F9197BDDE000D32AE9 /* IRDImpactCalculator.m */; };
 		515C633E197DAEE000C3BAB5 /* libFlurry_5.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 515C6339197DAEE000C3BAB5 /* libFlurry_5.2.0.a */; };
@@ -73,11 +73,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		07AE6A051B4D7EAD00B32B48 /* Area.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Area.swift; sourceTree = "<group>"; };
+		07AE6A071B4D7EAE00B32B48 /* Siren.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Siren.swift; sourceTree = "<group>"; };
 		07B29C151B4D4CF2008E6A50 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		07B29C181B4D4D3F008E6A50 /* IRDModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = IRDModel.xcdatamodel; sourceTree = "<group>"; };
 		07B29C211B4D50EC008E6A50 /* iRonDome-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iRonDome-Bridging-Header.h"; sourceTree = "<group>"; };
-		07B29C221B4D50ED008E6A50 /* Area.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Area.swift; sourceTree = "<group>"; };
-		07B29C241B4D50EE008E6A50 /* Siren.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Siren.swift; sourceTree = "<group>"; };
 		3AE7818C59A6F469CC45AB35 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		514893F8197BDDE000D32AE9 /* IRDImpactCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRDImpactCalculator.h; path = ../IRDImpactCalculator.h; sourceTree = "<group>"; };
 		514893F9197BDDE000D32AE9 /* IRDImpactCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRDImpactCalculator.m; path = ../IRDImpactCalculator.m; sourceTree = "<group>"; };
@@ -227,8 +227,8 @@
 			isa = PBXGroup;
 			children = (
 				07B29C171B4D4D3F008E6A50 /* IRDModel.xcdatamodeld */,
-				07B29C241B4D50EE008E6A50 /* Siren.swift */,
-				07B29C221B4D50ED008E6A50 /* Area.swift */,
+				07AE6A071B4D7EAE00B32B48 /* Siren.swift */,
+				07AE6A051B4D7EAD00B32B48 /* Area.swift */,
 				07B29C211B4D50EC008E6A50 /* iRonDome-Bridging-Header.h */,
 			);
 			name = "core-data";
@@ -578,11 +578,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07AE6A061B4D7EAD00B32B48 /* Area.swift in Sources */,
 				FED363AE1982EDFB0031BD31 /* CustomTableViewCell.m in Sources */,
 				07B29C191B4D4D3F008E6A50 /* IRDModel.xcdatamodeld in Sources */,
+				07AE6A081B4D7EAE00B32B48 /* Siren.swift in Sources */,
 				517992C119784D5200830A21 /* FMDatabase.m in Sources */,
 				FE52C9071977B572000ED87D /* IRDMapAnnotation.m in Sources */,
-				07B29C251B4D50EE008E6A50 /* Siren.swift in Sources */,
 				517992C419784D5200830A21 /* FMDatabaseQueue.m in Sources */,
 				FEC6518D198AF406006ACDB4 /* InAppObserver.m in Sources */,
 				519D550D19810086007C26FE /* IRDSingleRocketTableViewController.m in Sources */,
@@ -590,7 +591,6 @@
 				517992C319784D5200830A21 /* FMDatabasePool.m in Sources */,
 				514893FA197BDDE000D32AE9 /* IRDImpactCalculator.m in Sources */,
 				FE52C90A1977B699000ED87D /* CustomAnnotationView.m in Sources */,
-				07B29C231B4D50ED008E6A50 /* Area.swift in Sources */,
 				FE58AB0C19783EF00084808E /* IRDTableViewController.m in Sources */,
 				5179928419771B6300830A21 /* IRDAppDelegate.m in Sources */,
 				FE29BE971B4CC00A008EF958 /* Reachability.m in Sources */,

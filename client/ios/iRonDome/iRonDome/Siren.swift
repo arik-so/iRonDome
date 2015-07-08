@@ -9,10 +9,10 @@
 import Foundation
 import CoreData
 
-@objc class Siren: NSManagedObject {
+class Siren: NSManagedObject {
 
-    @NSManaged var alertID: Int64
-    @NSManaged var timestamp: NSTimeInterval
+    @NSManaged var alertID: NSNumber
+    @NSManaged var timestamp: NSDate
     @NSManaged var areas: NSSet
 
 }

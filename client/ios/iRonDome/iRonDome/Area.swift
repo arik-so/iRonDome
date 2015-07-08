@@ -9,17 +9,17 @@
 import Foundation
 import CoreData
 
-@objc class Area: NSManagedObject {
+class Area: NSManagedObject {
 
     @NSManaged var areaID: String
-    @NSManaged var toponymShort: String
-    @NSManaged var toponymLong: String
     @NSManaged var centerLatitude: NSDecimalNumber
     @NSManaged var centerLongitude: NSDecimalNumber
+    @NSManaged var eastEdgeLongitude: NSDecimalNumber
     @NSManaged var northEdgeLatitude: NSDecimalNumber
     @NSManaged var southEdgeLatitude: NSDecimalNumber
+    @NSManaged var toponymLong: String
+    @NSManaged var toponymShort: String
     @NSManaged var westEdgeLongitude: NSDecimalNumber
-    @NSManaged var eastEdgeLongitude: NSDecimalNumber
     @NSManaged var sirens: NSSet
 
 }

@@ -10,6 +10,8 @@
 #import "Reachability.h"
 #import "iRonDome-Swift.h"
 
+#import <MagicalRecord/MagicalRecord.h>
+
 #define kRocketTimeThreshold -60*2 // two minutes
 #define kMapZoomLatitude 400000
 #define kMapZoomLongitude 400000
@@ -382,15 +384,72 @@
                     if (!jsonError) {
                         
                         NSArray *sirens = jsonDict[@"response"][@"sirens"];
-                        NSDictionary *areas = jsonDict[@"response"][@"areas"];
+                        NSDictionary *areas = jsonDict[@"response"][@"areas"];                        
                         
-                        // first of all, let's walk through the areas and see whether they are already known to us, shall we?
-                        for(NSString *areaID in areas){
+                        // let's save this stuff in a background thread
+                        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
                             
-                            NSDictionary *currentAreaDetails = areas[areaID];
+                            // first of all, let's walk through the areas and see whether they are already known to us, shall we?
+                            for(NSString *areaID in areas){
+                                
+                                NSDictionary *currentAreaDetails = areas[areaID];
+                                
+                                Area *currentArea = [Area MR_createEntityInContext:localContext];
+                                currentArea.areaID = currentAreaDetails[@"area_id"];
+                                currentArea.toponymShort = currentAreaDetails[@"toponym_short"];
+                                currentArea.toponymLong = currentAreaDetails[@"toponym_long"];
+                                currentArea.centerLatitude = [[NSDecimalNumber alloc] initWithString:currentAreaDetails[@"center_latitude"]];
+                                currentArea.centerLongitude = [[NSDecimalNumber alloc] initWithString:currentAreaDetails[@"center_longitude"]];
+                                currentArea.northEdgeLatitude = [[NSDecimalNumber alloc] initWithString:currentAreaDetails[@"north_edge_latitude"]];
+                                currentArea.southEdgeLatitude = [[NSDecimalNumber alloc] initWithString:currentAreaDetails[@"south_edge_latitude"]];
+                                currentArea.westEdgeLongitude = [[NSDecimalNumber alloc] initWithString:currentAreaDetails[@"west_edge_longitude"]];
+                                currentArea.eastEdgeLongitude = [[NSDecimalNumber alloc] initWithString:currentAreaDetails[@"east_edge_longitude"]];
+                                
+                                
+                            }
                             
                             
-                        }
+                            for(NSDictionary *currentSirenDetails in sirens){
+                                
+                                Siren *currentSiren = [Siren MR_createEntityInContext:localContext];
+                                
+                                NSString *alertIDString = currentSirenDetails[@"alert_id"];
+                                NSString *timestampString = currentSirenDetails[@"timestamp"];
+                                
+                                long long alertID = alertIDString.longLongValue;
+                                NSTimeInterval timestamp = timestampString.longLongValue;
+                                
+                                currentSiren.alertID = @(alertID);
+                                currentSiren.timestamp = [NSDate dateWithTimeIntervalSince1970:timestamp];
+                                
+                                NSArray *affectedAreaIDs = currentSirenDetails[@"area_ids"];
+                                if(!affectedAreaIDs){ continue; }
+                                
+                                NSMutableSet *areaSet = [NSMutableSet setWithSet:currentSiren.areas];
+                                for(NSString *areaID in affectedAreaIDs){
+                                    
+                                    Area *currentAffectedArea = [Area MR_findFirstByAttribute:@"areaID" withValue:areaID];
+                                    [areaSet addObject:currentAffectedArea];
+                                    
+                                }
+                                
+                                [currentSiren setAreas:areaSet];
+                                
+                            }
+                            
+                            
+                            
+                            
+                            
+                            
+                        } completion:^(BOOL contextDidSave, NSError *error) {
+                            
+                            NSLog(@"here");
+                            
+                        }];
+                        
+                        
+                        
                         
                         
                         
@@ -615,7 +674,7 @@ calloutAccessoryControlTapped:(UIControl *)control{
     double longitudeWest = -1;
     double longitudeEast = -1;
     
-    NSDate *sirenTime = [NSDate dateWithTimeIntervalSince1970:siren.timestamp];
+    NSDate *sirenTime = siren.timestamp;
     
     for(Area *currentSiren in siren.areas.allObjects){
         

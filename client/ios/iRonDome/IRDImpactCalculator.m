@@ -19,7 +19,7 @@
     double longitudeWest = -1;
     double longitudeEast = -1;
     
-    NSDate *sirenTime = [NSDate dateWithTimeIntervalSince1970:siren.timestamp];
+    NSDate *sirenTime = siren.timestamp;
     
     for(Area *currentSiren in siren.areas.allObjects){
         
