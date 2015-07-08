@@ -39,6 +39,7 @@
 		519D550D19810086007C26FE /* IRDSingleRocketTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 519D550C19810086007C26FE /* IRDSingleRocketTableViewController.m */; };
 		51DCEB0F197DD5E90036CFCE /* major_alert.caf in Resources */ = {isa = PBXBuildFile; fileRef = 51DCEB0E197DD5E90036CFCE /* major_alert.caf */; };
 		51EB700D1981239800D92D22 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 51EB700F1981239800D92D22 /* Localizable.strings */; };
+		FE29BE971B4CC00A008EF958 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = FE29BE961B4CC00A008EF958 /* Reachability.m */; };
 		FE52C8EC197788FD000ED87D /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8EB197788FD000ED87D /* Parse.framework */; };
 		FE52C8EE19778C4D000ED87D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8ED19778C4D000ED87D /* AudioToolbox.framework */; };
 		FE52C8F719778CBD000ED87D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE52C8EF19778CBD000ED87D /* CFNetwork.framework */; };
@@ -147,6 +148,8 @@
 		51EB7014198262B000D92D22 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		51EB7015198262B000D92D22 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		51EB7016198262B000D92D22 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FE29BE951B4CC00A008EF958 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		FE29BE961B4CC00A008EF958 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		FE52C8EB197788FD000ED87D /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		FE52C8ED19778C4D000ED87D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		FE52C8EF19778CBD000ED87D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -387,6 +390,8 @@
 		FEC65187198AF406006ACDB4 /* iAPManager */ = {
 			isa = PBXGroup;
 			children = (
+				FE29BE951B4CC00A008EF958 /* Reachability.h */,
+				FE29BE961B4CC00A008EF958 /* Reachability.m */,
 				FEC65188198AF406006ACDB4 /* InAppManager.h */,
 				FEC65189198AF406006ACDB4 /* InAppManager.m */,
 				FEC6518A198AF406006ACDB4 /* InAppObserver.h */,
@@ -532,6 +537,7 @@
 				FE52C90A1977B699000ED87D /* CustomAnnotationView.m in Sources */,
 				FE58AB0C19783EF00084808E /* IRDTableViewController.m in Sources */,
 				5179928419771B6300830A21 /* IRDAppDelegate.m in Sources */,
+				FE29BE971B4CC00A008EF958 /* Reachability.m in Sources */,
 				FE9A3E2F197847770070AB27 /* IRDSettingsTableViewController.m in Sources */,
 				517C25C9197AD76500052133 /* SCLocalSiren.m in Sources */,
 				5179928019771B6300830A21 /* main.m in Sources */,

@@ -7,11 +7,14 @@
 //
 
 #import "IRDTableViewController.h"
+#import "Reachability.h"
 #define kRocketTimeThreshold -60*2 // two minutes
 #define kMapZoomLatitude 400000
 #define kMapZoomLongitude 400000
 #define kAvenirLight @"Avenir-Light"
 #define kAvenirBook @"Avenir-Book"
+
+#define kDownloadEndpoint @"http://ec2-52-8-181-240.us-west-1.compute.amazonaws.com/iRon-Dome-Server/web/app_dev.php/alarms"
 
 #define MAP_PADDING 2 // we want it a bit higher in here
 #define MINIMUM_VISIBLE_LATITUDE 0.01
@@ -77,6 +80,11 @@
     //dynamic cell height for table view in iOS8
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 160.0;
+    
+    //create network session
+    NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+    [sessionConfig setHTTPAdditionalHeaders:@{@"Accept": @"application/json"}];
+    _session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:self delegateQueue:nil];
 }
 
 - (void)handleNotification:(NSNotification *)notification{
@@ -246,8 +254,6 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.downloadIndicator];
     [self.downloadIndicator startAnimating];
     
-    
-    
     NSString *dbTable = [SCLocalSiren getDatabaseTable];
     NSString *query = [NSString stringWithFormat:@"SELECT alertID FROM %@ ORDER BY alertID DESC LIMIT 0,1", dbTable];
     
@@ -265,7 +271,13 @@
         
     }];
     
-    PFQuery *newSirenQuery = [PFQuery queryWithClassName:@"Siren"];
+    //TODO: New logic for downloading rocket data without parse
+    [self downloadWithCompletion:^(BOOL finished) {
+        
+    }];
+    
+    
+    /*PFQuery *newSirenQuery = [PFQuery queryWithClassName:@"Siren"];
     [newSirenQuery orderByDescending:@"alertID"];
     [newSirenQuery setLimit:1000];
     
@@ -316,8 +328,109 @@
             
         }
 
-    }];
+    }];*/
 }
+
+#pragma mark - Download Data
+- (void)downloadWithCompletion:(void (^)(BOOL))completion{
+    if ([self networkAvailable]) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        
+        NSURL *url = [NSURL URLWithString:kDownloadEndpoint];
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+        [request setURL:url];
+        [request setTimeoutInterval:30.0f];
+        [request setCachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData];
+        [request setHTTPMethod:@"GET"];
+        NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (!error) {
+                NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
+                if (httpResp.statusCode == 200) {
+                    
+                    NSError *jsonError;
+                    
+                    //TODO: write json data to database
+                    
+                    NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data
+                                                                             options:NSJSONReadingAllowFragments
+                                                                               error:&jsonError];
+                    NSLog(@"%@", jsonDict);
+                    
+                
+                    if (!jsonError) {
+                        NSArray *contentsOfRootDirectory = jsonDict[@"response"][@"sirens"];
+                        for (NSDictionary *data in contentsOfRootDirectory) {
+                            if (data[@"alert_id"]) {
+                                [self.currentAlertIDs addObject:data[@"alert_id"]];
+                            }
+                            
+                        }
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                            [self prepareRocketData];
+                            
+                            [self.refreshControl endRefreshing];
+                            self.navigationItem.rightBarButtonItem = self.refreshButton;
+                            
+                            [self.tableView reloadData];
+
+                        });
+                    }
+                }
+                else{
+                    NSLog(@"unexpected response %@",[NSHTTPURLResponse localizedStringForStatusCode:httpResp.statusCode]);
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                    });
+                }
+            }
+            if (completion) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion(YES);
+                });
+            }
+        }];
+        
+        [dataTask resume];
+    }
+    else{
+        //TODO: no internet so read just load the local database
+        
+    }
+}
+
+#pragma mark - Reachability
+- (BOOL)networkAvailable{
+    Reachability *reach = [Reachability reachabilityForInternetConnection];
+    NetworkStatus status = [reach currentReachabilityStatus];
+    if ([[self stringFromStatus:status] isEqualToString:@"Not Reachable"]) {
+        return NO;
+    }
+    return YES;
+}
+
+//Reachability convert network status to string
+- (NSString *)stringFromStatus:(NetworkStatus) status {
+    
+    NSString *string;
+    switch(status) {
+        case NotReachable:
+            string = @"Not Reachable";
+            break;
+        case ReachableViaWiFi:
+            string = @"Reachable via WiFi";
+            break;
+        case ReachableViaWWAN:
+            string = @"Reachable via WWAN";
+            break;
+        default:
+            string = @"Unknown";
+            break;
+    }
+    return string;
+}
+
 
 #pragma mark - Date Creator
 - (NSDate *)todaysDate{

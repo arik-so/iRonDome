@@ -16,10 +16,11 @@
 #import "CustomTableViewCell.h"
 #import "SCLocalSiren.h"
 
-@interface IRDTableViewController : UITableViewController <MKMapViewDelegate, CLLocationManagerDelegate>
+@interface IRDTableViewController : UITableViewController <MKMapViewDelegate, CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate>
 
 @property (nonatomic, strong)NSMutableArray *rocketData;
 @property (nonatomic, weak) IBOutlet MKMapView *mapView;
 @property (nonatomic, strong) CLGeocoder *geocoder;
+@property (nonatomic, strong) NSURLSession *session;
 
 @end
