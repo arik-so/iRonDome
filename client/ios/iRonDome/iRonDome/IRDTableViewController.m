@@ -72,7 +72,11 @@
     
     self.navigationItem.rightBarButtonItem = self.refreshButton;
     
-
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    
+    //dynamic cell height for table view in iOS8
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 160.0;
 }
 
 - (void)handleNotification:(NSNotification *)notification{
@@ -440,6 +444,8 @@ calloutAccessoryControlTapped:(UIControl *)control{
 {
     CustomTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"CustomCell"];
   
+    //clear background color
+    cell.backgroundColor = [UIColor clearColor];
     // Configure the cell...
     NSArray *rocketArray = @[];
     
@@ -590,85 +596,6 @@ calloutAccessoryControlTapped:(UIControl *)control{
     self.pendingSegueAlertID = currentAlertID;
     
     [self performSegueWithIdentifier:@"showRocketSegue" sender:nil];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    // Calculate a height based on a cell
-    if(!self.customCell) {
-        self.customCell = [self.tableView dequeueReusableCellWithIdentifier:@"CustomCell"];
-    }
-    
-    // Configure the cell...
-    NSArray *rocketArray = @[];
-    
-    if(indexPath.section == 0){
-        rocketArray = self.currentAlertIDs.copy;
-    }else if(indexPath.section == 1){
-        rocketArray = self.pastAlertIDs.copy;
-    }
-    
-    NSNumber *currentAlertID = rocketArray[indexPath.row];
-    
-    NSArray *currentSirens = self.sirensByAlertID[currentAlertID];
-    
-    NSString *placeLabels = @"";
-    double latitudeNorth = -1;
-    double latitudeSouth = -1;
-    double longitudeWest = -1;
-    double longitudeEast = -1;
-    
-    NSDate *sirenTime = nil;
-    
-    for(SCLocalSiren *currentSiren in currentSirens){
-        
-        placeLabels = [NSString stringWithFormat:@"%@, %@", placeLabels, currentSiren.toponym];
-        
-        if(latitudeNorth == -1){
-            latitudeNorth = currentSiren.latitudeNorth;
-        }else{
-            latitudeNorth = MAX(latitudeNorth, currentSiren.latitudeNorth);
-        }
-        
-        if(latitudeSouth == -1){
-            latitudeSouth = currentSiren.latitudeSouth;
-        }else{
-            latitudeSouth = MIN(latitudeSouth, currentSiren.latitudeSouth);
-        }
-        
-        if(longitudeEast == -1){
-            longitudeEast = currentSiren.longitudeEast;
-        }else{
-            longitudeEast = MAX(longitudeEast, currentSiren.longitudeEast);
-        }
-        
-        if(longitudeWest == -1){
-            longitudeWest = currentSiren.longitudeWest;
-        }else{
-            longitudeWest = MIN(longitudeWest, currentSiren.longitudeWest);
-        }
-        
-        if(!sirenTime){
-            sirenTime = [NSDate dateWithTimeIntervalSince1970:currentSiren.timestamp];
-        }
-        
-    }
-    
-    placeLabels = [placeLabels substringFromIndex:2];
-    self.customCell.sirenLabel.text = placeLabels;
-    self.customCell.sirenLabel.font = [UIFont fontWithName:kAvenirLight size:14.0F];
-    
-    // Layout the cell
-    
-    [self.customCell layoutIfNeeded];
-    
-    // Get the height for the cell
-    
-    CGFloat height = [self.customCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-    
-    // Padding of 1 point (cell separator)
-    CGFloat separatorHeight = 1;
-    
-    return height + separatorHeight;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
