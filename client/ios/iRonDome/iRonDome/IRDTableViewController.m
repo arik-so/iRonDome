@@ -47,8 +47,8 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
+    
     [super viewDidLoad];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -113,7 +113,7 @@
     
     
     NSString *dbTable = [SCLocalSiren getDatabaseTable];
-    NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ ORDER BY alertID DESC, timestamp DESC, toponym ASC", dbTable];
+    NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ GROUP BY alertID, latitude, longitude ORDER BY alertID DESC, timestamp DESC, toponym ASC", dbTable];
     
     __block BOOL incomingRockets = NO; 
     
