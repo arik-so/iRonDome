@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
-#import "SCLocalSiren.h"
 
 @interface IRDImpactCalculator : NSObject
 

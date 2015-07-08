@@ -8,7 +8,7 @@
 
 #import "IRDTableViewController.h"
 #import "Reachability.h"
-#import "iRonDome-Bridging-Header.h"
+#import "iRonDome-Swift.h"
 
 #define kRocketTimeThreshold -60*2 // two minutes
 #define kMapZoomLatitude 400000
@@ -121,11 +121,15 @@
     NSTimeInterval rightNow = [NSDate date].timeIntervalSince1970;
     NSTimeInterval threshold = rightNow + kRocketTimeThreshold;
     
+    __block BOOL incomingRockets = NO; 
+    
+    
+    /*
     
     NSString *dbTable = [SCLocalSiren getDatabaseTable];
     NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ GROUP BY alertID, latitude, longitude ORDER BY alertID DESC, timestamp DESC, toponym ASC", dbTable];
     
-    __block BOOL incomingRockets = NO; 
+
     
     [[SCSQLiteManager getActiveManager].dbQueue inDatabase:^(FMDatabase *db) {
         
@@ -185,6 +189,9 @@
         }
         
     }];
+     
+     
+    */
     
     if(incomingRockets){
         
@@ -205,6 +212,9 @@
     
     // let's get the older rocket
     
+    
+    /*
+    
     NSString *oldestAlarmQuery = [NSString stringWithFormat:@"SELECT * FROM %@ ORDER BY alertID ASC LIMIT 0,1", dbTable];
     [[SCSQLiteManager getActiveManager].dbQueue inDatabase:^(FMDatabase *db) {
         
@@ -222,6 +232,7 @@
     }];
     
     
+    */
     
     
 }
@@ -259,6 +270,8 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.downloadIndicator];
     [self.downloadIndicator startAnimating];
     
+    /*
+    
     NSString *dbTable = [SCLocalSiren getDatabaseTable];
     NSString *query = [NSString stringWithFormat:@"SELECT alertID FROM %@ ORDER BY alertID DESC LIMIT 0,1", dbTable];
     
@@ -275,6 +288,8 @@
         }
         
     }];
+     
+    */
     
     //TODO: New logic for downloading rocket data without parse
     [self downloadWithCompletion:^(BOOL finished) {
@@ -592,7 +607,7 @@ calloutAccessoryControlTapped:(UIControl *)control{
     
     NSNumber *currentAlertID = rocketArray[indexPath.row];
     
-    NSArray *currentSirens = self.sirensByAlertID[currentAlertID];
+    Siren *siren = self.sirensByAlertID[currentAlertID];
     
     NSString *placeLabels = @"";
     double latitudeNorth = -1;
@@ -600,38 +615,34 @@ calloutAccessoryControlTapped:(UIControl *)control{
     double longitudeWest = -1;
     double longitudeEast = -1;
     
-    NSDate *sirenTime = nil;
+    NSDate *sirenTime = [NSDate dateWithTimeIntervalSince1970:siren.timestamp];
     
-    for(SCLocalSiren *currentSiren in currentSirens){
+    for(Area *currentSiren in siren.areas.allObjects){
         
-        placeLabels = [NSString stringWithFormat:@"%@, %@", placeLabels, currentSiren.toponym];
+        placeLabels = [NSString stringWithFormat:@"%@, %@", placeLabels, currentSiren.toponymLong];
         
         if(latitudeNorth == -1){
-            latitudeNorth = currentSiren.latitudeNorth;
+            latitudeNorth = currentSiren.northEdgeLatitude.doubleValue;
         }else{
-            latitudeNorth = MAX(latitudeNorth, currentSiren.latitudeNorth);
+            latitudeNorth = MAX(latitudeNorth, currentSiren.northEdgeLatitude.doubleValue);
         }
         
         if(latitudeSouth == -1){
-            latitudeSouth = currentSiren.latitudeSouth;
+            latitudeSouth = currentSiren.southEdgeLatitude.doubleValue;
         }else{
-            latitudeSouth = MIN(latitudeSouth, currentSiren.latitudeSouth);
+            latitudeSouth = MIN(latitudeSouth, currentSiren.southEdgeLatitude.doubleValue);
         }
         
         if(longitudeEast == -1){
-            longitudeEast = currentSiren.longitudeEast;
+            longitudeEast = currentSiren.eastEdgeLongitude.doubleValue;
         }else{
-            longitudeEast = MAX(longitudeEast, currentSiren.longitudeEast);
+            longitudeEast = MAX(longitudeEast, currentSiren.eastEdgeLongitude.doubleValue);
         }
         
         if(longitudeWest == -1){
-            longitudeWest = currentSiren.longitudeWest;
+            longitudeWest = currentSiren.westEdgeLongitude.doubleValue;
         }else{
-            longitudeWest = MIN(longitudeWest, currentSiren.longitudeWest);
-        }
-        
-        if(!sirenTime){
-            sirenTime = [NSDate dateWithTimeIntervalSince1970:currentSiren.timestamp];
+            longitudeWest = MIN(longitudeWest, currentSiren.westEdgeLongitude.doubleValue);
         }
         
     }

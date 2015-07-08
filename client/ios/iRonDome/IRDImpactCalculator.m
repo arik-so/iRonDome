@@ -8,45 +8,43 @@
 
 #import "IRDImpactCalculator.h"
 
+#import "iRonDome-Swift.h"
+
 @implementation IRDImpactCalculator
 
-+ (MKCoordinateRegion)determineSirenBounds:(NSArray *)sirens{
++ (MKCoordinateRegion)determineSirenBounds:(Siren *)siren{
     
     double latitudeNorth = -1;
     double latitudeSouth = -1;
     double longitudeWest = -1;
     double longitudeEast = -1;
     
-    NSDate *sirenTime = nil;
+    NSDate *sirenTime = [NSDate dateWithTimeIntervalSince1970:siren.timestamp];
     
-    for(SCLocalSiren *currentSiren in sirens){
+    for(Area *currentSiren in siren.areas.allObjects){
         
         if(latitudeNorth == -1){
-            latitudeNorth = currentSiren.latitudeNorth;
+            latitudeNorth = currentSiren.northEdgeLatitude.doubleValue;
         }else{
-            latitudeNorth = MAX(latitudeNorth, currentSiren.latitudeNorth);
+            latitudeNorth = MAX(latitudeNorth, currentSiren.northEdgeLatitude.doubleValue);
         }
         
         if(latitudeSouth == -1){
-            latitudeSouth = currentSiren.latitudeSouth;
+            latitudeSouth = currentSiren.southEdgeLatitude.doubleValue;
         }else{
-            latitudeSouth = MIN(latitudeSouth, currentSiren.latitudeSouth);
+            latitudeSouth = MIN(latitudeSouth, currentSiren.southEdgeLatitude.doubleValue);
         }
         
         if(longitudeEast == -1){
-            longitudeEast = currentSiren.longitudeEast;
+            longitudeEast = currentSiren.eastEdgeLongitude.doubleValue;
         }else{
-            longitudeEast = MAX(longitudeEast, currentSiren.longitudeEast);
+            longitudeEast = MAX(longitudeEast, currentSiren.eastEdgeLongitude.doubleValue);
         }
         
         if(longitudeWest == -1){
-            longitudeWest = currentSiren.longitudeWest;
+            longitudeWest = currentSiren.westEdgeLongitude.doubleValue;
         }else{
-            longitudeWest = MIN(longitudeWest, currentSiren.longitudeWest);
-        }
-        
-        if(!sirenTime){
-            sirenTime = [NSDate dateWithTimeIntervalSince1970:currentSiren.timestamp];
+            longitudeWest = MIN(longitudeWest, currentSiren.westEdgeLongitude.doubleValue);
         }
         
     }
@@ -78,37 +76,37 @@
     
 }
 
-+ (CLLocationDistance)determineImpactRadiusForSirens:(NSArray *)sirens{
++ (CLLocationDistance)determineImpactRadiusForSirens:(Siren *)siren{
     
     double latitudeNorth = -1;
     double latitudeSouth = -1;
     double longitudeWest = -1;
     double longitudeEast = -1;
     
-    for(SCLocalSiren *currentSiren in sirens){
+    for(Area *currentSiren in siren.areas.allObjects){
         
         if(latitudeNorth == -1){
-            latitudeNorth = currentSiren.latitudeNorth;
+            latitudeNorth = currentSiren.northEdgeLatitude.doubleValue;
         }else{
-            latitudeNorth = MAX(latitudeNorth, currentSiren.latitudeNorth);
+            latitudeNorth = MAX(latitudeNorth, currentSiren.northEdgeLatitude.doubleValue);
         }
         
         if(latitudeSouth == -1){
-            latitudeSouth = currentSiren.latitudeSouth;
+            latitudeSouth = currentSiren.southEdgeLatitude.doubleValue;
         }else{
-            latitudeSouth = MIN(latitudeSouth, currentSiren.latitudeSouth);
+            latitudeSouth = MIN(latitudeSouth, currentSiren.southEdgeLatitude.doubleValue);
         }
         
         if(longitudeEast == -1){
-            longitudeEast = currentSiren.longitudeEast;
+            longitudeEast = currentSiren.eastEdgeLongitude.doubleValue;
         }else{
-            longitudeEast = MAX(longitudeEast, currentSiren.longitudeEast);
+            longitudeEast = MAX(longitudeEast, currentSiren.eastEdgeLongitude.doubleValue);
         }
         
         if(longitudeWest == -1){
-            longitudeWest = currentSiren.longitudeWest;
+            longitudeWest = currentSiren.westEdgeLongitude.doubleValue;
         }else{
-            longitudeWest = MIN(longitudeWest, currentSiren.longitudeWest);
+            longitudeWest = MIN(longitudeWest, currentSiren.westEdgeLongitude.doubleValue);
         }
         
     }

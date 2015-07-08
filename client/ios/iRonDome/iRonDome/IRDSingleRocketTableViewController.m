@@ -54,9 +54,16 @@
     
     self.sirens = @[].mutableCopy;
     
+    
+    /*
     NSString *dbTable = [SCLocalSiren getDatabaseTable];
     NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE alertID = :alertID GROUP BY alertID, latitude, longitude ORDER BY toponym ASC", dbTable];
 
+    
+    
+    
+    
+    
     
     [[SCSQLiteManager getActiveManager].dbQueue inDatabase:^(FMDatabase *db) {
         
@@ -73,9 +80,16 @@
         
     }];
     
+     
+    */
+     
+     
 }
 
 - (void)prepareMap{
+    
+    /*
+    
     
     for(SCLocalSiren *currentSiren in self.sirens){
         
@@ -91,6 +105,9 @@
         [self.mapView addAnnotation:rocketAnnotation];
         
     }
+     
+     
+    */
     
     MKCoordinateRegion rocketBounds = [IRDImpactCalculator determineImpactBoundsForSirens:self.sirens];
     MKCoordinateRegion region = rocketBounds;
@@ -158,6 +175,9 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
+    /*
+    
+    
     SCLocalSiren *currentSiren = self.sirens[indexPath.row];
     
     // Configure the cell...
@@ -165,6 +185,9 @@
     titleLabel.text = currentSiren.toponym;
     
     //TODO: animate Siren
+    
+    */
+    
     
     return cell;
 }

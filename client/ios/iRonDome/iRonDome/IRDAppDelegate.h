@@ -11,8 +11,6 @@
 
 #import <CoreData/CoreData.h>
 
-#import "SCSQLiteManager.h"
-
 @interface IRDAppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

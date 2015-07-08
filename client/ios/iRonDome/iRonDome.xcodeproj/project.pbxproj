@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		07B29C141B4D4BA5008E6A50 /* SCLocalAlarm.m in Sources */ = {isa = PBXBuildFile; fileRef = 07B29C131B4D4BA5008E6A50 /* SCLocalAlarm.m */; };
 		07B29C161B4D4CF2008E6A50 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B29C151B4D4CF2008E6A50 /* CoreData.framework */; };
 		07B29C191B4D4D3F008E6A50 /* IRDModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 07B29C171B4D4D3F008E6A50 /* IRDModel.xcdatamodeld */; };
 		07B29C231B4D50ED008E6A50 /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B29C221B4D50ED008E6A50 /* Area.swift */; };
@@ -31,8 +30,6 @@
 		5179929819771B6300830A21 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5179927719771B6300830A21 /* UIKit.framework */; };
 		517992A019771B6300830A21 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5179929E19771B6300830A21 /* InfoPlist.strings */; };
 		517992A219771B6400830A21 /* iRonDomeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992A119771B6400830A21 /* iRonDomeTests.m */; };
-		517992B419784D3B00830A21 /* SCSQLiteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992B119784D3B00830A21 /* SCSQLiteManager.m */; };
-		517992B519784D3B00830A21 /* SCLocalObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992B319784D3B00830A21 /* SCLocalObject.m */; };
 		517992C119784D5200830A21 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992B819784D5200830A21 /* FMDatabase.m */; };
 		517992C219784D5200830A21 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992BA19784D5200830A21 /* FMDatabaseAdditions.m */; };
 		517992C319784D5200830A21 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992BC19784D5200830A21 /* FMDatabasePool.m */; };
@@ -40,7 +37,6 @@
 		517992C519784D5200830A21 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 517992C019784D5200830A21 /* FMResultSet.m */; };
 		517992C7197852B300830A21 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 517992C6197852B300830A21 /* libsqlite3.0.dylib */; };
 		517C25C6197AAD6300052133 /* minor_alert_alarm.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 517C25C2197A904000052133 /* minor_alert_alarm.m4a */; };
-		517C25C9197AD76500052133 /* SCLocalSiren.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C25C8197AD76500052133 /* SCLocalSiren.m */; };
 		519D550D19810086007C26FE /* IRDSingleRocketTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 519D550C19810086007C26FE /* IRDSingleRocketTableViewController.m */; };
 		51DCEB0F197DD5E90036CFCE /* major_alert.caf in Resources */ = {isa = PBXBuildFile; fileRef = 51DCEB0E197DD5E90036CFCE /* major_alert.caf */; };
 		51EB700D1981239800D92D22 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 51EB700F1981239800D92D22 /* Localizable.strings */; };
@@ -77,8 +73,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		07B29C121B4D4BA5008E6A50 /* SCLocalAlarm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLocalAlarm.h; sourceTree = "<group>"; };
-		07B29C131B4D4BA5008E6A50 /* SCLocalAlarm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLocalAlarm.m; sourceTree = "<group>"; };
 		07B29C151B4D4CF2008E6A50 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		07B29C181B4D4D3F008E6A50 /* IRDModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = IRDModel.xcdatamodel; sourceTree = "<group>"; };
 		07B29C211B4D50EC008E6A50 /* iRonDome-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iRonDome-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -111,10 +105,6 @@
 		5179929D19771B6300830A21 /* iRonDomeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iRonDomeTests-Info.plist"; sourceTree = "<group>"; };
 		5179929F19771B6300830A21 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		517992A119771B6400830A21 /* iRonDomeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iRonDomeTests.m; sourceTree = "<group>"; };
-		517992B019784D3B00830A21 /* SCSQLiteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSQLiteManager.h; sourceTree = "<group>"; };
-		517992B119784D3B00830A21 /* SCSQLiteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSQLiteManager.m; sourceTree = "<group>"; };
-		517992B219784D3B00830A21 /* SCLocalObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLocalObject.h; sourceTree = "<group>"; };
-		517992B319784D3B00830A21 /* SCLocalObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLocalObject.m; sourceTree = "<group>"; };
 		517992B719784D5200830A21 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		517992B819784D5200830A21 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		517992B919784D5200830A21 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -129,8 +119,6 @@
 		517C25C1197A903500052133 /* major_alert_alarm_old.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = major_alert_alarm_old.m4a; sourceTree = "<group>"; };
 		517C25C2197A904000052133 /* minor_alert_alarm.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = minor_alert_alarm.m4a; sourceTree = "<group>"; };
 		517C25C3197A916A00052133 /* major_alert_old.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = major_alert_old.caf; sourceTree = "<group>"; };
-		517C25C7197AD76500052133 /* SCLocalSiren.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLocalSiren.h; sourceTree = "<group>"; };
-		517C25C8197AD76500052133 /* SCLocalSiren.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLocalSiren.m; sourceTree = "<group>"; };
 		518F8ABD19828A77004AD0FA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
 		518F8ABE19828A77004AD0FA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main_iPad.strings; sourceTree = "<group>"; };
 		518F8ABF19828A77004AD0FA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -375,14 +363,6 @@
 			children = (
 				07B29C1A1B4D5025008E6A50 /* core-data */,
 				517992B619784D4200830A21 /* sqlite */,
-				517992B019784D3B00830A21 /* SCSQLiteManager.h */,
-				517992B119784D3B00830A21 /* SCSQLiteManager.m */,
-				517992B219784D3B00830A21 /* SCLocalObject.h */,
-				517992B319784D3B00830A21 /* SCLocalObject.m */,
-				517C25C7197AD76500052133 /* SCLocalSiren.h */,
-				517C25C8197AD76500052133 /* SCLocalSiren.m */,
-				07B29C121B4D4BA5008E6A50 /* SCLocalAlarm.h */,
-				07B29C131B4D4BA5008E6A50 /* SCLocalAlarm.m */,
 			);
 			name = storage;
 			sourceTree = "<group>";
@@ -552,11 +532,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FED363AE1982EDFB0031BD31 /* CustomTableViewCell.m in Sources */,
-				517992B419784D3B00830A21 /* SCSQLiteManager.m in Sources */,
-				517992B519784D3B00830A21 /* SCLocalObject.m in Sources */,
 				07B29C191B4D4D3F008E6A50 /* IRDModel.xcdatamodeld in Sources */,
 				517992C119784D5200830A21 /* FMDatabase.m in Sources */,
-				07B29C141B4D4BA5008E6A50 /* SCLocalAlarm.m in Sources */,
 				FE52C9071977B572000ED87D /* IRDMapAnnotation.m in Sources */,
 				07B29C251B4D50EE008E6A50 /* Siren.swift in Sources */,
 				517992C419784D5200830A21 /* FMDatabaseQueue.m in Sources */,
@@ -571,7 +548,6 @@
 				5179928419771B6300830A21 /* IRDAppDelegate.m in Sources */,
 				FE29BE971B4CC00A008EF958 /* Reachability.m in Sources */,
 				FE9A3E2F197847770070AB27 /* IRDSettingsTableViewController.m in Sources */,
-				517C25C9197AD76500052133 /* SCLocalSiren.m in Sources */,
 				5179928019771B6300830A21 /* main.m in Sources */,
 				FEC6518C198AF406006ACDB4 /* InAppManager.m in Sources */,
 				517992C219784D5200830A21 /* FMDatabaseAdditions.m in Sources */,

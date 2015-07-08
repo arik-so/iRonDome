@@ -12,7 +12,6 @@
 #import "CustomAnnotationView.h"
 #import "IRDMapAnnotation.h"
 
-#import "SCLocalSiren.h"
 #import "IRDImpactCalculator.h"
 
 @interface IRDSingleRocketTableViewController : UITableViewController <MKMapViewDelegate, CLLocationManagerDelegate>

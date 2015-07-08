@@ -79,8 +79,6 @@
     
     [application registerForRemoteNotificationTypes: UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
     
-    SCSQLiteManager *manager = [SCSQLiteManager initManager];
-    [SCSQLiteManager setActiveManager:manager];
     
     
     
