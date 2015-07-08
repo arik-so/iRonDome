@@ -249,6 +249,7 @@
 }
 
 - (void)downloadRocketData{
+    
     //make sure array is null and then init it for refresh
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.downloadIndicator];
@@ -333,6 +334,7 @@
 
 #pragma mark - Download Data
 - (void)downloadWithCompletion:(void (^)(BOOL))completion{
+    
     if ([self networkAvailable]) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         
@@ -343,6 +345,7 @@
         [request setCachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData];
         [request setHTTPMethod:@"GET"];
         NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            
             if (!error) {
                 NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
                 if (httpResp.statusCode == 200) {
@@ -358,7 +361,22 @@
                     
                 
                     if (!jsonError) {
+                        
+                        NSArray *sirens = jsonDict[@"response"][@"sirens"];
+                        NSDictionary *areas = jsonDict[@"response"][@"areas"];
+                        
+                        // first of all, let's walk through the areas and see whether they are already known to us, shall we?
+                        for(NSString *areaID in areas){
+                            
+                            NSDictionary *currentAreaDetails = areas[areaID];
+                            
+                            
+                        }
+                        
+                        
+                        
                         NSArray *contentsOfRootDirectory = jsonDict[@"response"][@"sirens"];
+                        
                         for (NSDictionary *data in contentsOfRootDirectory) {
                             if (data[@"alert_id"]) {
                                 [self.currentAlertIDs addObject:data[@"alert_id"]];
