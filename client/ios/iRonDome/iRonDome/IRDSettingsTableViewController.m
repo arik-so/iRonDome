@@ -9,7 +9,7 @@
 #import "IRDSettingsTableViewController.h"
 #define kAvenirLight @"Avenir-Light"
 
-#import <Parse/Parse.h>
+
 #import "Flurry/Flurry.h"
 #import "FlurryAds.h"
 
@@ -66,6 +66,8 @@ static NSString * const AD_SPACE_NAME = @"iRon Dome Ads";
     self.tableView.bounces = NO;
     
     
+    /*
+    
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     NSNumber *defaultMute = [currentInstallation objectForKey:KEY_MUTE_NOTIFICATIONS];
     NSNumber *defaultDisable = [currentInstallation objectForKey:KEY_DISABLE_NOTIFICATIONS];
@@ -78,6 +80,8 @@ static NSString * const AD_SPACE_NAME = @"iRon Dome Ads";
     
     [self.muteSwitch addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
     [self.notificationSwitch addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
+     
+     */
     
     
     self.developers = @[
@@ -117,6 +121,9 @@ static NSString * const AD_SPACE_NAME = @"iRon Dome Ads";
 
 - (void)switchValueChanged:(UISwitch *)affectedSwitch{
 
+    
+    /*
+    
     BOOL currentlyOn = affectedSwitch.on;
     
     NSNumber *newNumber = @(currentlyOn);
@@ -129,6 +136,8 @@ static NSString * const AD_SPACE_NAME = @"iRon Dome Ads";
     }
     
     [currentInstallation saveInBackground];
+     
+    */
     
 }
 
