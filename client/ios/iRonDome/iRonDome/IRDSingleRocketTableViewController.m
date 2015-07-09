@@ -8,6 +8,8 @@
 
 #import "IRDSingleRocketTableViewController.h"
 
+#import "iRonDome-Swift.h"
+
 #define MAP_PADDING 1.3
 #define MINIMUM_VISIBLE_LATITUDE 0.01
 
@@ -52,7 +54,10 @@
 
 - (void)loadSirens{
     
-    self.sirens = @[].mutableCopy;
+    // self.sirens = @[].mutableCopy;
+    
+
+    
     
     
     /*
@@ -88,16 +93,17 @@
 
 - (void)prepareMap{
     
-    /*
+    Siren *siren = (Siren *)([[NSManagedObjectContext MR_defaultContext] existingObjectWithID:self.alertID error:nil]);
     
     
-    for(SCLocalSiren *currentSiren in self.sirens){
+    
+    for(Area *currentArea in siren.areas.allObjects){
         
         CLLocationCoordinate2D  ctrpoint;
-        ctrpoint.latitude = currentSiren.latitude;
-        ctrpoint.longitude = currentSiren.longitude;
+        ctrpoint.latitude = currentArea.centerLatitude.doubleValue;
+        ctrpoint.longitude = currentArea.centerLongitude.doubleValue;
         NSString *placeLabel = @"";
-        placeLabel = [NSString stringWithFormat:@"%@, %@", placeLabel, currentSiren.toponym];
+        placeLabel = [NSString stringWithFormat:@"%@, %@", placeLabel, currentArea.toponymLong];
         placeLabel = [placeLabel substringFromIndex:2];
         IRDMapAnnotation *rocketAnnotation = [[IRDMapAnnotation alloc] init];
         [rocketAnnotation initWithCoordinate:ctrpoint userTitle:NSLocalizedString(@"siren", nil) userSubtitle:placeLabel];
@@ -107,9 +113,9 @@
     }
      
      
-    */
     
-    MKCoordinateRegion rocketBounds = [IRDImpactCalculator determineImpactBoundsForSirens:self.sirens];
+    
+    MKCoordinateRegion rocketBounds = [IRDImpactCalculator determineImpactBoundsForSirens:siren];
     MKCoordinateRegion region = rocketBounds;
     // region.center.latitude = (latitudeSouth + latitudeNorth) / 2;
     // region.center.longitude = (longitudeWest + longitudeEast) / 2;

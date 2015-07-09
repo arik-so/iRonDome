@@ -34,7 +34,7 @@
 @property (strong, nonatomic) NSMutableDictionary *sirensByAlertID;
 @property NSTimeInterval olderSirenTime;
 
-@property (strong, nonatomic) NSNumber *pendingSegueAlertID;
+@property (strong, nonatomic) NSManagedObjectID *pendingSegueAlertID;
 
 @property (strong, nonatomic) CustomTableViewCell *customCell;
 
@@ -849,7 +849,9 @@ calloutAccessoryControlTapped:(UIControl *)control{
         rocketArray = self.pastAlertIDs.copy;
     }
 
-    NSNumber *currentAlertID = rocketArray[indexPath.row];
+    NSManagedObjectID *currentAlertID = rocketArray[indexPath.row];
+    
+    // NSNumber *currentAlertID = rocketArray[indexPath.row];
     self.pendingSegueAlertID = currentAlertID;
     
     [self performSegueWithIdentifier:@"showRocketSegue" sender:nil];
@@ -905,7 +907,7 @@ calloutAccessoryControlTapped:(UIControl *)control{
     
     if([segue.identifier isEqualToString:@"showRocketSegue"]){
         
-        NSNumber *currentAlertID = self.pendingSegueAlertID;
+        NSManagedObjectID *currentAlertID = self.pendingSegueAlertID;
         self.pendingSegueAlertID = nil;
         
         IRDSingleRocketTableViewController *destVC = segue.destinationViewController;

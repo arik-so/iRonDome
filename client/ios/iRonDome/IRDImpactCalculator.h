@@ -9,10 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
 
+#import "iRonDome-Swift.h"
+
 @interface IRDImpactCalculator : NSObject
 
-+ (MKCoordinateRegion)determineSirenBounds:(NSArray *)sirens;
-+ (MKCoordinateRegion)determineImpactBoundsForSirens:(NSArray *)sirens;
-+ (CLLocationDistance)determineImpactRadiusForSirens:(NSArray *)sirens;
++ (MKCoordinateRegion)determineSirenBounds:(Siren *)siren;
++ (MKCoordinateRegion)determineImpactBoundsForSirens:(Siren *)sirens;
++ (CLLocationDistance)determineImpactRadiusForSirens:(Siren *)siren;
 
 @end

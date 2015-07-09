@@ -8,7 +8,7 @@
 
 #import "IRDImpactCalculator.h"
 
-#import "iRonDome-Swift.h"
+
 
 @implementation IRDImpactCalculator
 
@@ -64,7 +64,7 @@
     
 }
 
-+ (MKCoordinateRegion)determineImpactBoundsForSirens:(NSArray *)sirens{
++ (MKCoordinateRegion)determineImpactBoundsForSirens:(Siren *)sirens{
     
     MKCoordinateRegion bounds = [self determineSirenBounds:sirens];
     

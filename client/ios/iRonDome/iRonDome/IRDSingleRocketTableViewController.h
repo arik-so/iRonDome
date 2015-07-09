@@ -12,11 +12,14 @@
 #import "CustomAnnotationView.h"
 #import "IRDMapAnnotation.h"
 
+
+#import <MagicalRecord/MagicalRecord.h>
+
 #import "IRDImpactCalculator.h"
 
 @interface IRDSingleRocketTableViewController : UITableViewController <MKMapViewDelegate, CLLocationManagerDelegate>
 
-@property (strong, nonatomic) NSNumber *alertID;
+@property (strong, nonatomic) NSManagedObjectID *alertID;
 @property (nonatomic, weak) IBOutlet MKMapView *mapView;
 
 @end
