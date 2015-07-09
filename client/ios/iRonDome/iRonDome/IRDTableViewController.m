@@ -116,6 +116,9 @@
     NSMutableArray *currentSirens = @[].mutableCopy;
     
     
+    NSNumber *count = [Siren MR_numberOfEntities]; 
+    
+    
     // let's fetch the necessary stuff
     
     [self.mapView removeAnnotations:self.mapView.annotations];
@@ -125,6 +128,13 @@
     
     __block BOOL incomingRockets = NO; 
     
+    
+    NSArray *allSirens = [Siren MR_findAllSortedBy:@"alertID" ascending:NO];
+    for(Siren *currentSiren in allSirens){
+        
+        [self.pastAlertIDs addObject:currentSiren.objectID];
+        
+    }
     
     /*
     
@@ -356,10 +366,21 @@
 #pragma mark - Download Data
 - (void)downloadWithCompletion:(void (^)(BOOL))completion{
     
+    
+    
     if ([self networkAvailable]) {
+        
+        NSString *downloadEndpoint = kDownloadEndpoint;
+        
+        Siren *firstSiren = [Siren MR_findFirstOrderedByAttribute:@"alertID" ascending:NO];
+        if(firstSiren){
+            downloadEndpoint = [downloadEndpoint stringByAppendingPathComponent:firstSiren.alertID.stringValue];
+        }
+        
+        
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         
-        NSURL *url = [NSURL URLWithString:kDownloadEndpoint];
+        NSURL *url = [NSURL URLWithString:downloadEndpoint];
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
         [request setURL:url];
         [request setTimeoutInterval:30.0f];
@@ -394,7 +415,11 @@
                                 
                                 NSDictionary *currentAreaDetails = areas[areaID];
                                 
-                                Area *currentArea = [Area MR_createEntityInContext:localContext];
+                                Area *currentArea = [Area MR_findFirstByAttribute:@"areaID" withValue:areaID inContext:localContext];
+                                if(currentArea){ continue; }
+                                
+                                currentArea = [Area MR_createEntityInContext:localContext];
+                                
                                 currentArea.areaID = currentAreaDetails[@"area_id"];
                                 currentArea.toponymShort = currentAreaDetails[@"toponym_short"];
                                 currentArea.toponymLong = currentAreaDetails[@"toponym_long"];
@@ -411,13 +436,17 @@
                             
                             for(NSDictionary *currentSirenDetails in sirens){
                                 
-                                Siren *currentSiren = [Siren MR_createEntityInContext:localContext];
-                                
                                 NSString *alertIDString = currentSirenDetails[@"alert_id"];
                                 NSString *timestampString = currentSirenDetails[@"timestamp"];
                                 
                                 long long alertID = alertIDString.longLongValue;
                                 NSTimeInterval timestamp = timestampString.longLongValue;
+                                
+                                
+                                Siren *currentSiren = [Siren MR_findFirstByAttribute:@"alertID" withValue:@(alertID) inContext:localContext];
+                                if(currentSiren){ continue; }
+                                
+                                currentSiren = [Siren MR_createEntityInContext:localContext];
                                 
                                 currentSiren.alertID = @(alertID);
                                 currentSiren.timestamp = [NSDate dateWithTimeIntervalSince1970:timestamp];
@@ -428,7 +457,9 @@
                                 NSMutableSet *areaSet = [NSMutableSet setWithSet:currentSiren.areas];
                                 for(NSString *areaID in affectedAreaIDs){
                                     
-                                    Area *currentAffectedArea = [Area MR_findFirstByAttribute:@"areaID" withValue:areaID];
+                                    Area *currentAffectedArea = [Area MR_findFirstByAttribute:@"areaID" withValue:areaID inContext:localContext];
+                                    if(!currentAffectedArea){ continue; }
+                                    
                                     [areaSet addObject:currentAffectedArea];
                                     
                                 }
@@ -444,7 +475,20 @@
                             
                         } completion:^(BOOL contextDidSave, NSError *error) {
                             
+                            NSNumber *sirenCount = [Siren MR_numberOfEntities];
+                            NSNumber *areaCount = [Area MR_numberOfEntities];
+                            
                             NSLog(@"here");
+                            
+                            
+                            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                            [self prepareRocketData];
+                            
+                            [self.refreshControl endRefreshing];
+                            self.navigationItem.rightBarButtonItem = self.refreshButton;
+                            
+                            [self.tableView reloadData];
+                            
                             
                         }];
                         
@@ -452,6 +496,7 @@
                         
                         
                         
+                        /*
                         
                         NSArray *contentsOfRootDirectory = jsonDict[@"response"][@"sirens"];
                         
@@ -472,6 +517,9 @@
                             [self.tableView reloadData];
 
                         });
+                         
+                        */
+                        
                     }
                 }
                 else{
@@ -664,9 +712,11 @@ calloutAccessoryControlTapped:(UIControl *)control{
         rocketArray = self.pastAlertIDs.copy;
     }
     
-    NSNumber *currentAlertID = rocketArray[indexPath.row];
+    // NSNumber *currentAlertID = rocketArray[indexPath.row];
+    NSManagedObjectID *currentAlertID = rocketArray[indexPath.row];
+    Siren *siren = (Siren *)([[NSManagedObjectContext MR_defaultContext] existingObjectWithID:currentAlertID error:nil]);
     
-    Siren *siren = self.sirensByAlertID[currentAlertID];
+    // Siren *siren = self.sirensByAlertID[currentAlertID];
     
     NSString *placeLabels = @"";
     double latitudeNorth = -1;
@@ -706,7 +756,9 @@ calloutAccessoryControlTapped:(UIControl *)control{
         
     }
     
-    placeLabels = [placeLabels substringFromIndex:2];
+    if(placeLabels.length >= 2){
+        placeLabels = [placeLabels substringFromIndex:2];
+    }
     
 //    UILabel *titleLabel = (UILabel *)[cell viewWithTag:1];
 //    UILabel *subtitleLabel = (UILabel *)[cell viewWithTag:2];
