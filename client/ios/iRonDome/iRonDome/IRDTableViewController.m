@@ -12,7 +12,7 @@
 
 #import <MagicalRecord/MagicalRecord.h>
 
-#define kRocketTimeThreshold -60*2 // two minutes
+#define kRocketTimeThreshold -60*2    * 60 * 24 * 5 // two minutes
 #define kMapZoomLatitude 400000
 #define kMapZoomLongitude 400000
 #define kAvenirLight @"Avenir-Light"
@@ -116,7 +116,7 @@
     NSMutableArray *currentSirens = @[].mutableCopy;
     
     
-    NSNumber *count = [Siren MR_numberOfEntities]; 
+
     
     
     // let's fetch the necessary stuff
@@ -132,78 +132,44 @@
     NSArray *allSirens = [Siren MR_findAllSortedBy:@"alertID" ascending:NO];
     for(Siren *currentSiren in allSirens){
         
-        [self.pastAlertIDs addObject:currentSiren.objectID];
-        
-    }
-    
-    /*
-    
-    NSString *dbTable = [SCLocalSiren getDatabaseTable];
-    NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ GROUP BY alertID, latitude, longitude ORDER BY alertID DESC, timestamp DESC, toponym ASC", dbTable];
-    
-
-    
-    [[SCSQLiteManager getActiveManager].dbQueue inDatabase:^(FMDatabase *db) {
-        
-        FMResultSet *result = [db executeQuery:query];
-        
-        while([result next]){
-
-            // Siren *siren;
+        if(currentSiren.timestamp.timeIntervalSince1970 < threshold){
             
-            SCLocalSiren *currentSiren = [[SCLocalSiren alloc] init];
-            [currentSiren initWithFetchResponse:result.resultDictionary];
+            [self.pastAlertIDs addObject:currentSiren.objectID];
             
-            NSNumber *alertIDObject = @(currentSiren.alertID);
+        }else{
             
-            if(!self.sirensByAlertID[alertIDObject]){
-                self.sirensByAlertID[alertIDObject] = @[].mutableCopy;
-                
-                if(currentSiren.timestamp < threshold){
-                    
-                    // [self.pastRockets addObject:currentSiren];
-                    [self.pastAlertIDs addObject:alertIDObject];
-                    
-                }else{
-                    
-                    // [self.currentRockets addObject:currentSiren];
-                    [self.currentAlertIDs addObject:alertIDObject];
-                    
-                    
-                    // when will the current siren reach the threshold?
-                    NSTimeInterval timeDelta =  currentSiren.timestamp - threshold;
-                    
-                    [NSTimer scheduledTimerWithTimeInterval:timeDelta target:self selector:@selector(refreshLocalSirens) userInfo:nil repeats:NO];
-                    
-                    incomingRockets = YES;
-                    
-                }
-                
-            }
+            [self.currentAlertIDs addObject:currentSiren.objectID];
+            [currentSirens addObject:currentSiren];
             
-            if(currentSiren.timestamp >= threshold){
-                
+            NSTimeInterval timeDelta =  currentSiren.timestamp.timeIntervalSince1970 - threshold;
+            [NSTimer scheduledTimerWithTimeInterval:timeDelta target:self selector:@selector(refreshLocalSirens) userInfo:nil repeats:NO];
+            
+            incomingRockets = YES;
+            
+            
+            
+            for(Area *currentArea in currentSiren.areas){
+            
+            
                 CLLocationCoordinate2D  ctrpoint;
-                ctrpoint.latitude = currentSiren.latitude;
-                ctrpoint.longitude = currentSiren.longitude;
+                ctrpoint.latitude = currentArea.centerLatitude.doubleValue;
+                ctrpoint.longitude = currentArea.centerLongitude.doubleValue;
                 IRDMapAnnotation *rocketAnnotation = [[IRDMapAnnotation alloc] init];
-                [rocketAnnotation initWithCoordinate:ctrpoint userTitle:NSLocalizedString(@"siren", nil) userSubtitle:[NSString stringWithFormat:@"%f;%f", currentSiren.latitude, currentSiren.longitude]];
-                rocketAnnotation.rocketId = currentSiren.serverID;
+                [rocketAnnotation initWithCoordinate:ctrpoint userTitle:NSLocalizedString(@"siren", nil) userSubtitle:[NSString stringWithFormat:@"%f;%f", currentArea.centerLatitude.doubleValue, currentArea.centerLongitude.doubleValue]];
+                rocketAnnotation.rocketId = currentSiren.alertID.stringValue;
                 
                 [self.mapView addAnnotation:rocketAnnotation];
                 
-                [currentSirens addObject:currentSiren];
-                
             }
-        
-            [self.sirensByAlertID[alertIDObject] addObject:currentSiren];
             
         }
         
-    }];
-     
-     
-    */
+    }
+    
+    Siren *lastSiren = allSirens.lastObject;
+    self.olderSirenTime = lastSiren.timestamp.timeIntervalSince1970;
+    
+    
     
     if(incomingRockets){
         
@@ -221,30 +187,6 @@
         
         
     }
-    
-    // let's get the older rocket
-    
-    
-    /*
-    
-    NSString *oldestAlarmQuery = [NSString stringWithFormat:@"SELECT * FROM %@ ORDER BY alertID ASC LIMIT 0,1", dbTable];
-    [[SCSQLiteManager getActiveManager].dbQueue inDatabase:^(FMDatabase *db) {
-        
-        FMResultSet *result = [db executeQuery:oldestAlarmQuery];
-        
-        while(result.next){
-            
-            SCLocalSiren *oldestSiren = [[SCLocalSiren alloc] init];
-            [oldestSiren initWithFetchResponse:result.resultDictionary];
-            
-            self.olderSirenTime = oldestSiren.timestamp;
-            
-        }
-        
-    }];
-    
-    
-    */
     
     
 }

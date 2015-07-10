@@ -14,14 +14,18 @@
 
 + (MKCoordinateRegion)determineSirenBounds:(Siren *)siren{
     
+    return [self determineAreaBounds:siren.areas.allObjects];
+    
+}
+
++ (MKCoordinateRegion)determineAreaBounds:(NSArray *)areas{
+    
     double latitudeNorth = -1;
     double latitudeSouth = -1;
     double longitudeWest = -1;
     double longitudeEast = -1;
     
-    NSDate *sirenTime = siren.timestamp;
-    
-    for(Area *currentSiren in siren.areas.allObjects){
+    for(Area *currentSiren in areas){
         
         if(latitudeNorth == -1){
             latitudeNorth = currentSiren.northEdgeLatitude.doubleValue;
@@ -64,9 +68,15 @@
     
 }
 
-+ (MKCoordinateRegion)determineImpactBoundsForSirens:(Siren *)sirens{
++ (MKCoordinateRegion)determineImpactBoundsForSirens:(NSArray *)sirens{
     
-    MKCoordinateRegion bounds = [self determineSirenBounds:sirens];
+    NSMutableSet *areas = [NSMutableSet set];
+    
+    for(Siren *currentSiren in sirens){
+        [areas addObjectsFromArray:currentSiren.areas.allObjects];
+    }
+    
+    MKCoordinateRegion bounds = [self determineAreaBounds:areas.allObjects];
     
     CLLocationDegrees diameter = sqrt(pow(bounds.span.latitudeDelta, 2) + pow(bounds.span.longitudeDelta, 2));
     bounds.span.latitudeDelta = diameter;
@@ -76,7 +86,7 @@
     
 }
 
-+ (CLLocationDistance)determineImpactRadiusForSirens:(Siren *)siren{
++ (CLLocationDistance)determineImpactRadiusForSiren:(Siren *)siren{
     
     double latitudeNorth = -1;
     double latitudeSouth = -1;

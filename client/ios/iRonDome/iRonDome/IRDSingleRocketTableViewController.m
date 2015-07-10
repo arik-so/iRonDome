@@ -115,7 +115,7 @@
      
     
     
-    MKCoordinateRegion rocketBounds = [IRDImpactCalculator determineImpactBoundsForSirens:siren];
+    MKCoordinateRegion rocketBounds = [IRDImpactCalculator determineImpactBoundsForSirens:@[siren]];
     MKCoordinateRegion region = rocketBounds;
     // region.center.latitude = (latitudeSouth + latitudeNorth) / 2;
     // region.center.longitude = (longitudeWest + longitudeEast) / 2;
@@ -135,7 +135,7 @@
      [self.mapView addAnnotation:rocketAnnotation]; */
     
     
-    CLLocationDistance impactRadius = [IRDImpactCalculator determineImpactRadiusForSirens:self.sirens];
+    CLLocationDistance impactRadius = [IRDImpactCalculator determineImpactRadiusForSiren:siren];
     MKCircle *circle = [MKCircle circleWithCenterCoordinate:rocketBounds.center radius:impactRadius];
     [self.mapView addOverlay:circle];
     

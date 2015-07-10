@@ -14,7 +14,7 @@
 @interface IRDImpactCalculator : NSObject
 
 + (MKCoordinateRegion)determineSirenBounds:(Siren *)siren;
-+ (MKCoordinateRegion)determineImpactBoundsForSirens:(Siren *)sirens;
-+ (CLLocationDistance)determineImpactRadiusForSirens:(Siren *)siren;
++ (MKCoordinateRegion)determineImpactBoundsForSirens:(NSArray *)sirens;
++ (CLLocationDistance)determineImpactRadiusForSiren:(Siren *)siren;
 
 @end
