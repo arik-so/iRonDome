@@ -12,7 +12,7 @@
 
 #import <MagicalRecord/MagicalRecord.h>
 
-#define kRocketTimeThreshold -60*2    * 60 * 24 * 5 // two minutes
+#define kRocketTimeThreshold -60*2  //  * 60 * 24 * 5 // two minutes
 #define kMapZoomLatitude 400000
 #define kMapZoomLongitude 400000
 #define kAvenirLight @"Avenir-Light"
