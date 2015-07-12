@@ -165,8 +165,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    return self.sirens.count;
+    
+    Siren *siren = (Siren *)([[NSManagedObjectContext MR_defaultContext] existingObjectWithID:self.alertID error:nil]);
+    
+    return siren.areas.count;
+    
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath: (NSIndexPath *) indexPath {
@@ -180,6 +183,18 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    
+    
+    Siren *siren = (Siren *)([[NSManagedObjectContext MR_defaultContext] existingObjectWithID:self.alertID error:nil]);
+    
+    NSArray *allAreas = siren.areas.allObjects;
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"toponymLong" ascending:YES];
+    NSArray *sortedAreas = [allAreas sortedArrayUsingDescriptors:@[descriptor]];
+    
+    Area *currentArea = allAreas[indexPath.row];
+    
+    UILabel *titleLabel = (UILabel *)[cell viewWithTag:1];
+    titleLabel.text = currentArea.toponymLong;
     
     /*
     
